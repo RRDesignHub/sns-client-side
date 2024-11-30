@@ -5,16 +5,16 @@ import { Header } from "../components/Header"
 export const MainLayout = () => {
   return (
     <>
-    <header className="w-11/12 mx-auto">
+    <header className=" ">
     <Header></Header>
 
     </header>
 
-    <main className="w-11/12 mx-auto">
+    <main className="mb-10">
       <Outlet></Outlet>
     </main>
 
-    <footer className="w-11/12 mx-auto">
+    <footer className="bg-green-900">
      <Footer></Footer>
     </footer>
     </>

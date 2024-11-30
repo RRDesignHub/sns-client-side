@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      dropShadow: {
+        'white': '3px 2px 8px #83f28f',
+        
+      }
+    },
   },
   plugins: [
     require('daisyui'),
