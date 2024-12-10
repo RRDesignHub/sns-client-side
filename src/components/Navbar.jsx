@@ -22,6 +22,11 @@ export const Navbar = () => {
       <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+            to="/add">Admin Access</NavLink>
+      </li>
+      <li>
+        <NavLink 
+          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
             to="/result">Result</NavLink>
       </li>
     </>

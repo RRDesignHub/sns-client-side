@@ -1,15 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
     <footer className="footer footer-center text-white rounded p-10">
       <nav className="grid grid-flow-col gap-4">
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
+        <Link to='/teachers' className="link link-hover">Teachers</Link>
+        <Link to='/management' className="link link-hover">Management</Link>
+        <Link className="link link-hover">About us</Link>
       </nav>
-      <nav>
+      {/* <nav>
         <div className="w-11/12 mx-auto grid grid-flow-col gap-4">
           <a>
             <svg
@@ -45,11 +45,12 @@ export const Footer = () => {
             </svg>
           </a>
         </div>
-      </nav>
+      </nav> */}
       <aside>
         <p>
-          Copyright © {new Date().getFullYear()} - All right reserved by ACME
-          Industries Ltd
+          Copyright © {new Date().getFullYear()} - All right reserved. Designed & developed by <Link 
+          className="font-semibold underline"
+          to='https://ripanulalam.netlify.app'>Ripanul Alam</Link>
         </p>
       </aside>
     </footer>
