@@ -2,17 +2,19 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 export const AddResult = () => {
   const [student, setStudent] = useState(null);
-  const [subjectsData, setSubjectsData] = useState(null);
-  const [subject, setSubject] = useState("");
+  const [subjectsData, setSubjectsData] = useState([]);
   const [error, setError] = useState(null);
   const [result, setResult] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  
+  const [totalMarks, setTotalMarks] = useState(0);
+  const [gpaAverage, setGpaAverage] = useState(0);
+  const [averageLetterGrade, setAverageLetterGrade] = useState("");
   const handleDisplayStudentInfo = (e) => {
     e.preventDefault();
     const clsName = e.target.className.value;
     const clsRoll = e.target.classRoll.value;
-    fetch(`https://snkh-school-server-side.vercel.app/students/${clsName}/${clsRoll}`)
+    fetch(
+      `https://snkh-school-server-side.vercel.app/students/${clsName}/${clsRoll}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setError(null);
@@ -26,28 +28,82 @@ export const AddResult = () => {
 
     fetch(`https://snkh-school-server-side.vercel.app/subjects/${clsName}`)
       .then((res) => res.json())
-      .then((data) => setSubjectsData(data.subjects));
-
-    console.log(subjectsData);
+      .then((data) => setSubjectsData(data.subjects))
+      .catch((err) => console.error("Failed to fetch subjects:", err));
   };
 
   const handleSingleSubjectResult = (e) => {
     e.preventDefault();
-
+    
     const form = e.target;
-    // const subjectName = form.subject.value;
-    const marks = form.marks.value;
-    const GPA = form.gradePoint.value;
-    const latterGrade = form.latterGrade.value;
+    const subjectName = form.subjectName.value;
+    const marks = parseInt(form.marks.value);
+    let GPA, letterGrade;
+
+    if (marks >= 80 && marks <= 100) {
+      GPA = 5.0;
+      letterGrade = "A+";
+    } else if (marks >= 70 && marks <= 79) {
+      GPA = 4.0;
+      letterGrade = "A";
+    } else if (marks >= 60 && marks <= 69) {
+      GPA = 3.5;
+      letterGrade = "A-";
+    } else if (marks >= 50 && marks <= 59) {
+      GPA = 3.0;
+      letterGrade = "B";
+    } else if (marks >= 40 && marks <= 49) {
+      GPA = 2.0;
+      letterGrade = "C";
+    } else if (marks >= 33 && marks <= 39) {
+      GPA = 1.0;
+      letterGrade = "D";
+    } else if (marks >= 0 && marks <= 32) {
+      GPA = 0.0;
+      letterGrade = "F";
+    } else {
+      alert(
+        "Invalid marks entered! Please enter a valid number between 0 and 100."
+      );
+      return;
+    }
 
     const resultData = {
       subjectName,
       marks,
       GPA,
-      latterGrade,
+      letterGrade,
     };
 
-    setResult([...result, resultData]);
+    const updatedResult = [...result, resultData];
+    setResult(updatedResult);
+
+    //calculate total marks:
+    const totalMarks = updatedResult.reduce(
+      (total, subject) => total + subject.marks,
+      0
+    );
+    // Calculate GPA Average
+    const totalGPA = updatedResult.reduce(
+      (total, subject) => total + subject.GPA,
+      0
+    );
+    const gpaAverage = totalGPA / updatedResult.length;
+
+    // Determine Average Letter Grade
+    let averageLetterGrade = "";
+    if (gpaAverage >= 5) averageLetterGrade = "A+";
+    else if (gpaAverage >= 4) averageLetterGrade = "A";
+    else if (gpaAverage >= 3.5) averageLetterGrade = "A-";
+    else if (gpaAverage >= 3) averageLetterGrade = "B";
+    else if (gpaAverage >= 2) averageLetterGrade = "C";
+    else if (gpaAverage >= 1) averageLetterGrade = "D";
+    else averageLetterGrade = "F";
+
+    setResult(updatedResult);
+    setTotalMarks(totalMarks);
+    setGpaAverage(gpaAverage);
+    setAverageLetterGrade(averageLetterGrade);
     form.reset();
   };
 
@@ -57,6 +113,9 @@ export const AddResult = () => {
       clsName: student?.className,
       clsRoll: student?.classRoll,
       resultData: result,
+      totalMarks: totalMarks,
+      totalGPA: gpaAverage,
+      totalLG: averageLetterGrade
     };
 
     fetch("https://snkh-school-server-side.vercel.app/results", {
@@ -166,13 +225,21 @@ export const AddResult = () => {
                   <tbody>
                     {result.map((singleSubject, index) => (
                       <tr key={index}>
-                        <td>{singleSubject.subjectName}</td>
-                        <td>{singleSubject.marks}</td>
-                        <td>{singleSubject.GPA}</td>
-                        <td>{singleSubject.latterGrade}</td>
+                        <td>{singleSubject?.subjectName}</td>
+                        <td>{singleSubject?.marks}</td>
+                        <td>{singleSubject?.GPA}</td>
+                        <td>{singleSubject?.letterGrade}</td>
                       </tr>
                     ))}
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <td className="font-bold">Total</td>
+                      <td className="font-bold">{totalMarks}</td>
+                      <td className="font-bold">{gpaAverage.toFixed(2)}</td>
+                      <td className="font-bold">{averageLetterGrade}</td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>
@@ -185,25 +252,24 @@ export const AddResult = () => {
             className="card-body max-sm:px-0"
           >
             <div className="grid gap-3 grid-cols-12 items-end">
-              <div className="mb-4 col-span-4 md:col-span-3">
-                <label className="block font-medium text-gray-700">
+              <div className="form-control col-span-4 md:col-span-6">
+                <label className="block label text-gray-700">
                   Subject Name
                 </label>
                 <select
                   name="subjectName"
-                  // value={subject}
-                  // onChange={(e)=> setSubject(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full h-12 p-2 border border-gray-300 rounded-md"
                   required
                 >
-                  <option value='Select' disabled>Select</option>
-                  <option value='Select1' >Select1</option>
-                  <option value='Select2' >Select2</option>
-                  {
-                    subjectsData && subjectsData.map((singleSubData, index) =>{
-                      <option value={singleSubData.subjectName} key={index} >{singleSubData.subjectName}</option>
-                    })
-                  }
+                  <option value="" disabled selected>
+                    Select
+                  </option>
+                  {subjectsData &&
+                    subjectsData.map((singleSubData, index) => (
+                      <option value={singleSubData.subjectName} key={index}>
+                        {singleSubData.subjectName}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="form-control col-span-4 md:col-span-3">
@@ -218,31 +284,7 @@ export const AddResult = () => {
                   required
                 />
               </div>
-              <div className="form-control col-span-6 md:col-span-2">
-                <label className="label">
-                  <span className="label-text">GPA</span>
-                </label>
-                <input
-                  type="number"
-                  name="gradePoint"
-                  step="0.01"
-                  placeholder="Grade Point"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control col-span-6 md:col-span-2">
-                <label className="label">
-                  <span className="label-text">Latter Grade</span>
-                </label>
-                <input
-                  type="text"
-                  name="latterGrade"
-                  placeholder="Latter Grade"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
+
               <button className="btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
                 Add
               </button>
