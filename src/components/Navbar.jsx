@@ -1,7 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from './../assets/logo.png'
+import { useContext } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 export const Navbar = () => {
+  const {user , logoutUser} = useContext(AuthContext);
+  const handleLogout = () =>{
+    logoutUser();
+  }
   const links = (
     <>
       <li>
@@ -19,16 +25,30 @@ export const Navbar = () => {
           className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
           to="/management">Management</NavLink>
       </li>
-      <li>
-        <NavLink 
-          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
-            to="/add">Admin Access</NavLink>
-      </li>
+      
       <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
             to="/result">Result</NavLink>
       </li>
+      {
+        user && <li>
+        <NavLink 
+          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+            to="/admin_access">Admin Access</NavLink>
+      </li>
+      }
+      {
+        user ? <li>
+        <NavLink 
+          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+            onClick={handleLogout}>Logout</NavLink>
+      </li> : <li>
+        <NavLink 
+          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+            to="/login">Login</NavLink>
+      </li>
+      }
     </>
   );
   return (

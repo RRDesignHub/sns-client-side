@@ -5,6 +5,7 @@ export const AddResult = () => {
   const [subjectsData, setSubjectsData] = useState([]);
   const [error, setError] = useState(null);
   const [result, setResult] = useState([]);
+  const [examName, setExamName] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
   const [gpaAverage, setGpaAverage] = useState(0);
   const [averageLetterGrade, setAverageLetterGrade] = useState("");
@@ -34,7 +35,7 @@ export const AddResult = () => {
 
   const handleSingleSubjectResult = (e) => {
     e.preventDefault();
-    
+
     const form = e.target;
     const subjectName = form.subjectName.value;
     const marks = parseInt(form.marks.value);
@@ -109,13 +110,14 @@ export const AddResult = () => {
 
   const handleSubmitResult = () => {
     const resultData = {
+      examName: examName,
       studentName: student?.studentName,
       clsName: student?.className,
       clsRoll: student?.classRoll,
       resultData: result,
       totalMarks: totalMarks,
       totalGPA: gpaAverage,
-      totalLG: averageLetterGrade
+      totalLG: averageLetterGrade,
     };
 
     fetch("https://snkh-school-server-side.vercel.app/results", {
@@ -192,7 +194,7 @@ export const AddResult = () => {
           <h1 className="text-2xl md:text-4xl font-bold text-center">
             Add Student Result
           </h1>
-          <div className="flex max-sm:flex-col justify-center md:gap-8 pt-5">
+          <div className="flex max-sm:flex-col justify-center items-center gap-2 md:gap-8 pt-5">
             <h3 className="text-lg">
               Student Name:{" "}
               <span className="font-semibold">
@@ -207,6 +209,24 @@ export const AddResult = () => {
               Class Roll:{" "}
               <span className="font-semibold">{student?.classRoll || ""}</span>
             </h3>
+            <div className="form-control flex-row justify-center items-center">
+              <label className="block w-full label text-lg">Exam Name :</label>
+              <select
+              onChange={(e) => setExamName(e.target.value)}
+                name="subjectName"
+                className="w-full h-12 p-2 border border-gray-300 rounded-md"
+                required
+              >
+                <option value="" disabled selected>
+                  Select
+                </option>
+                <option value="1st Semester">1st Semester</option>
+                <option value="2nd Semester">2nd Semester</option>
+                <option value="3rd Semester">3rd Semester</option>
+                <option value="Half Yearly">Half Yearly</option>
+                <option value="Annual">Annual</option>
+              </select>
+            </div>
           </div>
 
           {result.length ? (
@@ -252,16 +272,17 @@ export const AddResult = () => {
             className="card-body max-sm:px-0"
           >
             <div className="grid gap-3 grid-cols-12 items-end">
-              <div className="form-control col-span-4 md:col-span-6">
+              <div className="form-control col-span-12 md:col-span-6">
                 <label className="block label text-gray-700">
                   Subject Name
                 </label>
                 <select
+                  defaultValue="Select"
                   name="subjectName"
                   className="w-full h-12 p-2 border border-gray-300 rounded-md"
                   required
                 >
-                  <option value="" disabled selected>
+                  <option disabled >
                     Select
                   </option>
                   {subjectsData &&
@@ -272,7 +293,7 @@ export const AddResult = () => {
                     ))}
                 </select>
               </div>
-              <div className="form-control col-span-4 md:col-span-3">
+              <div className="form-control col-span-6 md:col-span-3">
                 <label className="label">
                   <span className="label-text">Marks</span>
                 </label>
@@ -285,7 +306,7 @@ export const AddResult = () => {
                 />
               </div>
 
-              <button className="btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
+              <button className="max-sm:col-span-6 md:col-span-3 btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
                 Add
               </button>
             </div>

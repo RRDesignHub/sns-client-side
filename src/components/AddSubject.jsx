@@ -61,13 +61,13 @@ export const AddSubject = () => {
       })
   };
   return (
-    <div className="w-11/12 mx-auto mb-10">
+    <div className="w-11/12 mx-auto my-10">
       <div className="bg-green-50 px-3 rounded-lg py-5 md:py-8">
         <h1 className="text-2xl md:text-4xl font-bold text-center">
           Add Subject
         </h1>
-        <div className="flex max-sm:flex-col justify-center md:gap-8 pt-5">
-          <div className="form-control flex-row">
+        <div className="grid grid-cols-12 ">
+          <div className="form-control col-span-12 justify-center mt-5 flex-row  ">
             <label className="label">
               <span className="label-text text-lg font-semibold">Class: </span>
             </label>
@@ -116,7 +116,7 @@ export const AddSubject = () => {
 
         <form onSubmit={handleAddSubject} className="card-body max-sm:px-0">
           <div className="grid gap-3 grid-cols-12 items-end">
-            <div className="form-control col-span-8 md:col-span-4">
+            <div className="form-control col-span-12 md:col-span-4">
               <label className="label">
                 <span className="label-text">Subject Name</span>
               </label>
@@ -197,7 +197,7 @@ export const AddSubject = () => {
               />
             </div>
 
-            <button className="btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
+            <button className="max-sm:col-span-6 md:col-span-2 btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
               Add
             </button>
           </div>

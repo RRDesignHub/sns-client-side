@@ -81,7 +81,7 @@ export const ExistingSubjects = () => {
           </div>
         </form>
 
-        {subjects && (
+        {subjects ? (
           <div className="overflow-x-auto bg-gray-50 p-5 rounded-xl">
             <table className="table py-0">
               {/* head */}
@@ -122,7 +122,9 @@ export const ExistingSubjects = () => {
               </tbody>
             </table>
           </div>
-        )}
+        ) :
+        <><h3 className="text-center">Please type class and click on the Search button to display all added subjects...</h3></>
+        }
       </div>
     </>
   );

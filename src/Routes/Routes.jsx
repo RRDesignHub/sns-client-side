@@ -10,12 +10,16 @@ import { AddResult } from "../components/AddResult";
 import { DisplayStudents } from "../components/DisplayStudents";
 import { AddSubject } from "../components/AddSubject";
 import { ExistingSubjects } from "../components/ExistingSubjects";
+import { PrivateRoute } from "./PrivateRoute";
+import { Login } from "../components/Login";
+import { ErrorPage } from "../Pages/ErrorPage";
 
 const router = createBrowserRouter(
   [
     {
       path: '/',
       element: <MainLayout></MainLayout>,
+      errorElement:<ErrorPage></ErrorPage>,
       children:[
         {
           path: '/',
@@ -30,27 +34,31 @@ const router = createBrowserRouter(
           element:<Management></Management>
         },
         {
-          path: '/add',
-          element:<AddUpdateRemoveData></AddUpdateRemoveData>,
+          path: '/login',
+          element:<Login></Login>
+        },
+        {
+          path: '/admin_access',
+          element:<PrivateRoute><AddUpdateRemoveData></AddUpdateRemoveData></PrivateRoute>,
           children:[
             {
-              path: '/add/add_student',
+              path: '/admin_access/add_student',
               element: <AddStudent></AddStudent>
             },
             {
-              path: '/add/students',
+              path: '/admin_access/students',
               element: <DisplayStudents></DisplayStudents>,
             },
             {
-              path: '/add/add_result',
+              path: '/admin_access/add_result',
               element: <AddResult></AddResult>
             },
             {
-              path: '/add/add_subject',
+              path: '/admin_access/add_subject',
               element: <AddSubject></AddSubject>
             },
             {
-              path: '/add/display_subject',
+              path: '/admin_access/display_subject',
               element: <ExistingSubjects></ExistingSubjects>
             }
           ]

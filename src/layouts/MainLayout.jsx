@@ -10,7 +10,7 @@ export const MainLayout = () => {
 
     </header>
 
-    <main className="mb-10">
+    <main >
       <Outlet></Outlet>
     </main>
 
