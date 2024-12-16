@@ -2,23 +2,29 @@ import { useState } from "react";
 import { TiDelete } from "react-icons/ti";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import Swal from "sweetalert2";
+import { Loading } from "./Loading";
 
 export const DisplayStudents = () => {
+  const [loader, setLoader] = useState(false);
   const [students, setStudents] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [existingStudentData, setExistingStudentData] = useState(null);
+  const [className, setClassName] = useState(null);
   const [session, setSession] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [gender, setGender] = useState("");
   const [religion, setReligion] = useState("");
   const handleDisplayStudents = (e) => {
+    setLoader(true);
     e.preventDefault();
-
-    const className = e.target.className.value;
 
     fetch(`https://snkh-school-server-side.vercel.app/students/${className}`)
       .then((res) => res.json())
-      .then((data) => setStudents(data));
+      .then((data) => {
+        setLoader(true);
+        setStudents(data);
+        setLoader(false);
+      });
   };
 
   const handleUpdatePopup = (id) => {
@@ -36,7 +42,6 @@ export const DisplayStudents = () => {
     const birthRegNo = form.birthRegNo.value;
     const dateOfBirth = form.dateOfBirth.value;
     const studentName = form.studentName.value;
-    const className = form.className.value;
     const classRoll = form.classRoll.value;
     const fatherName = form.fatherName.value;
     const motherName = form.motherName.value;
@@ -59,17 +64,20 @@ export const DisplayStudents = () => {
       photo,
     };
 
-    fetch(`https://snkh-school-server-side.vercel.app/students/${existingStudentData._id}`,{
-      method: "PUT",
-      headers: {
-        "content-type":"application/json"
-      },
-      body: JSON.stringify(updatedStudentData)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if(data.modifiedCount){
-          setShowModal(false)
+    fetch(
+      `https://snkh-school-server-side.vercel.app/students/${existingStudentData._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(updatedStudentData),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          setShowModal(false);
           Swal.fire({
             position: "center",
             icon: "success",
@@ -79,8 +87,7 @@ export const DisplayStudents = () => {
           });
           form.reset();
         }
-      })
-
+      });
   };
 
   const handleDeleteStudent = (clsName, roll) => {
@@ -132,15 +139,35 @@ export const DisplayStudents = () => {
             <label className="label">
               <span className="label-text  text-xl font-semibold">Class:</span>
             </label>
-            <input
-              type="number"
-              min="1"
-              max="10"
-              name="className"
-              placeholder="Class 1-10"
-              className="input input-bordered w-[150px]"
+            <select
+              defaultValue={"Select a class"}
+              onChange={(e) => setClassName(e.target.value)}
+              name="class"
+              className="select select-bordered"
               required
-            />
+            >
+              <option value="" disabled>
+                Select a class
+              </option>
+              {[
+                "Play",
+                "Nursery",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+              ].map((className) => (
+                <option key={className} value={className}>
+                  {className}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="form-control">
@@ -150,65 +177,76 @@ export const DisplayStudents = () => {
           </div>
         </form>
 
-        {students ? (
-          <div className="overflow-x-auto bg-gray-50 p-3 rounded-xl">
-            <table className="table py-0">
-              {/* head */}
-              <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>Studnet Name</th>
-                  <th>Class</th>
-                  <th>Class Roll</th>
-                  <th>Father's Name</th>
-                  <th>Mother's Name</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {students.map((student) => (
-                  <tr className="*:py-1 " key={student._id}>
-                    <td>
-                      {student.photo && (
-                        <img
-                          className="border-2 border-green-100 w-10 h-10 rounded-full"
-                          src={student.photo}
-                          alt=""
-                        />
-                      )}
-                    </td>
-                    <td className="font-semibold ">{student.studentName}</td>
-                    <td>{student.className}</td>
-                    <td>{student.classRoll}</td>
-                    <td>{student.fatherName}</td>
-                    <td>{student.motherName}</td>
-                    <td className="flex items-center gap-1">
-                      <button
-                        onClick={() => handleUpdatePopup(student._id)}
-                        className="text-lg p-1 rounded-full bg-green-700  text-white"
-                      >
-                        <MdDriveFileRenameOutline />
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleDeleteStudent(
-                            student.className,
-                            student.classRoll
-                          )
-                        }
-                        className="text-4xl text-red-500"
-                      >
-                        <TiDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) :
-        <><h3 className="text-center">Please type the class and click on Search button to find students...</h3></>
-        }
+            {loader ? 
+            <Loading></Loading> :
+            students ? (
+              <div className="overflow-x-auto bg-gray-50 p-3 rounded-xl">
+                <h2 className="text-center font-semibold">Total Students: {students.length}</h2>
+                <table className="table py-0">
+                  {/* head */}
+                  <thead>
+                    <tr>
+                      <th>Photo</th>
+                      <th>Studnet Name</th>
+                      <th>Class</th>
+                      <th>Class Roll</th>
+                      <th>Father's Name</th>
+                      <th>Mother's Name</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {students.sort((a, b) => a.classRoll - b.classRoll)
+                      .map((student) => (
+                      <tr className="*:py-1 " key={student._id}>
+                        <td>
+                          {student.photo && (
+                            <img
+                              className="border-2 border-green-100 w-10 h-10 rounded-full"
+                              src={student.photo}
+                              alt=""
+                            />
+                          )}
+                        </td>
+                        <td className="font-semibold ">{student.studentName}</td>
+                        <td>{student.className}</td>
+                        <td>{student.classRoll}</td>
+                        <td>{student.fatherName}</td>
+                        <td>{student.motherName}</td>
+                        <td className="flex items-center gap-1">
+                          <button
+                            onClick={() => handleUpdatePopup(student._id)}
+                            className="text-lg p-1 rounded-full bg-green-700  text-white"
+                          >
+                            <MdDriveFileRenameOutline />
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleDeleteStudent(
+                                student.className,
+                                student.classRoll
+                              )
+                            }
+                            className="text-4xl text-red-500"
+                          >
+                            <TiDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-center">
+                  Please type the class and click on Search button to find
+                  students...
+                </h3>
+              </>
+            )
+            }
+
 
         {/* update modal */}
         {showModal && (
@@ -224,19 +262,42 @@ export const DisplayStudents = () => {
                   </h2>
                   <div className="divider col-span-12 mt-0"></div>
                   <div className=" grid gap-2 grid-cols-12">
+                    {/* class name */}
                     <div className="form-control col-span-6 md:col-span-3">
                       <label className="label">
                         <span className="label-text">Class Name:</span>
                       </label>
-                      <input
-                        type="text"
-                        name="className"
-                        defaultValue={existingStudentData.className}
-                        placeholder="Type class name..."
-                        className="input input-bordered"
+                      <select
+                        defaultValue={"Select a class"}
+                        onChange={(e) => setClassName(e.target.value)}
+                        name="class"
+                        className="select select-bordered"
                         required
-                      />
+                      >
+                        <option value="" disabled>
+                          Select a class
+                        </option>
+                        {[
+                          "Play",
+                          "Nursery",
+                          "1",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "6",
+                          "7",
+                          "8",
+                          "9",
+                          "10",
+                        ].map((className) => (
+                          <option key={className} value={className}>
+                            {className}
+                          </option>
+                        ))}
+                      </select>
                     </div>
+                    {/* class roll */}
                     <div className="form-control col-span-6 md:col-span-3">
                       <label className="label">
                         <span className="label-text">Class Roll:</span>
@@ -250,6 +311,7 @@ export const DisplayStudents = () => {
                         required
                       />
                     </div>
+                    {/* section */}
                     <div className="form-control col-span-6 md:col-span-3">
                       <label className="label">
                         <span className="label-text">Section:</span>
@@ -262,6 +324,7 @@ export const DisplayStudents = () => {
                         className="input input-bordered"
                       />
                     </div>
+                    {/* group */}
                     <div className="form-control col-span-6 md:col-span-3">
                       <label className="label">
                         <span className="label-text">Group:</span>
@@ -274,6 +337,7 @@ export const DisplayStudents = () => {
                         className="input input-bordered"
                       />
                     </div>
+                    {/* birth reg no */}
                     <div className="form-control col-span-6 md:col-span-12">
                       <label className="label">
                         <span className="label-text">
@@ -289,6 +353,7 @@ export const DisplayStudents = () => {
                         required
                       />
                     </div>
+                    {/* birth date */}
                     <div className="form-control col-span-6 md:col-span-6">
                       <label className="label">
                         <span className="label-text">Date Of Birth:</span>
@@ -302,6 +367,7 @@ export const DisplayStudents = () => {
                         required
                       />
                     </div>
+                    {/* academic year */}
                     <div className="form-control col-span-6 md:col-span-6">
                       <label className="label">
                         <span className="label-text">Academic Year:</span>
@@ -309,11 +375,11 @@ export const DisplayStudents = () => {
                       <select
                         onChange={(e) => setSession(e.target.value)}
                         name="session"
-                        
+                        defaultValue="Select a year"
                         className="select select-bordered"
                         required
                       >
-                        <option value="" disabled selected>
+                        <option value="" disabled>
                           Select a year
                         </option>
                         {Array.from({ length: 10 }, (_, i) => {
@@ -326,6 +392,7 @@ export const DisplayStudents = () => {
                         })}
                       </select>
                     </div>
+                    {/* student name */}
                     <div className="form-control col-span-12 md:col-span-12">
                       <label className="label">
                         <span className="label-text">Student Name:</span>
@@ -339,6 +406,7 @@ export const DisplayStudents = () => {
                         required
                       />
                     </div>
+                    {/* father name */}
                     <div className="form-control col-span-12 md:col-span-12">
                       <label className="label">
                         <span className="label-text">Father's Name:</span>
@@ -351,6 +419,7 @@ export const DisplayStudents = () => {
                         className="input input-bordered"
                       />
                     </div>
+                    {/* mother name */}
                     <div className="form-control col-span-12 md:col-span-12">
                       <label className="label">
                         <span className="label-text">Mother's Name:</span>
@@ -363,6 +432,7 @@ export const DisplayStudents = () => {
                         className="input input-bordered"
                       />
                     </div>
+                    {/* blood group */}
                     <div className="form-control col-span-6 md:col-span-4">
                       <label className="label">
                         <span className="label-text">Blood Group:</span>
@@ -370,11 +440,11 @@ export const DisplayStudents = () => {
                       <select
                         onChange={(e) => setBloodGroup(e.target.value)}
                         name="bloodGroup"
-                        
+                        defaultValue="Select a blood group"
                         className="select select-bordered"
                         required
                       >
-                        <option value="" disabled selected>
+                        <option value="" disabled>
                           Select a blood group
                         </option>
                         {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map(
@@ -386,6 +456,7 @@ export const DisplayStudents = () => {
                         )}
                       </select>
                     </div>
+                    {/* gender */}
                     <div className="form-control col-span-6 md:col-span-4">
                       <label className="label">
                         <span className="label-text">Gender:</span>
@@ -393,11 +464,11 @@ export const DisplayStudents = () => {
                       <select
                         onChange={(e) => setGender(e.target.value)}
                         name="gender"
-                        
+                        defaultValue="Select Gender"
                         className="select select-bordered"
                         required
                       >
-                        <option value="" disabled selected>
+                        <option value="" disabled>
                           Select your gender
                         </option>
                         {["Male", "Female"].map((gender) => (
@@ -407,18 +478,19 @@ export const DisplayStudents = () => {
                         ))}
                       </select>
                     </div>
+                    {/* religion */}
                     <div className="form-control col-span-6 md:col-span-4">
                       <label className="label">
                         <span className="label-text">Religion:</span>
                       </label>
                       <select
                         name="gender"
-                        
+                        defaultValue="Select religion"
                         onChange={(e) => setReligion(e.target.value)}
                         className="select select-bordered"
                         required
                       >
-                        <option value="" disabled selected>
+                        <option value="" disabled>
                           Select religion
                         </option>
                         {["Islam", "Hindu", "Cristian"].map((gender) => (
@@ -428,12 +500,13 @@ export const DisplayStudents = () => {
                         ))}
                       </select>
                     </div>
+                    {/* photo url */}
                     <div className="form-control col-span-12 md:col-span-12">
                       <label className="label">
                         <span className="label-text">Photo URL:</span>
                       </label>
                       <input
-                        type="text"
+                        type="url"
                         name="photo"
                         defaultValue={existingStudentData.photo}
                         placeholder="Photo url..."

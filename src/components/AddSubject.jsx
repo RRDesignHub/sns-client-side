@@ -71,15 +71,35 @@ export const AddSubject = () => {
             <label className="label">
               <span className="label-text text-lg font-semibold">Class: </span>
             </label>
-            <input
-              type="text"
-              name="clsName"
-              onChange={(e) => setClsName(e.target.value)}
-              placeholder="Class..."
-              className="input input-bordered"
-              defaultValue={clsName}
-              required
-            />
+            <select
+                defaultValue={"Select a class"}
+                onChange={(e) => setClsName(e.target.value)}
+                name="class"
+                className="select select-bordered"
+                required
+              >
+                <option value="" disabled>
+                  Select a class
+                </option>
+                {[
+                  "Play",
+                  "Nursery",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10",
+                ].map((className) => (
+                  <option key={className} value={className}>
+                    {className}
+                  </option>
+                ))}
+              </select>
           </div>
           
         </div>

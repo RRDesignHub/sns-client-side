@@ -3,9 +3,12 @@ import Swal from "sweetalert2";
 
 export const AddStudent = () => {
   const [session, setSession] = useState("");
+  const [className, setClassName] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [gender, setGender] = useState("");
   const [religion, setReligion] = useState("");
+
+
   const handleStudentData = (e) => {
     e.preventDefault();
 
@@ -15,7 +18,6 @@ export const AddStudent = () => {
     const birthRegNo = form.birthRegNo.value;
     const dateOfBirth = form.dateOfBirth.value;
     const studentName = form.studentName.value;
-    const className = form.className.value;
     const classRoll = form.classRoll.value;
     const fatherName = form.fatherName.value;
     const motherName = form.motherName.value;
@@ -48,6 +50,7 @@ export const AddStudent = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.insertedId) {
+          form.reset();
           Swal.fire({
             position: "center",
             icon: "success",
@@ -58,6 +61,8 @@ export const AddStudent = () => {
         }
       });
   };
+
+
   return (
     <>
       <div className="w-11/12 mx-auto my-10">
@@ -69,18 +74,42 @@ export const AddStudent = () => {
             Add Student Details
           </h1>
           <div className="grid gap-2 grid-cols-12">
+            {/* class name */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
                 <span className="label-text">Class Name:</span>
               </label>
-              <input
-                type="text"
-                name="className"
-                placeholder="Type class name..."
-                className="input input-bordered"
+              <select
+                defaultValue={"Select a class"}
+                onChange={(e) => setClassName(e.target.value)}
+                name="class"
+                className="select select-bordered"
                 required
-              />
+              >
+                <option value="" disabled>
+                  Select a class
+                </option>
+                {[
+                  "Play",
+                  "Nursery",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10",
+                ].map((className) => (
+                  <option key={className} value={className}>
+                    {className}
+                  </option>
+                ))}
+              </select>
             </div>
+            {/* roll */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
                 <span className="label-text">Class Roll:</span>
@@ -93,6 +122,7 @@ export const AddStudent = () => {
                 required
               />
             </div>
+            {/* section */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
                 <span className="label-text">Section:</span>
@@ -102,9 +132,9 @@ export const AddStudent = () => {
                 name="branchName"
                 placeholder="Type branch name..."
                 className="input input-bordered"
-                
               />
             </div>
+            {/* Group */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
                 <span className="label-text">Group:</span>
@@ -114,9 +144,9 @@ export const AddStudent = () => {
                 name="departmentName"
                 placeholder="Type department..."
                 className="input input-bordered"
-                
               />
             </div>
+            {/* Birth reg no */}
             <div className="form-control col-span-12 md:col-span-8">
               <label className="label">
                 <span className="label-text">Birth Registration No:</span>
@@ -129,6 +159,7 @@ export const AddStudent = () => {
                 required
               />
             </div>
+            {/* Date of Birth */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
                 <span className="label-text">Date Of Birth:</span>
@@ -141,6 +172,7 @@ export const AddStudent = () => {
                 required
               />
             </div>
+            {/* Academic year */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
                 <span className="label-text">Academic Year:</span>
@@ -152,7 +184,7 @@ export const AddStudent = () => {
                 className="select select-bordered"
                 required
               >
-                <option value="" disabled >
+                <option value="" disabled>
                   Select a year
                 </option>
                 {Array.from({ length: 10 }, (_, i) => {
@@ -165,6 +197,7 @@ export const AddStudent = () => {
                 })}
               </select>
             </div>
+          {/* student name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
                 <span className="label-text">Student Name:</span>
@@ -177,6 +210,7 @@ export const AddStudent = () => {
                 required
               />
             </div>
+            {/* fathers name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
                 <span className="label-text">Father's Name:</span>
@@ -188,6 +222,7 @@ export const AddStudent = () => {
                 className="input input-bordered"
               />
             </div>
+            {/* Mother's name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
                 <span className="label-text">Mother's Name:</span>
@@ -199,18 +234,19 @@ export const AddStudent = () => {
                 className="input input-bordered"
               />
             </div>
+            {/* Blood group */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
                 <span className="label-text">Blood Group:</span>
               </label>
               <select
-              defaultValue={"Select blood group"}
+                defaultValue={"Select blood group"}
                 onChange={(e) => setBloodGroup(e.target.value)}
                 name="bloodGroup"
                 className="select select-bordered"
                 required
               >
-                <option value="" disabled >
+                <option value="" disabled>
                   Select a blood group
                 </option>
                 {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map(
@@ -222,18 +258,19 @@ export const AddStudent = () => {
                 )}
               </select>
             </div>
+            {/* Gender */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
                 <span className="label-text">Gender:</span>
               </label>
               <select
-              defaultValue={"Select gender"}
+                defaultValue={"Select gender"}
                 onChange={(e) => setGender(e.target.value)}
                 name="gender"
                 className="select select-bordered"
                 required
               >
-                <option value="" disabled >
+                <option value="" disabled>
                   Select your gender
                 </option>
                 {["Male", "Female"].map((gender) => (
@@ -243,16 +280,19 @@ export const AddStudent = () => {
                 ))}
               </select>
             </div>
+            {/* Religion */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
                 <span className="label-text">Religion:</span>
               </label>
-              <select 
-              defaultValue={"Select religion"}
-                name="gender" 
+              <select
+                defaultValue={"Select religion"}
+                name="gender"
                 onChange={(e) => setReligion(e.target.value)}
-                className="select select-bordered" required>
-                <option value="" disabled >
+                className="select select-bordered"
+                required
+              >
+                <option value="" disabled>
                   Select religion
                 </option>
                 {["Islam", "Hindu", "Cristian"].map((gender) => (
@@ -262,6 +302,7 @@ export const AddStudent = () => {
                 ))}
               </select>
             </div>
+            {/* Photo URL */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
                 <span className="label-text">Photo URL:</span>

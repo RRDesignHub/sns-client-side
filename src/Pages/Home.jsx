@@ -8,7 +8,7 @@ export const Home = () => {
     <>
       <div className="relative max-sm:mb-80 mb-10 ">
         <Hero></Hero>
-        <div className="absolute -bottom-[280px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12  mx-auto bg-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
+        <div className="absolute z-50 -bottom-[280px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12  mx-auto bg-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
           <div className="flex max-sm:flex-col items-center gap-5">
           <img className="w-20" src={logo} alt="" />
           <div>

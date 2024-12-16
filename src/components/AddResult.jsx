@@ -6,12 +6,12 @@ export const AddResult = () => {
   const [error, setError] = useState(null);
   const [result, setResult] = useState([]);
   const [examName, setExamName] = useState("");
+  const [clsName, setClsName] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
   const [gpaAverage, setGpaAverage] = useState(0);
   const [averageLetterGrade, setAverageLetterGrade] = useState("");
   const handleDisplayStudentInfo = (e) => {
     e.preventDefault();
-    const clsName = e.target.className.value;
     const clsRoll = e.target.classRoll.value;
     fetch(
       `https://snkh-school-server-side.vercel.app/students/${clsName}/${clsRoll}`
@@ -113,7 +113,7 @@ export const AddResult = () => {
       examName: examName,
       studentName: student?.studentName,
       clsName: student?.className,
-      clsRoll: student?.classRoll,
+      clsRoll:student?.classRoll,
       resultData: result,
       totalMarks: totalMarks,
       totalGPA: gpaAverage,
@@ -151,21 +151,42 @@ export const AddResult = () => {
           className="card-body w-3/4 mx-auto"
         >
           <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-5">
+            {/* class name */}
             <div className="form-control flex-row items-center gap-1">
               <label className="label">
                 <span className="label-text text-lg md:text-xl font-semibold">
                   Class:
                 </span>
               </label>
-              <input
-                type="number"
-                min="1"
-                max="10"
-                name="className"
-                placeholder="Class 1-10"
-                className="input input-bordered"
+              <select
+                defaultValue={"Select a class"}
+                onChange={(e) => setClsName(e.target.value)}
+                name="class"
+                className="select select-bordered"
                 required
-              />
+              >
+                <option value="" disabled>
+                  Select a class
+                </option>
+                {[
+                  "Play",
+                  "Nursery",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10",
+                ].map((className) => (
+                  <option key={className} value={className}>
+                    {className}
+                  </option>
+                ))}
+            </select>
             </div>
             <div className="form-control flex-row items-center gap-1">
               <label className="label">
@@ -214,10 +235,11 @@ export const AddResult = () => {
               <select
               onChange={(e) => setExamName(e.target.value)}
                 name="subjectName"
+                defaultValue="Select"
                 className="w-full h-12 p-2 border border-gray-300 rounded-md"
                 required
               >
-                <option value="" disabled selected>
+                <option value="" disabled >
                   Select
                 </option>
                 <option value="1st Semester">1st Semester</option>

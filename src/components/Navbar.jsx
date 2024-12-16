@@ -1,10 +1,20 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from './../assets/logo.png'
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import { TiThMenu } from "react-icons/ti";
+import { FaWindowClose } from "react-icons/fa";
 
 export const Navbar = () => {
   const {user , logoutUser} = useContext(AuthContext);
+  const [isOpen, setIsOpne] = useState(false);
+  const [openCloseMenu, setOpenCloseMenu] = useState(true);
+  const handleOpenCloseMenu = (status) => {
+    setOpenCloseMenu(!status);
+  };
+  const handleProfileToagle = () => {
+    setIsOpne(!isOpen);
+  };
   const handleLogout = () =>{
     logoutUser();
   }
@@ -12,72 +22,49 @@ export const Navbar = () => {
     <>
       <li>
       <NavLink 
-      className={({ isActive }) => (isActive ? " text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+      className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600  focus:bg-transparent" : "text-green-950 lg:text-white")} 
       to="/">Home</NavLink>
       </li>
       <li>
         <NavLink 
-        className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+        className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
         to="/teachers">Teachers</NavLink>
       </li>
       <li>
         <NavLink 
-          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+          className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
           to="/management">Management</NavLink>
       </li>
       
       <li>
         <NavLink 
-          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+          className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
             to="/result">Result</NavLink>
       </li>
       {
         user && <li>
         <NavLink 
-          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+          className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
             to="/admin_access">Admin Access</NavLink>
       </li>
       }
       {
         user ? <li>
         <NavLink 
-          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
+          className={({ isActive }) => (isActive ? "text-green-950 lg:text-white  bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
             onClick={handleLogout}>Logout</NavLink>
       </li> : <li>
         <NavLink 
-          className={({ isActive }) => (isActive ? "text-white underline bg-transparent focus:text-white focus:bg-transparent" : "")} 
-            to="/login">Login</NavLink>
+          className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent max-sm:focus:text-green-600 focus:text-white focus:bg-transparent" : "text-green-950 lg:text-white")} 
+            to="/login">Admin Login</NavLink>
       </li>
       }
     </>
   );
   return (
-    <div className="navbar  w-11/12 mx-auto text-white">
+    <div className="navbar w-11/12 mx-auto text-white max-sm:justify-between max-sm:items-center">
         <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-green-100 text-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              {links}
-            </ul>
-          </div>
+          
           <Link to="/" className=" text-xl">
             <div className="flex items-center gap-3">
             <img className="w-10 md:w-20" src={logo} alt="" /> 
@@ -86,9 +73,32 @@ export const Navbar = () => {
             
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex"></div>
-        <div className="navbar-end max-sm:hidden">
+       
+        <div className="flex-none hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
+        </div>
+        <div className="flex-end lg:hidden mx-2">
+          <div className="py-2 px-3 rounded-lg bg-green-200 text-green-950 ">
+            {openCloseMenu ? (
+              <TiThMenu
+                onClick={() => handleOpenCloseMenu(true)}
+                className="text-2xl flex  "
+              />
+            ) : (
+              <FaWindowClose
+                onClick={() => handleOpenCloseMenu(false)}
+                className="text-2xl flex  "
+              ></FaWindowClose>
+            )}
+          </div>
+
+          <ul
+            className={`absolute z-50 gap-5 justify-center duration-500 rounded-lg bg-green-100 drop-shadow-md py-6 px-10 max-sm:*:text-xl top-20  max-sm:*:font-medium ${
+              openCloseMenu ? "-left-[1000px] " : "left-4 "
+            }`}
+          >
+            {links}
+          </ul>
         </div>
       </div>
   )

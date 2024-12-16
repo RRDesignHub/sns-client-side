@@ -10,7 +10,7 @@ export const MainLayout = () => {
 
     </header>
 
-    <main >
+    <main className="min-h-[calc(100vh-244px)]">
       <Outlet></Outlet>
     </main>
 

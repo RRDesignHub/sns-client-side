@@ -3,7 +3,7 @@ import img from './../assets/Hero-1.jpg'
 export const About = () => {
   return (
     <>
-      <div className="bg-green-700 py-8 lg:py-10 lg:px-20">
+      <div className="bg-green-700 py-8 lg:py-10 lg:px-20 mb-10">
         <div className="w-11/12 mx-auto flex max-sm:flex-col gap-y-6 items-center justify-between">
           <div className="">
             <h2 className="text-4xl font-bold text-white mb-2">About Us</h2>
