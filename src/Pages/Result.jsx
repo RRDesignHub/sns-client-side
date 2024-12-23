@@ -163,7 +163,7 @@ export const Result = () => {
                   </h3>
                 </div>
                 <div className="py-5 grid grid-cols-12 gap-y-2 justify-between p-5">
-                  <div className="col-span-12 md:col-span-8 max-sm:space-y-2 ">
+                  <div className="col-span-12 md:col-span-7 max-sm:space-y-2 ">
                     {/* student name */}
                     <h3 className="text-md md:text-lg grid grid-cols-12  gap-1">
                       <strong className="col-span-6 md:col-span-3">
@@ -194,31 +194,31 @@ export const Result = () => {
                     </h3>
                     
                   </div>
-                  <div className="md:ms-auto col-span-12 md:col-span-4">
-                    <h3 className="text-md md:text-lg grid grid-cols-12">
-                      <strong className="col-span-6">Total Marks</strong>{" "}
+                  <div className=" md:ms-auto col-span-12 md:col-span-5">
+                    <h3 className="text-md md:text-lg grid grid-cols-12  gap-1">
+                      <strong className="col-span-6 md:col-span-7">Total Marks</strong>{" "}
                       <span className="col-span-1">:</span>{" "}
-                      <span className="col-span-5">
+                      <span className="col-span-5 md:col-span-4">
                         {resultData?.totalMarks}
                       </span>
                     </h3>
-                    <h3 className="text-md md:text-lg grid grid-cols-12 ">
-                      <strong className="col-span-6">GPA</strong>{" "}
+                    <h3 className="text-md md:text-lg grid grid-cols-12  gap-1">
+                      <strong className="col-span-6 md:col-span-7">GPA</strong>{" "}
                       <span className="col-span-1">:</span>{" "}
-                      <span className="col-span-5">
+                      <span className="col-span-5 md:col-span-4">
                         {resultData?.totalGPA?.toFixed(2)}
                       </span>
                     </h3>
-                    <h3 className="text-md md:text-lg grid grid-cols-12">
-                      <strong className="col-span-6">Letter Grade</strong>
-                      <span className="col-span-1">:</span>
-                      <span className="col-span-5">{resultData?.totalLG}</span>
+                    <h3 className="text-md md:text-lg grid grid-cols-12 gap-1">
+                      <strong className="col-span-6 md:col-span-7 ">Letter Grade</strong>{" "}
+                      <span className="col-span-1">:</span>{" "}
+                      <span className="col-span-5 md:col-span-4">{resultData?.totalLG}</span>
                     </h3>
                     {/* Status */}
                     <h3 className="text-md md:text-lg grid grid-cols-12 gap-1">
-                      <strong className="col-span-6 md:col-span-6">Status</strong>{" "}
+                      <strong className="col-span-6 md:col-span-7">Status</strong>{" "}
                       <span className="col-span-1">:</span>{" "}
-                      <span className="col-span-5 md:col-span-5">
+                      <span className="col-span-5 md:col-span-4">
                         {status}
                       </span>
                     </h3>
