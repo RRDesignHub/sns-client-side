@@ -1,8 +1,15 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 export const AddUpdateRemoveData = () => {
+  const location = useLocation();
   return (
     <>
+      <Helmet>
+        <title>{
+          location.pathname == '/admin_access' ? "SN-Admin Access" : location.pathname == '/admin_access/add_student' ? "SN-Add Student" : location.pathname == '/admin_access/students' ? "SN-Students" : location.pathname == '/admin_access/add_subject' ? "SN-Add Subjects" : location.pathname == '/admin_access/display_subject' ? "SN-Subjects" : location.pathname == '/admin_access/add_result' ? "SN-Add Result" : ""
+          }</title>
+      </Helmet>
       <div className="w-[98%] md:w-11/12 mx-auto grid grid-cols-12 gap-2 pb-5">
         <div className="mt-10 col-span-12 md:col-span-2  flex flex-row max-sm:flex-wrap max-sm:justify-center md:flex-col gap-2 md:gap-1">
           <NavLink

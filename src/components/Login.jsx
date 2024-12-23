@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 export const Login = () => {
   const [authError, setAuthError] = useState(null);
@@ -42,6 +43,9 @@ export const Login = () => {
   };
   return (
     <>
+      <Helmet>
+        <title>SN-Admin Login</title>
+      </Helmet>
       <div className="hero  w-11/12 mx-auto">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="flex-1 text-center lg:text-left">
