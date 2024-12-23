@@ -4,6 +4,7 @@ import logo from "./../assets/logo.png";
 import { Link } from "react-router-dom";
 import { About } from "../components/About";
 import { Helmet } from "react-helmet-async";
+import ContactSection from "../components/Contact";
 export const Home = () => {
   return (
     <>
@@ -30,6 +31,7 @@ export const Home = () => {
         </div>
       </div>
       <About></About>
+      <ContactSection></ContactSection>
     </>
   );
 };

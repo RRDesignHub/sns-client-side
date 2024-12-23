@@ -38,6 +38,7 @@ export const Footer = () => {
       <div className="divider bg-[rgba(5,46,22,0.48)] h-[1px]"></div>
         {/* Bottom Section */}
         <div className="text-center flex flex-col md:flex-row justify-center items-center">
+          
           {/* Copyright */}
           <div className="text-center text-sm md:mb-0">
             <p>
