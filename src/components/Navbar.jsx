@@ -23,40 +23,40 @@ export const Navbar = () => {
       <li>
       <NavLink 
       className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600  focus:bg-transparent" : "text-green-950 lg:text-white")} 
-      to="/">Home</NavLink>
+      to="/">হোম</NavLink>
       </li>
       <li>
         <NavLink 
         className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-        to="/teachers">Teachers</NavLink>
+        to="/teachers">শিক্ষকমন্ডলী</NavLink>
       </li>
       <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-          to="/management">Management</NavLink>
+          to="/management">পরিচালকমন্ডলী</NavLink>
       </li>
       
       <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-            to="/result">Result</NavLink>
+            to="/result">ফলাফল</NavLink>
       </li>
       {
         user && <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-            to="/admin_access">Admin Access</NavLink>
+            to="/admin_access">এডমিন এক্সিস</NavLink>
       </li>
       }
       {
         user ? <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white  bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-            onClick={handleLogout}>Logout</NavLink>
+            onClick={handleLogout}>লগআউট</NavLink>
       </li> : <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent max-sm:focus:text-green-600 focus:text-white focus:bg-transparent" : "text-green-950 lg:text-white")} 
-            to="/login">Admin Login</NavLink>
+            to="/login">এডমিন লগইন</NavLink>
       </li>
       }
     </>
@@ -68,7 +68,7 @@ export const Navbar = () => {
           <Link to="/" className=" text-xl">
             <div className="flex items-center gap-3">
             <img className="w-10 md:w-20" src={logo} alt="" /> 
-            <h3 className="text-3xl font-bold max-sm:hidden">Shah Neyamat (RH:) <br /> KG & High School</h3>
+            <h3 className="text-3xl font-bold max-sm:hidden">শাহ্ নেয়ামত (রহঃ) <br /> কেজি এন্ড হাই স্কুল</h3>
             </div>
             
           </Link>

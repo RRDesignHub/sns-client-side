@@ -18,15 +18,15 @@ export const Home = () => {
           <img className="w-20" src={logo} alt="" />
           <div>
             <h2 className="text-2xl max-sm:text-center lg:text-4xl font-bold text-white">
-              Shah Neyamat (RH:) KG & High School
+             শাহ্ নেয়ামত (রহঃ) কেজি এন্ড হাই স্কুল
             </h2>
             <p className="text-white max-sm:text-center max-sm:mb-3">
             Inspiring Excellence, Building Futures
             </p>
           </div>
           </div>
-          <Link className="btn bg-white text-black rounded-3xl px-8">
-            About Us
+          <Link to="/teachers" className="btn bg-white text-black rounded-3xl px-8">
+            শিক্ষকমন্ডলী
           </Link>
         </div>
       </div>

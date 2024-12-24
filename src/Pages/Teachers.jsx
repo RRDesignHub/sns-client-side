@@ -4,6 +4,8 @@ import nejamSir from "./../assets/Teachers/Nejam_sir.jpg";
 import reajSir from "./../assets/Teachers/Reaj_sir.jpg";
 import ridoySir from "./../assets/Teachers/Ridoy_sir.jpg";
 import bariSir from './../assets/Teachers/Bari_sir.png';
+import priyaMam from './../assets/Teachers/Priya_mam.jpg';
+import imranSir from './../assets/Teachers/Imran_sir.png';
 import { Helmet } from "react-helmet-async";
 export const Teachers = () => {
   return (
@@ -80,7 +82,39 @@ export const Teachers = () => {
             </div>
           </div>
         </div>
+        <div className="flex flex-col rounded-lg items-center py-5 px-5 bg-gray-100  ">
+          <figure>
+            <img className="w-40 shadow-md" src={imranSir} alt="Shoes" />
+          </figure>
+          <div className="flex flex-col items-center justify-center">
+            <h2 className="text-2xl font-bold">Md. Emran Hossain</h2>
+            <h3 className="text-lg font-semibold">Assistant Teacher</h3>
+            <h3 className="text-md text-center mt-0">
+              <strong>Qualification: </strong> BSc. Pass (2nd year), <br />{" "}
+            </h3>
 
+            <div className="card-actions justify-end">
+              
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col rounded-lg items-center py-5 px-5 bg-gray-100  ">
+          <figure>
+            <img className="w-40 shadow-md" src={priyaMam} alt="Shoes" />
+          </figure>
+          <div className="flex flex-col items-center justify-center">
+            <h2 className="text-2xl font-bold">Priya Akther</h2>
+            <h3 className="text-lg font-semibold">Assistant Teacher</h3>
+            <h3 className="text-md text-center mt-0">
+              <strong>Qualification: </strong> BA Pass (Final year), <br />{" "}
+            </h3>
+
+            <div className="card-actions justify-end">
+              
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col rounded-lg items-center py-5 px-5 bg-gray-100  ">
           <figure>
             
