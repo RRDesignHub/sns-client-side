@@ -1,0 +1,124 @@
+
+[
+  {
+    "name": "Muhammed Iqbal Hossain",
+    "role": "Head Teacher",
+    "category": "Higher",
+    "specialization": "Mathematics & Finance",
+    "qualification": [
+      "BBA in Finance, Southern University Bangladesh",
+      "MBA in Finance, Southern University Bangladesh"
+    ],
+    "profileImage": null
+  },
+  {
+    "name": "Md. Nejam Uddin",
+    "role": "Assistant Teacher",
+    "category": "Higher",
+    "specialization": "English & Accounting",
+    "qualification": [
+      "BBA Hons. (1st Class), Department of Management"
+    ],
+    "profileImage": "https://i.ibb.co.com/YZkHtjT/Nejam-sir.jpg"
+  },
+  {
+    "name": "Shahin Akther",
+    "role": "Assistant Teacher",
+    "category": "Higher",
+    "specialization": "Bangla",
+    "qualification": [
+      "BA Hons. (2nd Class), Department of Bangla"
+    ],
+    "profileImage": "https://i.ibb.co.com/09Rk3pw/Shahin-mam.png"
+  },
+  {
+    "name": "Md. Reaj Uddin",
+    "role": "Assistant Teacher",
+    "category": "Higher",
+    "specialization": "Bangla",
+    "qualification": [
+      "BBA Hons. (Final Year), Department of Management"
+    ],
+    "profileImage": "https://i.ibb.co.com/cYJhnkY/Reaj-sir.jpg"
+  },
+  {
+    "name": "Mohammad Abdul Bari",
+    "role": "Assistant Teacher",
+    "category": "Higher",
+    "specialization": "Science & ICT",
+    "qualification": [
+      "Diploma in Civil Engineering (7th Semester)"
+    ],
+    "profileImage": "https://i.ibb.co.com/PjmGLzH/Bari-sir.png"
+  },
+  {
+    "name": "Ripanul Alam Ridoy",
+    "role": "Assistant Teacher",
+    "category": "Higher",
+    "specialization": "English & Economics",
+    "qualification": [
+      "BSS Hons. (Final Year), Department of Economics"
+    ],
+    "profileImage": "https://i.ibb.co.com/hm9NrGM/Ridoy-sir.jpg"
+  },
+  {
+    "name": "Priya Akther",
+    "role": "Assistant Teacher",
+    "category": "Primary",
+    "specialization": "Mathematics",
+    "qualification": [
+      "BA Pass (Final Year)"
+    ],
+    "profileImage": "https://i.ibb.co.com/6YrQQN8/Priya-mam.jpg"
+  },
+  {
+    "name": "Md. Emran Hossain",
+    "role": "Assistant Teacher",
+    "category": "Primary & Higher",
+    "specialization": "Mathematics & Science",
+    "qualification": [
+      "B.Sc Pass (2nd Year)"
+    ],
+    "profileImage": "https://i.ibb.co.com/1rCrsSn/Imran-sir.png"
+  },
+  {
+    "name": "Tithi Chowdhury",
+    "role": "Assistant Teacher",
+    "category": "Higher",
+    "specialization": "English & Bangla",
+    "qualification": [
+      "BA Hons. (2nd Year), Department of Philosophy"
+    ],
+    "profileImage": "https://i.ibb.co.com/j8LyMtW/Tithi-mam.png"
+  },
+  {
+    "name": "Israt Hasan",
+    "role": "Assistant Teacher",
+    "category": "Primary",
+    "specialization": "English & Bangla",
+    "qualification": [
+      "BSS Hons. (1st Year), Department of Political Science"
+    ],
+    "profileImage": "https://i.ibb.co.com/0rmsBR3/Promi-mam.png"
+  },
+  {
+    "name": "Saima Sayed Momo",
+    "role": "Assistant Teacher",
+    "category": "Primary",
+    "specialization": "History",
+    "qualification": [
+      "BBA Hons. (1st Year), Department of Managemant"
+    ],
+    "profileImage": null
+  },
+  {
+    "name": "Nusrat Jahan Naima",
+    "role": "Assistant Teacher",
+    "category": "Primary",
+    "specialization": "Mathematics & Religion",
+    "qualification": [
+      "BSS Hons. (1st Year), Department of Political Science"
+    ],
+    "profileImage": "https://i.ibb.co.com/rtgwp2n/Naima-mam.png"
+  }
+]

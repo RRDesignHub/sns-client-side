@@ -27,7 +27,7 @@ const router = createBrowserRouter(
         },
         {
           path: '/teachers',
-          element: <Teachers></Teachers>
+          element: <Teachers></Teachers>,
         },
         {
           path: '/management',
