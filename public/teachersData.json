@@ -24,7 +24,7 @@
   {
     "name": "Shahin Akther",
     "role": "Assistant Teacher",
-    "category": "Higher",
+    "category": "Primary",
     "specialization": "Bangla",
     "qualification": [
       "BA Hons. (2nd Class), Department of Bangla"
@@ -79,12 +79,12 @@
     "qualification": [
       "B.Sc Pass (2nd Year)"
     ],
-    "profileImage": "https://i.ibb.co.com/1rCrsSn/Imran-sir.png"
+    "profileImage": "https://i.ibb.co.com/1T37D7X/Emran-sir.png"
   },
   {
     "name": "Tithi Chowdhury",
     "role": "Assistant Teacher",
-    "category": "Higher",
+    "category": "Primary",
     "specialization": "English & Bangla",
     "qualification": [
       "BA Hons. (2nd Year), Department of Philosophy"
@@ -102,7 +102,7 @@
     "profileImage": "https://i.ibb.co.com/0rmsBR3/Promi-mam.png"
   },
   {
-    "name": "Saima Sayed Momo",
+    "name": "Saima Sabrin Momo",
     "role": "Assistant Teacher",
     "category": "Primary",
     "specialization": "History",
