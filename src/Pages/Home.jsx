@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { About } from "../components/About";
 import { Helmet } from "react-helmet-async";
 import ContactSection from "../components/Contact";
+import { Achievement } from "../components/HomePage/Achievement";
+import { AnnualProgram } from "../components/HomePage/AnnualProgram";
+import { Testimonial } from "../components/HomePage/Testimonial";
 export const Home = () => {
   return (
     <>
@@ -31,6 +34,9 @@ export const Home = () => {
         </div>
       </div>
       <About></About>
+      <Achievement></Achievement>
+      <AnnualProgram></AnnualProgram>
+      <Testimonial></Testimonial>
       <ContactSection></ContactSection>
     </>
   );

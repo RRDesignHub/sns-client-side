@@ -6,10 +6,17 @@ export default {
   ],
   theme: {
     extend: {
-      dropShadow: {
-        'white': '3px 2px 8px #83f28f',
-        
-      }
+      colors: {
+        primary: "#166534", // Green-700 (Base Color for Buttons, Headers, Links)
+        secondary: "#22C55E", // Green-500 (For Highlights, Accents)
+        background: "#F3F4F6", // Neutral Gray (Soft Background for Better Readability)
+        card: "#FFFFFF", // White (Clean and Professional Card UI)
+        btn: {
+          DEFAULT: "#166534", // Primary Green
+          hover: "#14532D", // Darker Green-800 for Hover Effect
+        },
+        shadow: "#14532D66", // Slight Greenish Shadow for Depth
+      },
     },
   },
   plugins: [

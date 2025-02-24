@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TiDelete } from "react-icons/ti";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import Swal from "sweetalert2";
-import { Loading } from "./Loading";
+import { Loading } from "./Shared/Loading";
 
 export const DisplayStudents = () => {
   const [loader, setLoader] = useState(false);

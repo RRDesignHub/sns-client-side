@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import { Loading } from "../components/Loading";
 import { Helmet } from "react-helmet-async";
+import { Loading } from "../components/Shared/Loading";
 export const Result = () => {
   const [resultData, setResultData] = useState(null);
   const [examName, setExamName] = useState("");

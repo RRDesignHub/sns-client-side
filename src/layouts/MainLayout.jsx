@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom"
-import { Footer } from "../components/Footer"
-import { Header } from "../components/Header"
+import { Footer } from "../components/Shared/Footer"
+import { Navbar } from "../components/Shared/Navbar"
 
 export const MainLayout = () => {
   return (
     <>
-    <header className=" ">
-    <Header></Header>
+    <header className="bg-green-800 ">
+    <Navbar />
 
     </header>
 
