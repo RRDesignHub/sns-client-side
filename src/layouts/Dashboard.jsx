@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { IoArrowForwardCircle, IoArrowBackCircle } from "react-icons/io5";
 import logo from "./../assets/logo.png";
-import { PiUsersFourFill } from "react-icons/pi";
+import { RiBookShelfFill } from "react-icons/ri";
+import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
 import {
   FaHome,
   FaUser,
@@ -13,8 +14,7 @@ import {
   FaFileAlt,
 } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
-import { MdDashboard } from "react-icons/md";
-import { TbArrowGuideFilled } from "react-icons/tb";
+import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaUsersGear, FaUsersBetweenLines } from "react-icons/fa6";
 import { LuPackagePlus } from "react-icons/lu";
@@ -183,6 +183,7 @@ export const Dashboard = () => {
             {/* Admin-Specific Links */}
             {isAdmin && (
               <>
+              {/* overview */}
                 <NavLink
                   to="/dashboard/overview"
                   className={({ isActive }) =>
@@ -194,6 +195,8 @@ export const Dashboard = () => {
                   <MdDashboard className="w-5 h-5" />
                   Overview
                 </NavLink>
+
+                {/* add student */}
                 <NavLink
                   to="/dashboard/add-student"
                   className={({ isActive }) =>
@@ -205,6 +208,7 @@ export const Dashboard = () => {
                   <IoMdPersonAdd className="w-5 h-5" />
                   Add Student
                 </NavLink>
+                {/* all students */}
                 <NavLink
                   to="/dashboard/students"
                   className={({ isActive }) =>
@@ -216,45 +220,49 @@ export const Dashboard = () => {
                   <PiUsersFourFill className="w-5 h-5" />
                   All Students
                 </NavLink>
+
+                {/* add subject */}
                 <NavLink
-                  to="/dashboard/added-packages"
+                  to="/dashboard/add-subjects"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-terracotta text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-white transition rounded-lg"
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
                   }
                 >
-                  <MdBookmarkAdded className="w-5 h-5" />
-                  My Added Packages
+                  <PiBookOpenTextFill className="w-5 h-5" />
+                  Add Subjects
                 </NavLink>
                 <NavLink
-                  to="/dashboard/manage-candidates"
+                  to="/dashboard/subjects"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-terracotta text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-white transition rounded-lg"
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
                   }
                 >
-                  <FaUsersBetweenLines className="w-5 h-5" />
-                  Manage Candidates
+                  <RiBookShelfFill className="w-5 h-5" />
+                  Subjects
                 </NavLink>
+
+                {/* // add result */}
                 <NavLink
-                  to="/dashboard/add-admin-story"
+                  to="/dashboard/add-result"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-terracotta text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-white transition rounded-lg"
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
                   }
                 >
-                  <FaPlus className="w-5 h-5" />
-                  Add Story
+                  <MdOutlineAddchart className="w-5 h-5" />
+                  Add Result
                 </NavLink>
                 <NavLink
                   to="/dashboard/manage-admin-stories"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-terracotta text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-white transition rounded-lg"
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
                   }
                 >
                   <FaBookOpen className="w-5 h-5" />

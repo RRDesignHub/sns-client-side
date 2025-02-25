@@ -12,6 +12,9 @@ import Overview from "../Pages/AdminPages/Overview";
 import { AddStudent } from "../Pages/AdminPages/AddStudent";
 import AllStudents from "../Pages/AdminPages/AllStudents";
 import UpdateStudent from "../Pages/AdminPages/UpdateStudent";
+import { AddSubject } from "../Pages/AdminPages/AddSubject";
+import AllSubjects from "../Pages/AdminPages/AllSubjects";
+import { AddResult } from "../Pages/AdminPages/AddResult";
 
 const router = createBrowserRouter(
   [
@@ -61,6 +64,18 @@ const router = createBrowserRouter(
         {
           path: "update-student/:id",
           element: <UpdateStudent></UpdateStudent>
+        },
+        {
+          path: "add-subjects",
+          element: <AddSubject></AddSubject>
+        },
+        {
+          path: "subjects",
+          element: <AllSubjects></AllSubjects>
+        },
+        {
+          path: "add-result",
+          element: <AddResult></AddResult>
         },
       ]
     }
