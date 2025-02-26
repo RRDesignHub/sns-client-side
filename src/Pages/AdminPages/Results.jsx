@@ -1,0 +1,216 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { Loading } from "../../components/Shared/Loading";
+import { Link } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
+const Results = () => {
+  const [results, setResults] = useState([]);
+  const [className, setClassName] = useState("");
+  const [academicYear, setAcademicYear] = useState(new Date().getFullYear());
+  const [examName, setExamName] = useState("");
+  const [enabled, setUnabled] = useState(false);
+  const [message, setMessage] = useState(
+    "Please choose class or subject for results"
+  );
+
+  const {data: resultData=[], isLoading, refetch} = useQuery({
+    queryKey: ["resultData", className, academicYear, examName],
+    queryFn: async() =>{
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER_API}/results?className=${className}&&academicYear=${academicYear}&&examName=${examName}`
+      );
+      return data;
+    },
+    enabled
+  })
+
+  const handleFilter = () => {
+    if (className === "" && examName === "") {
+      setMessage("Please select class, exam name!");
+      return;
+    }
+    setUnabled(true);
+    refetch()
+  };
+
+  const handleDelete = async(id) =>{
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You have to again add this!",
+        icon: "warning",
+        color: "#064E3B",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#16A34A",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const { data } = await axios.delete(
+            `${import.meta.env.VITE_SERVER_API}/result/${id}`
+          );
+          if (data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Result has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          }
+        }
+      });
+    } catch (err) {
+      console.log("Delete student Error--->", err);
+    }
+  }
+
+  if(isLoading){
+    return <Loading />
+  }
+  return (
+    <div className="w-11/12 mx-auto my-10">
+      <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
+        <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
+          Class & Subject-Based Results
+        </h2>
+        <div className="divider my-0"></div>
+        {/* Filter Inputs */}
+        <div className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5">
+          {/* choose class */}
+          <div className="form-control col-span-6 md:col-span-3">
+            <label className="label">
+              <span className="label-text">Class:</span>
+            </label>
+            <select
+              onChange={(e) => setClassName(e.target.value)}
+              value={className}
+              className="select select-bordered bg-white w-64 text-gray-700"
+            >
+              <option value="">Choose class...</option>
+              {[
+                "Play",
+                "Nursery",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+              ].map((className) => (
+                <option key={className} value={className}>
+                  Class {className}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* select year */}
+          <div className="form-control col-span-6 md:col-span-2">
+            <label className="label">
+              <span className="label-text">Academic Year:</span>
+            </label>
+            <select
+              onChange={(e) => setAcademicYear(parseInt(e.target.value))}
+              name="session"
+              value={academicYear}
+              className="select select-bordered"
+              required
+            >
+              <option value="" disabled>
+                Select a year
+              </option>
+              {Array.from({ length: 10 }, (_, i) => {
+                const year = new Date().getFullYear() - i;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          {/* choose exam */}
+          <div className="form-control col-span-6 md:col-span-3">
+            <label className="label">
+              <span className="label-text">Exam Name:</span>
+            </label>
+            <select
+              onChange={(e) => setExamName(e.target.value)}
+              name="subjectName"
+              value={examName}
+              className={`select select-bordered`}
+              required
+            >
+              <option value={""} disabled>
+                Select
+              </option>
+              <option value="1st-Semester">1st Semester</option>
+              <option value="2nd-Semester">2nd Semester</option>
+              <option value="3rd-Semester">3rd Semester</option>
+              <option value="Half-Yearly">Half Yearly</option>
+              <option value="Annual">Annual</option>
+            </select>
+          </div>
+
+          <div className="col-span-6 md:col-span-2 flex items-end">
+            <button
+              onClick={handleFilter}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+            >
+              Filter
+            </button>
+          </div>
+        </div>
+        <div className="divider my-0"></div>
+        {/* Display Results */}
+        {resultData.length === 0 ? (
+          <p className="text-center text-gray-500">{message}</p>
+        ) : (
+          <table className="w-full table">
+            <thead>
+              <tr className="bg-green-600 text-green-50 ">
+                <th >Student Name</th>
+                <th >Class</th>
+                <th >Roll</th>
+                <th >Total Marks</th>
+                <th >Grade</th>
+                <th >Status</th>
+                <th >Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {resultData?.map((result) => (
+                <tr key={result._id} className="">
+                  <td >{result.studentName}</td>
+                  <td >{result.className}</td>
+                  <td >{result.classRoll}</td>
+                  <td >{result.totalMarks}</td>
+                  <td >{result.totalLG}</td>
+                  <td >{result.status}</td>
+                  <td className="flex justify-center gap-1 items-center">
+                    <Link to={`/dashboard/result/${result._id}`} className="btn btn-sm bg-green-50 text-primary">Details</Link>
+                    <button 
+                    onClick={() =>handleDelete(result._id)}
+                    className="btn btn-sm text-lg bg-red-500 hover:bg-red-600 text-white">
+                      <MdDelete />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Results;
+

@@ -1,6 +1,8 @@
+import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { Loading } from "../../components/Shared/Loading";
 export const AddResult = () => {
   const [student, setStudent] = useState({});
   const [subjectsData, setSubjectsData] = useState([]);
@@ -9,8 +11,10 @@ export const AddResult = () => {
   const [examName, setExamName] = useState("");
   const [className, setClassName] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
+  const [status, setStatus] = useState("");
   const [gpaAverage, setGpaAverage] = useState(0);
   const [averageLetterGrade, setAverageLetterGrade] = useState("");
+
   const handleDisplayStudentInfo = async(e) => {
     e.preventDefault();
     const classRoll = e.target.classRoll.value;
@@ -63,7 +67,7 @@ export const AddResult = () => {
       GPA = 0.0;
       letterGrade = "F";
     } else {
-      alert(
+      Swal.fire(
         "Invalid marks entered! Please enter a valid number between 0 and 100."
       );
       return;
@@ -101,6 +105,16 @@ export const AddResult = () => {
     else if (gpaAverage >= 1) averageLetterGrade = "D";
     else averageLetterGrade = "F";
 
+
+    //update status pass/fail
+    updatedResult.map(result => {
+      if(result.marks > 32){
+        setStatus("Pass");
+      }else{
+        setStatus("Fail")
+      }
+    })
+
     setResult(updatedResult);
     setTotalMarks(totalMarks);
     setGpaAverage(gpaAverage);
@@ -109,15 +123,22 @@ export const AddResult = () => {
   };
 
   const handleSubmitResult = async() => {
+
+    if(!examName){
+      return setError("Exam name select please.")
+    }
     const resultInfo = {
-      examName: examName,
+      studentID: student?.studentID,
       studentName: student?.studentName,
-      clsName: student?.className,
-      clsRoll: student?.classRoll,
+      className: student?.className,
+      classRoll: student?.classRoll,
+      examName: examName,
+      academicYear: student?.session,
       resultData: result,
       totalMarks: totalMarks,
       totalGPA: gpaAverage,
       totalLG: averageLetterGrade,
+      status
     };
 
     try {
@@ -129,12 +150,14 @@ export const AddResult = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `${studentName}'s result added successfully!!!`,
+          title: `${resultInfo?.studentName}'s result added successfully!!!`,
           showConfirmButton: false,
           timer: 1500,
         });
         setResult([]);
         setStudent({});
+        setError(null);
+        setResult([]);
       }
     } catch (err) {
       console.log("Add subject Error-->", err);
@@ -159,8 +182,8 @@ export const AddResult = () => {
                 </label>
                 <select
                   defaultValue={"Select a class"}
+                  name="className"
                   onChange={(e) => setClassName(e.target.value)}
-                  name="class"
                   className="select select-bordered"
                   required
                 >
@@ -241,17 +264,17 @@ export const AddResult = () => {
                 <select
                   onChange={(e) => setExamName(e.target.value)}
                   name="subjectName"
-                  defaultValue="Select"
-                  className="w-full h-12 p-2 border border-gray-300 rounded-md"
+                  value={examName}
+                  className={`w-full h-12 p-2 border rounded-md ${error === "Exam name select please." ? "border-red-400" : "border-gray-300 "}`}
                   required
                 >
-                  <option value="" disabled>
+                  <option value={""} disabled>
                     Select
                   </option>
-                  <option value="1st Semester">1st Semester</option>
-                  <option value="2nd Semester">2nd Semester</option>
-                  <option value="3rd Semester">3rd Semester</option>
-                  <option value="Half Yearly">Half Yearly</option>
+                  <option value="1st-Semester">1st Semester</option>
+                  <option value="2nd-Semester">2nd Semester</option>
+                  <option value="3rd-Semester">3rd Semester</option>
+                  <option value="Half-Yearly">Half Yearly</option>
                   <option value="Annual">Annual</option>
                 </select>
               </div>

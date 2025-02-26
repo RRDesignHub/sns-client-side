@@ -4,21 +4,14 @@ import { IoArrowForwardCircle, IoArrowBackCircle } from "react-icons/io5";
 import logo from "./../assets/logo.png";
 import { RiBookShelfFill } from "react-icons/ri";
 import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
-import {
-  FaHome,
-  FaUser,
-  FaClipboardList,
-  FaPlus,
-  FaUsers,
-  FaBookOpen,
-  FaFileAlt,
-} from "react-icons/fa";
+import { FaHome, FaPlus, FaBookOpen } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaUsersGear, FaUsersBetweenLines } from "react-icons/fa6";
 import { LuPackagePlus } from "react-icons/lu";
 import { MdBookmarkAdded } from "react-icons/md";
+import { GiPapers } from "react-icons/gi";
 export const Dashboard = () => {
   const isAdmin = true;
   const navigate = useNavigate();
@@ -176,14 +169,16 @@ export const Dashboard = () => {
         <div className="max-sm:hidden  w-full py-4 h-full flex flex-col shadow">
           <div className="flex flex-col items-center justify-center">
             <img src={logo} className="w-16" alt="" />
-            <h3 className="text-green-950 text-xl font-semibold text-center">Dashboard</h3>
+            <h3 className="text-green-950 text-xl font-semibold text-center">
+              Dashboard
+            </h3>
           </div>
           <div className="divider my-2 h-[2px] bg-[rgba(244,241,222,0.59)]"></div>
           <nav className=" space-y-4 px-4">
             {/* Admin-Specific Links */}
             {isAdmin && (
               <>
-              {/* overview */}
+                {/* overview */}
                 <NavLink
                   to="/dashboard/overview"
                   className={({ isActive }) =>
@@ -258,15 +253,15 @@ export const Dashboard = () => {
                   Add Result
                 </NavLink>
                 <NavLink
-                  to="/dashboard/manage-admin-stories"
+                  to="/dashboard/results"
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
                       : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
                   }
                 >
-                  <FaBookOpen className="w-5 h-5" />
-                  Manage Stories
+                  <GiPapers className="w-5 h-5" />
+                  Results
                 </NavLink>
               </>
             )}

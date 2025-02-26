@@ -17,7 +17,8 @@ export const AddStudent = () => {
   const handleStudentData = async (e) => {
     e.preventDefault();
 
-    // image file upload to imageBB:let photoURL;
+    // image file upload to imageBB:
+    let photoURL;
     if(imageFile){
       photoURL = await imageUpload(imageFile);
     }
@@ -27,7 +28,7 @@ export const AddStudent = () => {
     const groupName = form.departmentName.value;
     const birthRegNo = parseInt(form.birthRegNo.value);
     const studentName = form.studentName.value;
-    const classRoll = parseInt(form.classRoll.value);
+    const classRoll = form.classRoll.value;
     const fatherName = form.fatherName.value;
     const motherName = form.motherName.value;
 

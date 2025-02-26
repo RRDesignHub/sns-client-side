@@ -15,6 +15,8 @@ import UpdateStudent from "../Pages/AdminPages/UpdateStudent";
 import { AddSubject } from "../Pages/AdminPages/AddSubject";
 import AllSubjects from "../Pages/AdminPages/AllSubjects";
 import { AddResult } from "../Pages/AdminPages/AddResult";
+import Results from "../Pages/AdminPages/Results";
+import ResultDetails from "../Pages/AdminPages/ResultDetails";
 
 const router = createBrowserRouter(
   [
@@ -76,6 +78,14 @@ const router = createBrowserRouter(
         {
           path: "add-result",
           element: <AddResult></AddResult>
+        },
+        {
+          path: "results",
+          element: <Results></Results>
+        },
+        {
+          path: "result/:id",
+          element: <ResultDetails></ResultDetails>
         },
       ]
     }

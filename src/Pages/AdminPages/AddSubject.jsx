@@ -13,18 +13,20 @@ export const AddSubject = () => {
 
     const form = e.target;
     const subjectName = form.subject.value;
+    const subjectID = `SUB_${subjectName.slice(0, 3)}`;
     const totalMarks = parseInt(form.totalMarks.value, 10);
     const subjectCode = form.subjectCode.value;
     const assignedTeacher = form.teacher.value;
 
     const subjectData = {
+      subjectID,
       subjectName,
       subjectType,
       totalMarks,
       subjectCode,
       assignedTeacher,
     };
-
+    console.log(subjectData);
     setSubjects([...subjects, subjectData]);
     form.reset();
   };
