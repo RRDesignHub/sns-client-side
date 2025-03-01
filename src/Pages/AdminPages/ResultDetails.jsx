@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useRef } from "react";
 import { useParams } from "react-router-dom";
-
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 export default function ResultDetails() {
   const { id } = useParams();
-  console.log(id);
+
+  const pdfRef = useRef()
 
   const {
     data: resultData = {},
@@ -19,11 +22,24 @@ export default function ResultDetails() {
       return data;
     },
   });
+
+
+  const handleDownloadResult = async() =>{
+    const element = pdfRef.current;
+
+    if(!element){
+      return
+    }
+
+    const canvas = await html2canvas(element);
+    console.log(canvas)
+  }
   return (
     <div className="w-11/12 mx-auto my-10">
-      <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
+      
+      <div ref={pdfRef} style={{ backgroundColor: "#bbf7d0" }} className=" px-3 rounded-lg py-5 md:py-8" >
         <div className="flex flex-col justify-center items-center">
-          <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
+          <h2 style={{ color: "#052e16" }} className="text-2xl md:text-4xl font-bold text-center">
             Shah Neyamat (RH:) KG & High School
           </h2>
           <h3 className="text-lg md:text-xl text-center font-semibold">
@@ -117,6 +133,11 @@ export default function ResultDetails() {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="mx-auto mt-4 text-center">
+        <button 
+        onClick={handleDownloadResult}
+        className="btn bg-primary hover:bg-green-600 text-green-50">Download</button>
       </div>
     </div>
   );

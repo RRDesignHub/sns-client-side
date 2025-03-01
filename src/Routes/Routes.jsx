@@ -17,6 +17,7 @@ import AllSubjects from "../Pages/AdminPages/AllSubjects";
 import { AddResult } from "../Pages/AdminPages/AddResult";
 import Results from "../Pages/AdminPages/Results";
 import ResultDetails from "../Pages/AdminPages/ResultDetails";
+import PDF from "../Pages/AdminPages/PDF";
 
 const router = createBrowserRouter(
   [
@@ -86,6 +87,10 @@ const router = createBrowserRouter(
         {
           path: "result/:id",
           element: <ResultDetails></ResultDetails>
+        },
+        {
+          path: "pdf",
+          element: <PDF></PDF>
         },
       ]
     }

@@ -1,3 +1,4 @@
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -11,10 +12,7 @@ export default {
         secondary: "#22C55E", // Green-500 (For Highlights, Accents)
         background: "#F3F4F6", // Neutral Gray (Soft Background for Better Readability)
         card: "#FFFFFF", // White (Clean and Professional Card UI)
-        btn: {
-          DEFAULT: "#166534", // Primary Green
-          hover: "#14532D", // Darker Green-800 for Hover Effect
-        },
+       
         shadow: "#14532D66", // Slight Greenish Shadow for Depth
       },
     },
