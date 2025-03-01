@@ -169,7 +169,8 @@ export const AddStudent = () => {
               <label className="label">
                 <span className="label-text">Date Of Birth:</span>
               </label>
-              <DatePicker
+              <input
+              type="date"
                 selected={birthDate}
                 required
                 onChange={(date) => setBirthDate(date)}

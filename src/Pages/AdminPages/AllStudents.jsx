@@ -9,21 +9,27 @@ import Swal from "sweetalert2";
 export default function AllStudents() {
   const [filterStudentsID, setFilterStudentsID] = useState("");
   const [filterByClass, setFilterByClass] = useState("");
-  const {
-    data: students = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["studens", filterStudentsID, filterByClass],
-    queryFn: async () => {
+  const [academicYear, setAcademicYear] = useState(new Date().getFullYear());
+  
+  const [enabled, setUnabled] = useState(false);
+  
+
+  const {data: students=[], isLoading, refetch} = useQuery({
+    queryKey: ["resultData", academicYear, filterByClass],
+    queryFn: async() =>{
       const { data } = await axios.get(
-        `${
-          import.meta.env.VITE_SERVER_API
-        }/students?studentID=${filterStudentsID}&&className=${filterByClass}`
+        `${import.meta.env.VITE_SERVER_API}/students?academicYear=${academicYear}&&className=${filterByClass}`
       );
       return data;
     },
-  });
+    enabled
+  })
+
+  const handleFilter = () => {
+    
+    setUnabled(true);
+    refetch()
+  };
 
   // Delete Student Function
   const handleDelete = async (id) => {
@@ -70,8 +76,14 @@ export default function AllStudents() {
         Total: <span className="font-bold">{students.length}</span> students
       </h3>
       {/* Filters */}
-      <div className="flex gap-4 mb-6">
-        <select
+       {/* Filter Inputs */}
+       <div className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5">
+          {/* choose class */}
+          <div className="form-control col-span-12 md:col-span-3">
+            <label className="label">
+              <span className="label-text max-sm:text-lg">Class:</span>
+            </label>
+            <select
           defaultValue={filterByClass}
           onChange={(e) => setFilterByClass(e.target.value)}
           name="class"
@@ -100,8 +112,39 @@ export default function AllStudents() {
             </option>
           ))}
         </select>
+          </div>
 
-        <input
+          {/* select year */}
+          <div className="form-control col-span-12 md:col-span-2">
+            <label className="label">
+              <span className="label-text max-sm:text-lg">Academic Year:</span>
+            </label>
+            <select
+              onChange={(e) => setAcademicYear(parseInt(e.target.value))}
+              name="session"
+              value={academicYear}
+              className="select select-bordered"
+            >
+              <option value="" disabled>
+                Select a year
+              </option>
+              {Array.from({ length: 10 }, (_, i) => {
+                const year = new Date().getFullYear() - i;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          {/* choose exam */}
+          <div className="form-control col-span-12 md:col-span-3">
+            <label className="label">
+              <span className="label-text max-sm:text-lg">Student ID:</span>
+            </label>
+            <input
           type="text"
           placeholder="Filter by Student ID"
           name="classRoll"
@@ -109,7 +152,18 @@ export default function AllStudents() {
           onChange={(e) => setFilterStudentsID(e.target.value)}
           className="input input-bordered w-full"
         />
-      </div>
+          </div>
+
+          <div className="col-span-6 md:col-span-2 flex items-end">
+            <button
+              onClick={handleFilter}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+            >
+              Filter
+            </button>
+          </div>
+        </div>
+      
 
       {/* Student Table */}
       <div className="overflow-x-auto bg-green-200 shadow-md rounded-lg">

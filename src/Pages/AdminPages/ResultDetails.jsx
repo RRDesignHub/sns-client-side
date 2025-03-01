@@ -1,14 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-import PDF from "./PDF";
+import { Loading } from "../../components/Shared/Loading";
+import ResultPDF from "../../components/Dashboard/ResultPDF/ResultPDF";
 export default function ResultDetails() {
-  const [download, setDownload] = useState(false);
   const { id } = useParams();
-
 
   const {
     data: resultData = {},
@@ -24,20 +20,16 @@ export default function ResultDetails() {
     },
   });
 
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  const handleDownloadResult = async () => {
-      const blob = await pdf(<PDF resultData={resultData} />).toBlob();
-        saveAs(blob, `${resultData?.studentName}_Result.pdf`);
-  };
-
-  
   return (
     <>
-      
       {/* PDF viewer for testing */}
-      <div className={`w-full mt-4`}>
-            <PDF resultData={resultData}/>
-        </div>
+      <div className={`w-full h-screen mt-4`}>
+        <ResultPDF resultData={resultData} />
+      </div>
     </>
   );
 }

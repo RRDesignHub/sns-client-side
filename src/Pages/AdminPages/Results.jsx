@@ -70,7 +70,7 @@ const Results = () => {
     return <Loading />
   }
   return (
-    <div className="w-11/12 mx-auto my-10">
+    <div className="max-sm:ml-1 max-sm:mt-1 md:w-11/12 mx-auto md:my-10">
       <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
         <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
           Class & Subject-Based Results
@@ -79,9 +79,9 @@ const Results = () => {
         {/* Filter Inputs */}
         <div className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5">
           {/* choose class */}
-          <div className="form-control col-span-6 md:col-span-3">
+          <div className="form-control col-span-12 md:col-span-3">
             <label className="label">
-              <span className="label-text">Class:</span>
+              <span className="label-text max-sm:text-lg">Class:</span>
             </label>
             <select
               onChange={(e) => setClassName(e.target.value)}
@@ -111,9 +111,9 @@ const Results = () => {
           </div>
 
           {/* select year */}
-          <div className="form-control col-span-6 md:col-span-2">
+          <div className="form-control col-span-12 md:col-span-2">
             <label className="label">
-              <span className="label-text">Academic Year:</span>
+              <span className="label-text max-sm:text-lg">Academic Year:</span>
             </label>
             <select
               onChange={(e) => setAcademicYear(parseInt(e.target.value))}
@@ -137,9 +137,9 @@ const Results = () => {
           </div>
 
           {/* choose exam */}
-          <div className="form-control col-span-6 md:col-span-3">
+          <div className="form-control col-span-12 md:col-span-3">
             <label className="label">
-              <span className="label-text">Exam Name:</span>
+              <span className="label-text max-sm:text-lg">Exam Name:</span>
             </label>
             <select
               onChange={(e) => setExamName(e.target.value)}

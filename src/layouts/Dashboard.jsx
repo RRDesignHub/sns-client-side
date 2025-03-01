@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { IoArrowForwardCircle, IoArrowBackCircle } from "react-icons/io5";
 import logo from "./../assets/logo.png";
 import { RiBookShelfFill } from "react-icons/ri";
 import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
-import { FaHome, FaPlus, FaBookOpen } from "react-icons/fa";
+import { FaHome} from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { FaUsersGear, FaUsersBetweenLines } from "react-icons/fa6";
-import { LuPackagePlus } from "react-icons/lu";
-import { MdBookmarkAdded } from "react-icons/md";
 import { GiPapers } from "react-icons/gi";
 export const Dashboard = () => {
   const isAdmin = true;
@@ -33,16 +29,16 @@ export const Dashboard = () => {
           {openCloseMenu ? (
             <>
               <div className="mx-2 flex justify-between items-center gap-2">
-                <img src={logo} alt="" />
-                <IoArrowForwardCircle
-                  className={`text-4xl text-terracotta `}
+                <img src={logo} alt="" className={`max-sm:w-10`} />
+                <IoArrowBackCircle
+                  className={`text-4xl text-green-800`}
                   onClick={handleOpenCloseMenu}
                 />
               </div>
             </>
           ) : (
-            <IoArrowBackCircle
-              className={`mx-auto  text-4xl text-terracotta `}
+            <IoArrowForwardCircle
+              className={`mx-auto  text-4xl text-green-800`}
               onClick={handleOpenCloseMenu}
             />
           )}
@@ -54,94 +50,94 @@ export const Dashboard = () => {
             {isAdmin && (
               <>
                 <NavLink
-                  to="/dashboard/admin-profile"
+                  to="/dashboard/overview"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <CgProfile className="w-5 h-5" />
+                  <MdDashboard className="w-5 h-5" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Admin Profile" : ""}
+                    {openCloseMenu ? "Overview" : ""}
                   </span>
                 </NavLink>
                 <NavLink
-                  to="/dashboard/manage-users"
+                  to="/dashboard/add-student"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <FaUsersGear className="w-5 h-5" />
+                  <IoMdPersonAdd className="w-5 h-5" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Manages Users" : ""}
+                    {openCloseMenu ? "Add Student" : ""}
                   </span>
                 </NavLink>
                 <NavLink
-                  to="/dashboard/add-package"
+                  to="/dashboard/students"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <LuPackagePlus className="w-5 h-5" />
+                  <PiUsersFourFill className="w-5 h-5" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Add Package" : ""}
+                    {openCloseMenu ? "All Students" : ""}
                   </span>
                 </NavLink>
                 <NavLink
-                  to="/dashboard/added-packages"
+                  to="/dashboard/add-subjects"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <MdBookmarkAdded className="w-5 h-5" />
+                  <PiBookOpenTextFill className="w-5 h-5" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Added Packages" : ""}
+                    {openCloseMenu ? "Add Subjects" : ""}
                   </span>
                 </NavLink>
                 <NavLink
-                  to="/dashboard/manage-candidates"
+                  to="/dashboard/subjects"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <FaUsersBetweenLines className="w-5 h-5" />
+                  <RiBookShelfFill className="w-5 h-5" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Manage Candidates" : ""}
+                    {openCloseMenu ? "Subjects" : ""}
                   </span>
                 </NavLink>
                 <NavLink
-                  to="/dashboard/add-admin-story"
+                  to="/dashboard/add-result"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <FaPlus className="w-5 h-5" />
+                  <MdOutlineAddchart className="w-5 h-5" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Add Story" : ""}
+                    {openCloseMenu ? "Add Result" : ""}
                   </span>
                 </NavLink>
                 <NavLink
-                  to="/dashboard/manage-admin-stories"
+                  to="/dashboard/results"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <FaBookOpen className="w-5 h-5" />
+                  <GiPapers className="w-5 h-5" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Manage Stories" : ""}
+                    {openCloseMenu ? "Results" : ""}
                   </span>
                 </NavLink>
               </>
@@ -156,8 +152,8 @@ export const Dashboard = () => {
             to="/"
             className={({ isActive }) =>
               isActive
-                ? "flex items-center ps-2 gap-2 py-2 bg-terracotta text-white "
-                : "flex items-center ps-2 gap-2 py-2 hover:bg-terracotta hover:text-white transition "
+                ? "flex items-center ps-2 gap-2 py-2 bg-green-100 text-white "
+                : "flex items-center ps-2 gap-2 py-2 hover:bg-green-100 hover:text-white transition "
             }
           >
             <FaHome className="w-5 h-5" />
@@ -197,7 +193,7 @@ export const Dashboard = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
                   }
                 >
                   <IoMdPersonAdd className="w-5 h-5" />
@@ -209,7 +205,7 @@ export const Dashboard = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
                   }
                 >
                   <PiUsersFourFill className="w-5 h-5" />
@@ -222,7 +218,7 @@ export const Dashboard = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
                   }
                 >
                   <PiBookOpenTextFill className="w-5 h-5" />
@@ -233,7 +229,7 @@ export const Dashboard = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
                   }
                 >
                   <RiBookShelfFill className="w-5 h-5" />
@@ -246,7 +242,7 @@ export const Dashboard = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
                   }
                 >
                   <MdOutlineAddchart className="w-5 h-5" />
@@ -257,7 +253,7 @@ export const Dashboard = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
                   }
                 >
                   <GiPapers className="w-5 h-5" />
@@ -271,7 +267,7 @@ export const Dashboard = () => {
             <div className="px-4">
               <Link
                 to="/"
-                className="flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-white transition rounded-lg"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-white transition rounded-lg"
               >
                 <FaHome className="w-5 h-5" />
                 Home
@@ -279,7 +275,7 @@ export const Dashboard = () => {
             </div>
             <div className="divider my-2 h-[2px] bg-[rgba(244,241,222,0.59)]"></div>
             <p className="text-xs pt-2 text-terracotta text-center">
-              All right reserved | TourHub
+              @Shah Neyamat School
             </p>
           </div>
         </div>
