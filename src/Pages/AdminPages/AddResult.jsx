@@ -130,6 +130,9 @@ export const AddResult = () => {
     const resultInfo = {
       studentID: student?.studentID,
       studentName: student?.studentName,
+      fatherName: student.fatherName,
+      motherName: student.motherName,
+      image: student.image,
       className: student?.className,
       classRoll: student?.classRoll,
       examName: examName,

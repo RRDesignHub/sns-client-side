@@ -20,5 +20,8 @@ export default {
   plugins: [
     require('daisyui'),
   ],
+  daisyui: {
+    themes: ["light"], // Ensure a specific theme to prevent auto `oklch()`
+  },
 }
 
