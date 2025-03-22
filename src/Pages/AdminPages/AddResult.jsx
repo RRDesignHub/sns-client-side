@@ -3,7 +3,9 @@ import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { Loading } from "../../components/Shared/Loading";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export const AddResult = () => {
+  const axiosSecure = useAxiosSec();
   const [student, setStudent] = useState({});
   const [subjectsData, setSubjectsData] = useState([]);
   const [error, setError] = useState(null);
@@ -21,7 +23,7 @@ export const AddResult = () => {
     setError(null)
     setStudent({})
     try{
-      const {data} = await axios.get(`${import.meta.env.VITE_SERVER_API}/student?className=${className}&&classRoll=${classRoll}`);
+      const {data} = await axiosSecure.get(`/student?className=${className}&&classRoll=${classRoll}`);
      
       setStudent(data);
     }catch(err){
@@ -30,7 +32,7 @@ export const AddResult = () => {
     }
 
     try{
-      const {data} = await axios.get(`${import.meta.env.VITE_SERVER_API}/subjects?className=${className}`);
+      const {data} = await axiosSecure.get(`/subjects?className=${className}`);
       setSubjectsData(data?.subjects);
     }catch(err){
       console.log("Bring subject data Error-->", err);
@@ -145,8 +147,8 @@ export const AddResult = () => {
     };
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER_API}/add-result`,
+      const { data } = await axiosSecure.post(
+        `/add-result`,
         resultInfo
       );
       if (data.insertedId) {

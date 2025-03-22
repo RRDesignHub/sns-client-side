@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import React, { useState } from "react";
 import { Loading } from "../../components/Shared/Loading";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import { FaUserEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import {format} from "date-fns";
 export default function AllStudents() {
+  const axiosSecure = useAxiosSec();
   const [filterStudentsID, setFilterStudentsID] = useState("");
   const [filterByClass, setFilterByClass] = useState("");
   const [academicYear, setAcademicYear] = useState(new Date().getFullYear());
@@ -17,8 +19,8 @@ export default function AllStudents() {
   const {data: students=[], isLoading, refetch} = useQuery({
     queryKey: ["resultData", academicYear, filterByClass],
     queryFn: async() =>{
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_API}/students?academicYear=${academicYear}&&className=${filterByClass}`
+      const { data } = await axiosSecure.get(
+        `/students?academicYear=${academicYear}&&className=${filterByClass}`
       );
       return data;
     },
@@ -26,7 +28,6 @@ export default function AllStudents() {
   })
 
   const handleFilter = () => {
-    
     setUnabled(true);
     refetch()
   };
@@ -45,8 +46,8 @@ export default function AllStudents() {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const { data } = await axios.delete(
-            `${import.meta.env.VITE_SERVER_API}/student/${id}`
+          const { data } = await axiosSecure.delete(
+            `/student/${id}`
           );
           if (data.deletedCount) {
             Swal.fire({
@@ -63,9 +64,7 @@ export default function AllStudents() {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+ 
   return (
     <div className="p-6 min-h-screen">
       <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
@@ -164,7 +163,9 @@ export default function AllStudents() {
           </div>
         </div>
       
-
+              {
+                isLoading && <Loading />
+              }
       {/* Student Table */}
       <div className="overflow-x-auto bg-green-200 shadow-md rounded-lg">
         <table className="table w-full">
@@ -174,15 +175,16 @@ export default function AllStudents() {
               <th>Student ID</th>
               <th>Image</th>
               <th>Name</th>
-              <th>Class</th>
               <th>Roll</th>
+              <th>DOB</th>
+              <th>Father's Name</th>
               <th>Actions</th>
             </tr>
           </thead>
           {/* Table Body */}
           <tbody>
             {students.length > 0 ? (
-              students.slice(0, 10).map((student) => (
+              students.sort((a, b) => a.classRoll - b.classRoll).map((student) => (
                 <tr key={student._id} >
                   <td>{student.studentID}</td>
                   <td>
@@ -193,8 +195,9 @@ export default function AllStudents() {
                     />
                   </td>
                   <td>{student.studentName}</td>
-                  <td>{student.className}</td>
                   <td>{student.classRoll}</td>
+                  <td>{format(new Date(student.dateOfBirth), "MMMM dd, yyyy")}</td>
+                  <td>{student.fatherName}</td>
                   <td>
                     <Link
                       to={`/dashboard/update-student/${student?._id}`}

@@ -3,8 +3,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../components/Shared/Loading";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 
 const AllSubjects = () => {
+  const axiosSecure = useAxiosSec();
   const [classFilter, setClassFilter] = useState("Play"); // Selected class filter
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedSubjectIdx, setSelectedSubjectIdx] = useState(null);
@@ -12,7 +14,7 @@ const AllSubjects = () => {
     enabled: !!classFilter,
     queryKey: ["subjects", classFilter],
     queryFn: async() =>{
-      const {data} = await axios.get(`${import.meta.env.VITE_SERVER_API}/subjects?className=${classFilter}`);
+      const {data} = await axiosSecure.get(`/subjects?className=${classFilter}`);
       return data;
     }
   })
@@ -30,7 +32,7 @@ const AllSubjects = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await axios.delete(`${import.meta.env.VITE_SERVER_API}/delete-subject/${classFilter}/${selectedSubjectIdx}`);
+          const { data } = await axiosSecure.delete(`/delete-subject/${classFilter}/${selectedSubjectIdx}`);
           if (data.modifiedCount > 0) {
             refetch();
             Swal.fire("Deleted!", "Subject has been deleted.", "success");
@@ -61,7 +63,7 @@ const AllSubjects = () => {
     };
 
     try{
-      const {data} = await axios.patch(`${import.meta.env.VITE_SERVER_API}/update-subject/${classFilter}/${selectedSubjectIdx}`, updatedSubject);
+      const {data} = await axiosSecure.patch(`/update-subject/${classFilter}/${selectedSubjectIdx}`, updatedSubject);
       if(data.modifiedCount > 0){
         Swal.fire({
           position: "center",
@@ -80,9 +82,7 @@ const AllSubjects = () => {
 
   };
 
-  if(isLoading){
-    return <Loading />
-  }
+  
   return (
     <div className="w-11/12 mx-auto my-10">
       <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
@@ -101,6 +101,10 @@ const AllSubjects = () => {
             ))}
           </select>
         </div>
+
+        {
+          isLoading && <Loading />
+        }
 
         {/* Subjects Table */}
         <div className="overflow-x-auto">

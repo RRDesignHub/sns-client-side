@@ -1,11 +1,9 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import imageUpload from "../../Api/Utils";
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export const AddStudent = () => {
+  const axiosSecure = useAxiosSec();
   const [session, setSession] = useState(new Date().getFullYear());
   const [className, setClassName] = useState("Play");
   const [bloodGroup, setBloodGroup] = useState("A+");
@@ -51,7 +49,7 @@ export const AddStudent = () => {
     };
 
     try{
-      const {data} = await axios.post(`${import.meta.env.VITE_SERVER_API}/add-student`, studentData);
+      const {data} = await axiosSecure.post(`/add-student`, studentData);
       if(data.insertedId){
         Swal.fire({
           position: "center",

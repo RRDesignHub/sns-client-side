@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export const AddSubject = () => {
+  const axiosSecure = useAxiosSec();
   const [clsName, setClsName] = useState(null);
   const [error, setError] = useState(null);
   const [subjects, setSubjects] = useState([]);
@@ -41,8 +43,8 @@ export const AddSubject = () => {
     };
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER_API}/add-subjects`,
+      const { data } = await axiosSecure.post(
+        `/add-subjects`,
         subjectData
       );
       if (data.insertedId) {

@@ -28,18 +28,23 @@ export const Navbar = () => {
       <li>
         <NavLink 
         className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-        to="/teachers">শিক্ষকমন্ডলী</NavLink>
+        to="/teachers">শিক্ষক/শিক্ষিকা</NavLink>
+      </li>
+      <li>
+        <NavLink 
+        className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
+        to="/students">শিক্ষার্থী</NavLink>
       </li>
       <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-          to="/management">পরিচালকমন্ডলী</NavLink>
+          to="/all-notice">নোটিশ</NavLink>
       </li>
       
       <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white underline bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
-            to="/result">ফলাফল</NavLink>
+            to="/result">ফলাফল অনুসন্ধান</NavLink>
       </li>
       
     </>
@@ -76,7 +81,7 @@ export const Navbar = () => {
           </div>
 
           <ul
-            className={`absolute z-50 gap-5 justify-center duration-500 rounded-lg bg-green-100 drop-shadow-md py-6 px-10 max-sm:*:text-xl top-20  max-sm:*:font-medium ${
+            className={`absolute z-50 space-y-3 gap-5 justify-center duration-500 rounded-lg bg-green-100 drop-shadow-md py-6 px-10 max-sm:*:text-xl top-20  max-sm:*:font-medium ${
               openCloseMenu ? "-left-[1000px] " : "left-4 "
             }`}
           >

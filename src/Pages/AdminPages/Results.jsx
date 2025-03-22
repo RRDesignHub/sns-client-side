@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { Loading } from "../../components/Shared/Loading";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 const Results = () => {
+  const axiosSecure = useAxiosSec()
   const [results, setResults] = useState([]);
   const [className, setClassName] = useState("");
   const [academicYear, setAcademicYear] = useState(new Date().getFullYear());
@@ -18,8 +19,8 @@ const Results = () => {
   const {data: resultData=[], isLoading, refetch} = useQuery({
     queryKey: ["resultData", className, academicYear, examName],
     queryFn: async() =>{
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_API}/results?className=${className}&&academicYear=${academicYear}&&examName=${examName}`
+      const { data } = await axiosSecure.get(
+        `/results?className=${className}&&academicYear=${academicYear}&&examName=${examName}`
       );
       return data;
     },
@@ -48,8 +49,8 @@ const Results = () => {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const { data } = await axios.delete(
-            `${import.meta.env.VITE_SERVER_API}/result/${id}`
+          const { data } = await axiosSecure.delete(
+            `/result/${id}`
           );
           if (data.deletedCount) {
             Swal.fire({
@@ -66,9 +67,7 @@ const Results = () => {
     }
   }
 
-  if(isLoading){
-    return <Loading />
-  }
+ 
   return (
     <div className="max-sm:ml-1 max-sm:mt-1 md:w-11/12 mx-auto md:my-10">
       <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
@@ -169,6 +168,10 @@ const Results = () => {
           </div>
         </div>
         <div className="divider my-0"></div>
+
+        {
+          isLoading && <Loading />
+        }
         {/* Display Results */}
         {resultData.length === 0 ? (
           <p className="text-center text-gray-500">{message}</p>

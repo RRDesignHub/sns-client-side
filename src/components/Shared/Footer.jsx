@@ -12,25 +12,25 @@ export const Footer = () => {
             <img className="w-20" src={logo} alt="" />
             <div >
               <h2 className="text-lg md:text-xl font-bold">
-                Shah Neyamat (RH:) KG & High School
+              শাহ্ নেয়ামত (রহঃ) কেজি এন্ড হাই স্কুল
               </h2>
               <p className="text-sm">Inspiring Excellence, Building Futures</p>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <div className="flex space-x-6 text-sm">
+          <div className="flex max-sm:flex-wrap max-sm:space-x-4 space-x-6 text-sm">
             <Link to="/" className="link link-hover">
-              Home
+              হোম
             </Link>
             <Link to="/teachers" className="link link-hover">
-              Teachers
+              শিক্ষক/শিক্ষিকা
             </Link>
             <Link to="/management" className="link link-hover">
-              Management
+              নোটিশ
             </Link>
             <Link to="/result" className="link link-hover">
-              Result
+              ফলাফল অনুসন্ধান 
             </Link>
           </div>
         </div>

@@ -1,40 +1,59 @@
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { createContext, useEffect, useState } from "react"
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.init";
-
-
+import axios from "axios";
 export const AuthContext = createContext(null);
 
-
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState(true);
-  const userLogin = (email, password) =>{
-    setLoader(true)
-    return signInWithEmailAndPassword(auth, email, password)
-  }
+  const userLogin = (email, password) => {
+    setLoader(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-  const logoutUser = ()=>{
+  const logoutUser = () => {
     setLoader(true);
     return signOut(auth);
-  }
+  };
 
   useEffect(() => {
-    const currentSubscriber = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoader(false);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser?.email) {
+        setUser(currentUser);
+        //  get jwt token from server
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_SERVER_API}/jwt`,
+          { email: currentUser?.email }
+        );
+        if (data?.token) {
+          localStorage.setItem("access-token", data?.token);
+          setLoader(false);
+        }
+      } else {
+        setUser(currentUser);
+        localStorage.removeItem("access-token");
+        setLoader(false);
+      }
     });
     return () => {
-      currentSubscriber();
+      unsubscribe();
     };
   }, []);
-  
+
   const authInfo = {
-    userLogin, user, setUser, loader , setLoader, logoutUser
-  }
+    userLogin,
+    user,
+    setUser,
+    loader,
+    setLoader,
+    logoutUser,
+  };
   return (
-    <AuthContext.Provider value={authInfo}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
+};

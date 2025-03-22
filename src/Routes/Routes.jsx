@@ -17,6 +17,9 @@ import AllSubjects from "../Pages/AdminPages/AllSubjects";
 import { AddResult } from "../Pages/AdminPages/AddResult";
 import Results from "../Pages/AdminPages/Results";
 import ResultDetails from "../Pages/AdminPages/ResultDetails";
+import AddNotice from "../Pages/AdminPages/AddNotice";
+import { Notices } from "../Pages/Notices";
+import Students from "../Pages/Students";
 
 const router = createBrowserRouter(
   [
@@ -30,12 +33,16 @@ const router = createBrowserRouter(
           element: <Home></Home>
         },
         {
+          path: '/all-notice',
+          element: <Notices />,
+        },
+        {
           path: '/teachers',
           element: <Teachers></Teachers>,
         },
         {
-          path: '/management',
-          element:<Management></Management>
+          path: '/students',
+          element: <Students />,
         },
         {
           path: '/result',
@@ -58,6 +65,10 @@ const router = createBrowserRouter(
         {
           path: "add-student",
           element: <AddStudent></AddStudent>
+        },
+        {
+          path: "add-notice",
+          element: <AddNotice />
         },
         {
           path: "students",

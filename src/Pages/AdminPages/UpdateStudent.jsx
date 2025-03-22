@@ -2,14 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 import { Loading } from "../../components/Shared/Loading";
 import Swal from "sweetalert2";
+
 import imageUpload from "../../Api/Utils";
 export default function UpdateStudent() {
+  const axiosSecure = useAxiosSec();
   const navigate = useNavigate();
   const { id } = useParams();
   const [session, setSession] = useState(new Date().getFullYear());
@@ -22,8 +23,8 @@ export default function UpdateStudent() {
   const { data: studentDetails = {}, isLoading } = useQuery({
     queryKey: ["studen", id],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_API}/student/${id}`
+      const { data } = await axiosSecure.get(
+        `/student/${id}`
       );
       return data;
     },
@@ -63,7 +64,7 @@ export default function UpdateStudent() {
     };
 
     try{
-      const {data} = await axios.patch(`${import.meta.env.VITE_SERVER_API}/update-student/${id}`, updateData);
+      const {data} = await axiosSecure.patch(`/update-student/${id}`, updateData);
       if(data.modifiedCount){
         Swal.fire({
           position: "center",

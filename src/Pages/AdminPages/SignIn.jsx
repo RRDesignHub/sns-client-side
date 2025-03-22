@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 export const SignIn = () => {
   const [authError, setAuthError] = useState(null);
-  const { setUser, user, userLogin } = useAuth();
+  const { setUser, userLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const handleAdminLogin = (e) => {

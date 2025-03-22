@@ -3,9 +3,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Loading } from "../../components/Shared/Loading";
 import ResultPDF from "../../components/Dashboard/ResultPDF/ResultPDF";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export default function ResultDetails() {
   const { id } = useParams();
-
+  const axiosSecure = useAxiosSec();
   const {
     data: resultData = {},
     isLoading,
@@ -13,8 +14,8 @@ export default function ResultDetails() {
   } = useQuery({
     queryKey: ["result", id],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_API}/result?id=${id}`
+      const { data } = await axiosSecure.get(
+        `/result?id=${id}`
       );
       return data;
     },
