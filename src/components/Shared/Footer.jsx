@@ -26,7 +26,7 @@ export const Footer = () => {
             <Link to="/teachers" className="link link-hover">
               শিক্ষক/শিক্ষিকা
             </Link>
-            <Link to="/management" className="link link-hover">
+            <Link to="/all-notice" className="link link-hover">
               নোটিশ
             </Link>
             <Link to="/result" className="link link-hover">

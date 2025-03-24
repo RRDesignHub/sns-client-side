@@ -171,7 +171,7 @@ export const AddStudent = () => {
               type="date"
                 selected={birthDate}
                 required
-                onChange={(date) => setBirthDate(date)}
+                onChange={(e) => setBirthDate(e.target.value)}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none"
               />
             </div>

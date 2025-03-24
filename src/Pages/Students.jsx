@@ -14,12 +14,12 @@ export default function Students() {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["students"],
+    queryKey: ["students", selectedClass],
     queryFn: async () => {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_SERVER_API
-        }/students?className=${selectedClass}&&session=${selectedYear}`
+        }/students?className=${selectedClass}`
       );
       return data;
     },
@@ -31,10 +31,6 @@ export default function Students() {
     refetch();
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  console.log(students);
   return (
     <div className="w-11/12 mx-auto my-10">
       <div className="grid grid-cols-4 max-sm:gap-4">
@@ -96,7 +92,7 @@ export default function Students() {
             সার্চ করুন
           </button>
         </div>
-        <div className="col-span-4">
+        <div className="max-sm:col-span-4 col-span-1">
           <h3 className="text-2xl text-green-950">
             মোট শিক্ষার্থী: <span className="font-bold">{students?.length}</span> জন
           </h3>
@@ -105,10 +101,11 @@ export default function Students() {
       <div className="divider"></div>
       {/* Student Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        {isLoading && <div className="col-span-4 "><Loading /></div>}
         {students.length === 0 ? (
           <>
-            <h2 className="col-span-4 text-center pt-5 text-3xl font-semibold text-green-950/80">
-              দয়া করে শ্রেণী নির্বাচন করুন...
+            <h2 className="col-span-4 text-center pt-5 ">
+              দয়া করে শ্রেণী নির্বাচন করুন এবং "Search" এ ক্লিক করুন...
             </h2>
           </>
         ) : (

@@ -10,7 +10,7 @@ export const AnnualProgram = () => {
   return (
     <section className="py-12 bg-base-200 text-primary">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-6 text-primary">
+        <h2 className="text-2xl md:text-4xl font-bold mb-6 text-primary">
           একাডেমিক প্রোগ্রাম
         </h2>
         <p className="text-lg mb-12 text-secondary">

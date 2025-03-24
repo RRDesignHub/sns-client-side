@@ -20,6 +20,7 @@ import ResultDetails from "../Pages/AdminPages/ResultDetails";
 import AddNotice from "../Pages/AdminPages/AddNotice";
 import { Notices } from "../Pages/Notices";
 import Students from "../Pages/Students";
+import CreateAdmitCard from "../Pages/AdminPages/CreateAdmitCard";
 
 const router = createBrowserRouter(
   [
@@ -81,6 +82,10 @@ const router = createBrowserRouter(
         {
           path: "add-subjects",
           element: <AddSubject></AddSubject>
+        },
+        {
+          path: "add-admit-card",
+          element: <CreateAdmitCard />
         },
         {
           path: "subjects",

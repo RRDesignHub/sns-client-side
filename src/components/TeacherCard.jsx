@@ -5,14 +5,14 @@ export const TeacherCard = ({teacher}) => {
   
   return (
     <>
-      <div className="card bg-gradient-to-r from-green-100 to-green-50 border border-green-400 shadow-md rounded-lg ">
-        <div className="flex flex-col ">
+      <div className="card bg-gradient-to-r from-green-50 to-white border-2 border-green-400 shadow-md rounded-lg ">
+        <div className="flex flex-col">
           {/* Profile Image */}
           <div className="avatar placeholder flex flex-col justify-center items-center mb-4">
-            <div className="  text-green-700 w-[200px] h-[265px] flex items-center justify-center ">
+            <div className="  text-green-700 w-[200px] h-[265px] flex items-center justify-center mt-5">
               {
                 profileImage ? 
-                <img src={profileImage} className="w-full object-cover object-top mt-5" alt={name} /> :
+                <img src={profileImage} className="w-full h-full border-l-[6px] border-b-[6px] border-l-green-500 border-b-green-500 rounded-lg object-top " alt={name} /> :
                 <FaCircleUser className="text-green-700 text-[180px]" />
               }
             </div>
@@ -43,7 +43,7 @@ export const TeacherCard = ({teacher}) => {
                 Qualification:{" "}
               </strong>
               {
-                qualification.map((qal,index) => <p className="block" key={index}>{qal}.</p>)
+                qualification?.map((qal,index) => <p className="block" key={index}>{qal}.</p>)
               }
             </h3>
           </div>

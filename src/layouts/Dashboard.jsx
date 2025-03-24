@@ -11,6 +11,7 @@ import { HiSpeakerphone } from "react-icons/hi";
 import { GiPapers } from "react-icons/gi";
 import { LuLogOut } from "react-icons/lu";
 import useAuth from "../Hooks/useAuth";
+import { FaCartPlus } from "react-icons/fa6";
 export const Dashboard = () => {
   const { logoutUser } = useAuth();
   const isAdmin = true;
@@ -50,9 +51,10 @@ export const Dashboard = () => {
           <div className="divider my-2 h-[2px] bg-[rgba(244,241,222,0.59)]"></div>
 
           <nav className="space-y-2 md:space-y-4">
-            {/* Admin-Specific Links */}
+            {/* Admin-Specific Links for small screen*/}
             {isAdmin && (
               <>
+              {/* overview */}
                 <NavLink
                   to="/dashboard/overview"
                   className={({ isActive }) =>
@@ -97,6 +99,51 @@ export const Dashboard = () => {
                   </span>
                 </NavLink>
 
+                {/* add subject */}
+                <NavLink
+                  to="/dashboard/add-subjects"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+                  }
+                >
+                  <PiBookOpenTextFill className="w-5 h-5" />
+                  <span className="text-xs ">
+                    {openCloseMenu ? "Add Subjects" : ""}
+                  </span>
+                </NavLink>
+
+                {/* add result */}
+                <NavLink
+                  to="/dashboard/add-result"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+                  }
+                >
+                  <MdOutlineAddchart className="w-5 h-5" />
+                  <span className="text-xs ">
+                    {openCloseMenu ? "Add Result" : ""}
+                  </span>
+                </NavLink>
+
+                {/* create admit card */}
+                <NavLink
+                  to="/dashboard/add-admit-card"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+                  }
+                >
+                  <MdOutlineAddchart className="w-5 h-5" />
+                  <span className="text-xs ">
+                    {openCloseMenu ? "Create Admit Card" : ""}
+                  </span>
+                </NavLink>
+
                 {/* all students */}
                 <NavLink
                   to="/dashboard/students"
@@ -112,20 +159,8 @@ export const Dashboard = () => {
                   </span>
                 </NavLink>
 
-                {/* add subject */}
-                <NavLink
-                  to="/dashboard/add-subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <PiBookOpenTextFill className="w-5 h-5" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "Add Subjects" : ""}
-                  </span>
-                </NavLink>
+
+                {/* subjects */}
                 <NavLink
                   to="/dashboard/subjects"
                   className={({ isActive }) =>
@@ -139,19 +174,7 @@ export const Dashboard = () => {
                     {openCloseMenu ? "Subjects" : ""}
                   </span>
                 </NavLink>
-                <NavLink
-                  to="/dashboard/add-result"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <MdOutlineAddchart className="w-5 h-5" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "Add Result" : ""}
-                  </span>
-                </NavLink>
+               
                 <NavLink
                   to="/dashboard/results"
                   className={({ isActive }) =>
@@ -249,6 +272,44 @@ export const Dashboard = () => {
                   Add Notice
                 </NavLink>
 
+                {/* add subject */}
+                <NavLink
+                  to="/dashboard/add-subjects"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+                  }
+                >
+                  <PiBookOpenTextFill className="w-5 h-5" />
+                  Add Subjects
+                </NavLink>
+
+                {/* add admit card */}
+                <NavLink
+                  to="/dashboard/add-admit-card"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+                  }
+                >
+                  <FaCartPlus className="w-5 h-5" />
+                  Create Admit Card
+                </NavLink>
+
+                  {/* // add result */}
+                <NavLink
+                  to="/dashboard/add-result"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+                  }
+                >
+                  <MdOutlineAddchart className="w-5 h-5" />
+                  Add Result
+                </NavLink>
 
                 {/* all students */}
                 <NavLink
@@ -263,18 +324,7 @@ export const Dashboard = () => {
                   All Students
                 </NavLink>
 
-                {/* add subject */}
-                <NavLink
-                  to="/dashboard/add-subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <PiBookOpenTextFill className="w-5 h-5" />
-                  Add Subjects
-                </NavLink>
+                {/* all subjects */}
                 <NavLink
                   to="/dashboard/subjects"
                   className={({ isActive }) =>
@@ -287,18 +337,7 @@ export const Dashboard = () => {
                   Subjects
                 </NavLink>
 
-                {/* // add result */}
-                <NavLink
-                  to="/dashboard/add-result"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <MdOutlineAddchart className="w-5 h-5" />
-                  Add Result
-                </NavLink>
+                {/* all results */}
                 <NavLink
                   to="/dashboard/results"
                   className={({ isActive }) =>

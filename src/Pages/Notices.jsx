@@ -4,6 +4,7 @@ import React from "react";
 import { FaFile } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Loading } from "../components/Shared/Loading";
+import { format } from "date-fns";
 
 export const Notices = () => {
   const { data: notices = [], isLoading } = useQuery({
@@ -51,9 +52,9 @@ export const Notices = () => {
                     className={index % 2 === 0 ? "bg-green-50" : "bg-white"}
                   >
                     <td className="px-4 py-2 text-gray-700">{notice.title}</td>
-                    <td className="px-4 py-2 text-gray-700">{notice.date}</td>
+                    <td className="px-4 py-2 text-gray-700">{notice?.date && format(new Date(notice.date), "dd/MM/yyyy, EEEE")}</td>
                     <td className="px-4 py-2 text-gray-700">
-                      <Link className="text-green-800 text-xl" to={notice.pdfUrl}><FaFile></FaFile></Link>
+                      <Link className="text-green-800 text-xl" to={notice?.pdfUrl}><FaFile></FaFile></Link>
                     </td>
                    
                   </tr>

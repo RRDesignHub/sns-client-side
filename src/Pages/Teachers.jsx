@@ -6,28 +6,34 @@ import { Helmet } from "react-helmet-async";
 import { TeacherCard } from "../components/TeacherCard";
 import { Loading } from "../components/Shared/Loading";
 export const Teachers = () => {
-  const {data:teachers=[], isLoading} = useQuery({
-      queryKey: ["teachers"],
-      queryFn: async() =>{
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_SERVER_API}/teachers`
-        );
-        return data;
-      },
-    })
- 
-    if(isLoading) {
-      return <Loading />
-    }
+  const { data: teachers = [], isLoading } = useQuery({
+    queryKey: ["teachers"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER_API}/teachers`
+      );
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Helmet>
         <title>SN-Teachers</title>
       </Helmet>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 *:w-full gap-5 w-11/12 mx-auto my-10 ">
-        {
-          teachers && teachers.map((teacher, index) => <TeacherCard key={index} teacher={teacher}></TeacherCard>)
-        }
+      <div className="bg-green-100 py-10 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 *:w-full gap-5 w-11/12 mx-auto ">
+          {teachers.length === 0 ? (
+            <Loading />
+          ) : (
+            teachers?.map((teacher, index) => (
+              <TeacherCard key={index} teacher={teacher}></TeacherCard>
+            ))
+          )}
+        </div>
       </div>
     </>
   );

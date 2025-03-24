@@ -8,7 +8,7 @@ export const Testimonial = () => {
   return (
     <section className="py-12 bg-base-200 text-primary">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-6 text-primary">
+        <h2 className="text-2xl md:text-4xl font-bold mb-6 text-primary">
           গার্ডিয়ান ও শিক্ষার্থীদের মতামত
         </h2>
         <p className="text-lg mb-2 text-secondary">

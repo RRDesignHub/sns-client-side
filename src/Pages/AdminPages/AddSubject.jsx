@@ -67,6 +67,7 @@ export const AddSubject = () => {
       <div className="bg-green-200 px-6 py-8 rounded-lg">
         <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">Add Subject</h1>
         <div className="divider my-0"></div>
+        
         <div className="flex justify-center items-center gap-4 mb-4">
           <label className="label text-xl font-semibold">Class:</label>
           <select

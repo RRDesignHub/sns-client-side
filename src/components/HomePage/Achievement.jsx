@@ -3,7 +3,7 @@ export const Achievement = () => {
   return (
     <section className="bg-green-50 py-12">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-4xl font-bold text-green-700 text-center mb-8">🏆 আমাদের শিক্ষার্থীদের অর্জন</h2>
+        <h2 className="text-2xl md:text-4xl font-bold text-green-700 text-center mb-8">🏆 আমাদের শিক্ষার্থীদের অর্জন</h2>
         <p className="text-lg text-green-600 text-center mb-12">একাডেমিক, ক্রীড়া এবং প্রতিযোগিতায় শ্রেষ্ঠত্ব উদযাপন!</p>
         
         {/* Achievements Grid */}
