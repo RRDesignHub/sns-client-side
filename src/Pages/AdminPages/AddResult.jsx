@@ -6,37 +6,35 @@ import { Loading } from "../../components/Shared/Loading";
 import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export const AddResult = () => {
   const axiosSecure = useAxiosSec();
-  const [student, setStudent] = useState({});
+  const [studentData, setStudentData] = useState({});
   const [subjectsData, setSubjectsData] = useState([]);
   const [error, setError] = useState(null);
   const [result, setResult] = useState([]);
   const [examName, setExamName] = useState("");
-  const [className, setClassName] = useState("");
+  const [className, setClassName] = useState("Play");
   const [totalMarks, setTotalMarks] = useState(0);
   const [status, setStatus] = useState("");
   const [gpaAverage, setGpaAverage] = useState(0);
   const [averageLetterGrade, setAverageLetterGrade] = useState("");
-
+  const [serverError, setServerError] = useState("");
   const handleDisplayStudentInfo = async(e) => {
     e.preventDefault();
     const classRoll = e.target.classRoll.value;
     setError(null)
-    setStudent({})
+    setStudentData({})
     try{
       const {data} = await axiosSecure.get(`/student?className=${className}&&classRoll=${classRoll}`);
-     
-      setStudent(data);
+      if(data?.message){
+        setServerError(data.message);
+      }else{
+        setServerError("");
+      }
+      setStudentData(data);
     }catch(err){
       setError(err.response.data.message);
       console.log("Bring student data Error-->", err);
     }
 
-    try{
-      const {data} = await axiosSecure.get(`/subjects?className=${className}`);
-      setSubjectsData(data?.subjects);
-    }catch(err){
-      console.log("Bring subject data Error-->", err);
-    }
   };
 
   const handleSingleSubjectResult = (e) => {
@@ -127,7 +125,7 @@ export const AddResult = () => {
   const handleSubmitResult = async() => {
 
     if(!examName){
-      return setError("Exam name select please.")
+      return setServerError("Exam name select please.")
     }
     const resultInfo = {
       studentID: student?.studentID,
@@ -186,7 +184,7 @@ export const AddResult = () => {
                   </span>
                 </label>
                 <select
-                  defaultValue={"Select a class"}
+                  defaultValue={className}
                   name="className"
                   onChange={(e) => setClassName(e.target.value)}
                   className="select select-bordered"
@@ -215,6 +213,8 @@ export const AddResult = () => {
                   ))}
                 </select>
               </div>
+
+              {/* class roll */}
               <div className="form-control flex-row items-center gap-1">
                 <label className="label">
                   <span className="label-text  md:text-xl font-semibold">
@@ -235,7 +235,7 @@ export const AddResult = () => {
                 </button>
               </div>
             </div>
-            {error && <p className="text-red-500 text-center">{error}</p>}
+            {serverError && <p className="text-red-500 text-md text-center pt-3">{serverError}</p>}
           </form>
 
           <div className="bg-green-100 px-3 rounded-lg py-5 md:py-8">
@@ -247,19 +247,15 @@ export const AddResult = () => {
               <h3 className="text-lg">
                 Student Name:{" "}
                 <span className="font-semibold">
-                  {student?.studentName || ""}
+                  {studentData?.studentName || ""}
                 </span>
               </h3>
               <h3 className="text-lg">
-                Class:{" "}
-                <span className="font-semibold">
-                  {student?.className || ""}
-                </span>
+                Class:<span className="font-semibold">{studentData?.className || ""}</span>
               </h3>
               <h3 className="text-lg">
-                Class Roll:{" "}
-                <span className="font-semibold">
-                  {student?.classRoll || ""}
+                Class Roll:<span className="font-semibold">
+                  {studentData?.classRoll || ""}
                 </span>
               </h3>
               <div className="form-control flex-row justify-center items-center">
@@ -339,8 +335,8 @@ export const AddResult = () => {
                     required
                   >
                     <option disabled>Select</option>
-                    {subjectsData &&
-                      subjectsData.map((singleSubData, index) => (
+                    {studentData.subjects &&
+                      studentData?.subjects?.map((singleSubData, index) => (
                         <option value={singleSubData.subjectName} key={index}>
                           {singleSubData.subjectName}
                         </option>

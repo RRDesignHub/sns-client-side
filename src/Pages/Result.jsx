@@ -4,8 +4,8 @@ import { Loading } from "../components/Shared/Loading";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 export const Result = () => {
-  const [examName, setExamName] = useState("");
-  const [clsName, setClsName] = useState("");
+  const [examName, setExamName] = useState("1st Semester");
+  const [className, setClassName] = useState("Play");
   const [classRoll, setClassRoll] = useState("");
   const [serverError, setServerError] = useState("");
   const [enabled, setEnabled] = useState(false);
@@ -16,13 +16,18 @@ export const Result = () => {
     refetch,
   } = useQuery({
     enabled,
-    queryKey: ["result", clsName, classRoll, examName],
+    queryKey: ["result", className, classRoll, examName],
     queryFn: async () => {
       const { data } = await axios(
         `${
           import.meta.env.VITE_SERVER_API
-        }/results/${examName}/${clsName}/${classRoll}`
+        }/results/${examName}/${className}/${classRoll}`
       );
+      if(data?.message){
+        setServerError(data.message);
+      }else{
+        setServerError(null)
+      }
       return data;
     },
   });
@@ -46,7 +51,7 @@ export const Result = () => {
                 পরীক্ষার নাম :
               </label>
               <select
-                defaultValue={"Select"}
+                defaultValue={examName}
                 onChange={(e) => setExamName(e.target.value)}
                 name="subjectName"
                 className="w-full h-12 p-2 border border-gray-300 rounded-md"
@@ -70,8 +75,8 @@ export const Result = () => {
                 </span>
               </label>
               <select
-                defaultValue={"Select a class"}
-                onChange={(e) => setClsName(e.target.value)}
+                defaultValue={className}
+                onChange={(e) => setClassName(e.target.value)}
                 name="class"
                 className="select select-bordered"
                 required
@@ -124,14 +129,10 @@ export const Result = () => {
               </button>
             </div>
           </div>
-          {/* {error && <p className="text-red-500 text-center">{error}</p>} */}
+          
         </div>
         <div className="w-[95%] md:w-11/12 mx-auto pb-5">
-          {/* Initial Message */}
-
-          {/* {!resultData && !loadin, g && serverError && (
-            <p className="text-center">{serverError}</p>
-          )} */}
+          
 
           <div className={`max-sm:mx-2 md:w-11/12 mx-auto`}>
             {isLoading && <Loading />}
@@ -148,7 +149,7 @@ export const Result = () => {
                     Shah Neyamat (RH:) KG & High School
                   </h2>
                   <h3 className="text-lg md:text-xl text-center font-semibold">
-                    {resultData?.examName} Exam: {resultData.academicYear}
+                    {resultData?.examName} Exam: {resultData.session}
                   </h3>
                 </div>
                 <div className="divider my-0"></div>
@@ -247,7 +248,9 @@ export const Result = () => {
                   </table>
                 </div>
               </div>
-            ) : (
+            ) : 
+            serverError ? <p className="text-red-500 text-center">{serverError}</p> :
+           (
               <p className="text-center">
                 দয়া করে পরীক্ষা, শ্রেণী ও রোল টাইপ করুন এবং ফলাফল দেখতে
                 "Search" এ ক্লিক করুন...

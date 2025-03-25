@@ -50,6 +50,13 @@ export const AddStudent = () => {
 
     try{
       const {data} = await axiosSecure.post(`/add-student`, studentData);
+      if(data?.message){
+       return Swal.fire({
+          position: "center",
+          icon: "info",
+          title: `${data?.message}`,
+        });
+      }
       if(data.insertedId){
         Swal.fire({
           position: "center",

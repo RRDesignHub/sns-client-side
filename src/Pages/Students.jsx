@@ -6,9 +6,10 @@ import StudentCard from "../components/StudentCard";
 
 export default function Students() {
   const [filteredStudents, setFilteredStudents] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("");
+  const [selectedClass, setSelectedClass] = useState("Play");
   const [selectedYear, setSelectedYear] = useState("");
   const [enabled, setUnabled] = useState(false);
+  const [serverError, setServerError] = useState("");
   const {
     data: students = [],
     isLoading,
@@ -19,14 +20,20 @@ export default function Students() {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_SERVER_API
-        }/students?className=${selectedClass}`
+        }/client-all-students?className=${selectedClass}`
       );
+      if (data?.message) {
+        setServerError(data.message);
+      } else {
+        setServerError(null);
+      }
       return data;
     },
     enabled,
   });
 
   const handleFilter = async () => {
+    setServerError(null);
     setUnabled(true);
     refetch();
   };
@@ -67,24 +74,24 @@ export default function Students() {
           <div className="flex items-center max-sm:justify-center gap-5 md:gap-2">
             <p className="text-green-800">শিক্ষাবর্ষ:</p>
             <select
-            className="border border-gray-300 p-2 rounded-md"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-          >
-           <option value="" disabled>
-                  Select a year
-                </option>
-                {Array.from({ length: 10 }, (_, i) => {
-                  const year = new Date().getFullYear() - i;
-                  return (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  );
-                })}
-          </select>
+              className="border border-gray-300 p-2 rounded-md"
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              <option value="" disabled>
+                Select a year
+              </option>
+              {Array.from({ length: 10 }, (_, i) => {
+                const year = new Date().getFullYear() - i;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-         
+
           <button
             className="bg-green-200 text-green-950 px-4 py-2 rounded-md"
             onClick={handleFilter}
@@ -94,24 +101,28 @@ export default function Students() {
         </div>
         <div className="max-sm:col-span-4 col-span-1">
           <h3 className="text-2xl text-green-950">
-            মোট শিক্ষার্থী: <span className="font-bold">{students?.length}</span> জন
+            মোট শিক্ষার্থী:{" "}
+            <span className="font-bold">{students?.length}</span> জন
           </h3>
         </div>
       </div>
       <div className="divider"></div>
       {/* Student Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-3">
-        {isLoading && <div className="col-span-4 "><Loading /></div>}
-        {students.length === 0 ? (
-          <>
-            <h2 className="col-span-4 text-center pt-5 ">
-              দয়া করে শ্রেণী নির্বাচন করুন এবং "Search" এ ক্লিক করুন...
-            </h2>
-          </>
-        ) : (
+        {isLoading ? (
+          <div className="col-span-4 ">
+            <Loading />
+          </div>
+        ) : serverError ? (
+          <p className="col-span-4 text-red-500 text-center">{serverError}</p>
+        ) : students.length > 0 ? (
           students?.map((student) => (
             <StudentCard key={student._id} student={student} />
           ))
+        ) : (
+          <h2 className="col-span-4 text-center pt-5 ">
+            দয়া করে শ্রেণী নির্বাচন করুন এবং "Search" এ ক্লিক করুন...
+          </h2>
         )}
       </div>
     </div>

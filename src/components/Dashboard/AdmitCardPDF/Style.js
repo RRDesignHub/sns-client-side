@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
   tableHeader: {
     flexDirection: "row",
     backgroundColor: "#bfbfbf",
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "bold",
     borderBottom: "1px solid #a19f9f",
     padding: 5,
@@ -106,12 +106,22 @@ export const styles = StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     borderBottom: "1px solid #a19f9f",
-    fontSize: 12,
+    fontSize: 11,
   },
   tableCell: {
-    padding: 5,
+    padding: 3,
     flex: 1,
-    textAlign: "center", // Center table content for readability
+    textAlign: "left", 
+  },
+  tableCellSubject: {
+    flex: 1, // Wider column for Subject Name
+    padding: 5,
+    textAlign: "left", // Left-align for readability
+  },
+  tableCellOther: {
+    flex: 1, // Narrower columns for Marks, GPA, Letter Grade
+    padding: 5,
+    textAlign: "center",
   },
   footer: {
     position: "absolute", // Fixed at bottom

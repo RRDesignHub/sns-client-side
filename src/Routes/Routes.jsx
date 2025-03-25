@@ -16,12 +16,12 @@ import { AddSubject } from "../Pages/AdminPages/AddSubject";
 import AllSubjects from "../Pages/AdminPages/AllSubjects";
 import { AddResult } from "../Pages/AdminPages/AddResult";
 import Results from "../Pages/AdminPages/Results";
-import ResultDetails from "../Pages/AdminPages/ResultDetails";
 import AddNotice from "../Pages/AdminPages/AddNotice";
 import { Notices } from "../Pages/Notices";
 import Students from "../Pages/Students";
 import CreateAdmitCard from "../Pages/AdminPages/CreateAdmitCard";
 import ClassAdmitCard from "../Pages/AdminPages/ClassAdmitCard";
+import ResultPDF from "../components/Dashboard/ResultPDF/ResultPDF";
 
 const router = createBrowserRouter(
   [
@@ -106,7 +106,7 @@ const router = createBrowserRouter(
         },
         {
           path: "result/:id",
-          element: <ResultDetails></ResultDetails>
+          element: <ResultPDF />
         },
       
       ]

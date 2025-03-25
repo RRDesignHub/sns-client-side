@@ -11,17 +11,22 @@ export default function AllStudents() {
   const axiosSecure = useAxiosSec();
   const [filterStudentsID, setFilterStudentsID] = useState("");
   const [filterByClass, setFilterByClass] = useState("");
-  const [academicYear, setAcademicYear] = useState(new Date().getFullYear());
-  
+  const [session, setSession] = useState(new Date().getFullYear());
+  const [serverError, setServerError] = useState("");
   const [enabled, setUnabled] = useState(false);
   
 
   const {data: students=[], isLoading, refetch} = useQuery({
-    queryKey: ["resultData", academicYear, filterByClass],
+    queryKey: ["resultData", filterByClass, session],
     queryFn: async() =>{
       const { data } = await axiosSecure.get(
-        `/students?academicYear=${academicYear}&&className=${filterByClass}`
+        `/students?session=${session}&&className=${filterByClass}`
       );
+      if(data?.message){
+        setServerError(data.message);
+      }else{
+        setServerError("");
+      }
       return data;
     },
     enabled
@@ -39,17 +44,17 @@ export default function AllStudents() {
         title: "Are you sure?",
         text: "You have to again add this!",
         icon: "warning",
-        color: "#064E3B",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#16A34A",
-        confirmButtonText: "Yes, delete it!",
+      color: "#064E3B",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#16A34A",
+      confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
           const { data } = await axiosSecure.delete(
-            `/student/${id}`
+            `/delete-student/${id}`
           );
-          if (data.deletedCount) {
+          if (data?.deletedCount) {
             Swal.fire({
               title: "Deleted!",
               text: "Student has been deleted.",
@@ -119,9 +124,9 @@ export default function AllStudents() {
               <span className="label-text max-sm:text-lg">Academic Year:</span>
             </label>
             <select
-              onChange={(e) => setAcademicYear(parseInt(e.target.value))}
+              onChange={(e) => setSession(parseInt(e.target.value))}
               name="session"
-              value={academicYear}
+              value={session}
               className="select select-bordered"
             >
               <option value="" disabled>
@@ -214,13 +219,19 @@ export default function AllStudents() {
                   </td>
                 </tr>
               ))
-            ) : (
+            ) :
+            serverError ? (
               <tr>
                 <td colSpan="6" className="text-center py-4 text-gray-600">
-                  No students found.
+                  {serverError}
                 </td>
               </tr>
-            )}
+            ) : 
+            <tr>
+            <td colSpan="6" className="text-center py-4 text-gray-600">
+            Please select class for load students data.
+            </td>
+          </tr>}
           </tbody>
         </table>
       </div>

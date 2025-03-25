@@ -38,7 +38,7 @@ export const Home = () => {
                 নোটিশ বোর্ড:
               </h3>
               <Link to="/all-notice">
-              <div className="max-sm:w-[300px]  bg-green-50 rounded-lg p-3">
+              <div className="max-sm:w-[300px] w-full bg-green-50 rounded-lg p-3">
 
                 <Marquee
                   pauseOnHover={true}

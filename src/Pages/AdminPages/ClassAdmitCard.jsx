@@ -12,29 +12,45 @@ export default function ClassAdmitCard() {
   const [enabled, setUnabled] = useState(false);
   const [isPrint, setIsPrint] = useState(false);
   const [admitCardPdf, setAdmitCardPdf] = useState({});
-  const [error, setError] = useState("");
+  const [serverError, setServerError] = useState("");
   const {
     data: admitCards = [],
     isLoading,
+    isError,
+    error,
     refetch,
   } = useQuery({
     queryKey: ["subjects", classFilter, examName, session],
     queryFn: async () => {
+     try{
       const { data } = await axiosSecure.get(
         `/admit-cards/class?className=${classFilter}&examName=${examName}&session=${session}`
       );
+      if(data.message){
+        setServerError(data.message);
+      }else{
+        setServerError("");
+      }
       return data;
+     }catch(err){
+      console.log(err);
+     }
     },
     enabled,
+    onError: (err) => {
+      setServerError(err.message); 
+    },
   });
 
   const handleAdmitCards = (e) => {
     e.preventDefault();
+    setServerError("")
     setUnabled(true);
     setIsPrint(false)
     refetch();
   };
 
+  
   
   //prind admit card 
   const handlePrintAdmitCard= async(cardData) =>{
@@ -141,7 +157,9 @@ export default function ClassAdmitCard() {
           </div>
           {isLoading ? (
             <h2 className="text-lg text-green-400 text-center">Loading...</h2>
-          ) : (
+          ) : 
+          serverError ? <p className="pt-3 text-base text-red-400 text-center">{serverError}</p> :
+          (
             ""
           )}
         </form>
