@@ -84,7 +84,7 @@ export default function CreateAdmitCard() {
 
     const admitCardData = {
       examName,
-      session,
+      session : parseInt(session),
       className: classFilter,
       examData,
     };
@@ -96,8 +96,6 @@ export default function CreateAdmitCard() {
           position: "center",
           icon: "info",
           title: `${admitCardData.className}'s admit card already added!`,
-          showConfirmButton: false,
-          timer: 1500,
         });
       }
       if (data.insertedId) {
@@ -105,8 +103,6 @@ export default function CreateAdmitCard() {
           position: "center",
           icon: "success",
           title: `${admitCardData.className}'s admit card added successfully!!!`,
-          showConfirmButton: false,
-          timer: 1500,
         });
         setExamData([]);
       }

@@ -21,6 +21,7 @@ import AddNotice from "../Pages/AdminPages/AddNotice";
 import { Notices } from "../Pages/Notices";
 import Students from "../Pages/Students";
 import CreateAdmitCard from "../Pages/AdminPages/CreateAdmitCard";
+import ClassAdmitCard from "../Pages/AdminPages/ClassAdmitCard";
 
 const router = createBrowserRouter(
   [
@@ -86,6 +87,10 @@ const router = createBrowserRouter(
         {
           path: "add-admit-card",
           element: <CreateAdmitCard />
+        },
+        {
+          path: "class-admit-cards",
+          element: <ClassAdmitCard />
         },
         {
           path: "subjects",

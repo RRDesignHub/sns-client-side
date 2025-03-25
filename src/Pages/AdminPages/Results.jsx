@@ -5,6 +5,7 @@ import { Loading } from "../../components/Shared/Loading";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { FaFilePdf } from "react-icons/fa";
 const Results = () => {
   const axiosSecure = useAxiosSec()
   const [results, setResults] = useState([]);
@@ -198,7 +199,7 @@ const Results = () => {
                   <td >{result.totalLG}</td>
                   <td >{result.status}</td>
                   <td className="flex justify-center gap-1 items-center">
-                    <Link to={`/dashboard/result/${result._id}`} className="btn btn-sm bg-green-50 text-primary">Details</Link>
+                    <Link to={`/dashboard/result/${result._id}`} className="btn btn-sm bg-green-50 text-primary">Print <FaFilePdf /></Link>
                     <button 
                     onClick={() =>handleDelete(result._id)}
                     className="btn btn-sm text-lg bg-red-500 hover:bg-red-600 text-white">

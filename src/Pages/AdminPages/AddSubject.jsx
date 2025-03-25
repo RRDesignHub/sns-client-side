@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export const AddSubject = () => {
   const axiosSecure = useAxiosSec();
-  const [clsName, setClsName] = useState(null);
+  const [className, setClassName] = useState("Play");
   const [error, setError] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [subjectType, setSubjectType] = useState("Compulsory");
@@ -28,17 +28,16 @@ export const AddSubject = () => {
       subjectCode,
       assignedTeacher,
     };
-    console.log(subjectData);
     setSubjects([...subjects, subjectData]);
     form.reset();
   };
 
   const handleSubjectsDataSubmit = async () => {
-    if (!clsName) {
+    if (!className) {
       return setError("Please select a class...");
     }
     const subjectData = {
-      className: clsName,
+      className,
       subjects: subjects,
     };
 
@@ -47,13 +46,18 @@ export const AddSubject = () => {
         `/add-subjects`,
         subjectData
       );
+      if(data?.message === "Already subjecs added for this class."){
+       return Swal.fire({
+          position: "center",
+          icon: "info",
+          title: `${data?.message}!`,
+        });
+      }
       if (data.insertedId) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `Class ${clsName}'s subjects added successfully!!!`,
-          showConfirmButton: false,
-          timer: 1500,
+          title: `Class ${className}'s subjects added successfully!!!`,
         });
         setSubjects([]);
         setError("");
@@ -71,8 +75,8 @@ export const AddSubject = () => {
         <div className="flex justify-center items-center gap-4 mb-4">
           <label className="label text-xl font-semibold">Class:</label>
           <select
-            value={clsName}
-            onChange={(e) => setClsName(e.target.value)}
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
             className={`select select-bordered max-w-xl ${error ? "border-red-400" : ""}`}
           >
             {[

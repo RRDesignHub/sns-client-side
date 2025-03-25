@@ -13,6 +13,18 @@ export default function ResultPDF({ resultData }) {
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={styles.container}>
+             <Image
+                          src="/logo.png" // Adjust path to your public folder
+                          style={{
+                            position: "absolute",
+                            top: "35%",
+                            left: "28%",
+                            transform: "translate(-50%, -50%)", // Center the image
+                            width: 380, // Adjust size as needed
+                            height:380,
+                            opacity: 0.17, // Transparent overlay effect
+                          }}
+                        />
             <View>
               <Image
                 src="../../../public/logo.png"

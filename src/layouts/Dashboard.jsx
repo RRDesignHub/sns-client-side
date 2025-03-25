@@ -4,7 +4,7 @@ import { IoArrowForwardCircle, IoArrowBackCircle } from "react-icons/io5";
 import logo from "./../assets/logo.png";
 import { RiBookShelfFill } from "react-icons/ri";
 import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaIdCard, FaRegIdCard } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
 import { HiSpeakerphone } from "react-icons/hi";
@@ -174,6 +174,21 @@ export const Dashboard = () => {
                     {openCloseMenu ? "Subjects" : ""}
                   </span>
                 </NavLink>
+
+                {/* subjects */}
+                <NavLink
+                  to="/dashboard/class-admit-cards"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+                  }
+                >
+                  <FaRegIdCard className="w-5 h-5" />
+                  <span className="text-xs ">
+                    {openCloseMenu ? "Admit Cards" : ""}
+                  </span>
+                </NavLink>
                
                 <NavLink
                   to="/dashboard/results"
@@ -294,7 +309,7 @@ export const Dashboard = () => {
                       : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
                   }
                 >
-                  <FaCartPlus className="w-5 h-5" />
+                  <FaIdCard className="w-5 h-5" />
                   Create Admit Card
                 </NavLink>
 
@@ -335,6 +350,19 @@ export const Dashboard = () => {
                 >
                   <RiBookShelfFill className="w-5 h-5" />
                   Subjects
+                </NavLink>
+
+                 {/* all classbased admit cards */}
+                 <NavLink
+                  to="/dashboard/class-admit-cards"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+                  }
+                >
+                  <FaRegIdCard className="w-5 h-5" />
+                  Admit Cards
                 </NavLink>
 
                 {/* all results */}

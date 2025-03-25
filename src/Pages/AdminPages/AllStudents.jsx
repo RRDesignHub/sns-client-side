@@ -196,7 +196,7 @@ export default function AllStudents() {
                   </td>
                   <td>{student.studentName}</td>
                   <td>{student.classRoll}</td>
-                  <td>{format(new Date(student.dateOfBirth), "MMMM dd, yyyy")}</td>
+                  <td>{student?.dateOfBirth && format(new Date(student?.dateOfBirth), "MMMM dd, yyyy")}</td>
                   <td>{student.fatherName}</td>
                   <td>
                     <Link
