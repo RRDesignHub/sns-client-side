@@ -5,9 +5,8 @@ import { useState } from "react";
 import StudentCard from "../components/StudentCard";
 
 export default function Students() {
-  const [filteredStudents, setFilteredStudents] = useState([]);
   const [selectedClass, setSelectedClass] = useState("Play");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [session, setSession] = useState(new Date().getFullYear());
   const [enabled, setUnabled] = useState(false);
   const [serverError, setServerError] = useState("");
   const {
@@ -15,12 +14,12 @@ export default function Students() {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["students", selectedClass],
+    queryKey: ["students", selectedClass, session],
     queryFn: async () => {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_SERVER_API
-        }/client-all-students?className=${selectedClass}`
+        }/client-all-students?className=${selectedClass}&session=${session}`
       );
       if (data?.message) {
         setServerError(data.message);
@@ -75,8 +74,8 @@ export default function Students() {
             <p className="text-green-800">শিক্ষাবর্ষ:</p>
             <select
               className="border border-gray-300 p-2 rounded-md"
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
+              value={session}
+              onChange={(e) => setSession(e.target.value)}
             >
               <option value="" disabled>
                 Select a year

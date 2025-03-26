@@ -27,7 +27,7 @@ export const Dashboard = () => {
       {/* Sidebar */}
       <aside
         className={`fixed shadow ${
-          openCloseMenu ? "max-sm:w-[130px]" : "max-sm:w-10"
+          openCloseMenu ? "max-sm:w-[180px]" : "max-sm:w-10"
         } transform ease-in-out duration-700 md:w-64 relative bg-green-100 text-sand `}
       >
         <div className="md:hidden py-3 text-center">

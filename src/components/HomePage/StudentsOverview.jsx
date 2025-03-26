@@ -34,12 +34,16 @@ export default function StudentsOverview() {
               className="bg-white border-2 border-green-300 shadow-lg rounded-lg p-3 md:px-4 md:py-2 md:pb-5 flex flex-col items-center"
             >
               <div className="text-green-700 w-[200px] h-[265px] flex items-center justify-center">
-                <FaUserGraduate className="text-green-400 text-[180px]" />
+                {
+                  student?.image ? <img src={student?.image} className="w-full object-cover object-top mt-2"
+                  alt={student.studentName} /> : 
+                  <FaUserGraduate className="text-green-400 text-[180px]" />
+                }
               </div>
               <h3 className="text-lg text-green-950 text-center font-semibold">{student.studentName}</h3>
               <p className="text-green-800/90">শ্রেণী : {student.className}</p>
               <p className="text-green-800/90">রোল : {student.classRoll}</p>
-             
+              <p className="text-green-800/80">রক্তের গ্রুপ: {student?.bloodGroup}</p>
             </div>
           ))}
         </div>

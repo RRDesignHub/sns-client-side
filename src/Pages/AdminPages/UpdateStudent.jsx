@@ -35,6 +35,8 @@ export default function UpdateStudent() {
     let photoURL;
     if(imageFile){
       photoURL = await imageUpload(imageFile);
+    }else{
+      photoURL = studentDetails?.image;
     }
 
     const form = e.target;
@@ -53,7 +55,7 @@ export default function UpdateStudent() {
       groupName,
       birthRegNo,
       dateOfBirth: birthDate,
-      session,
+      session: session.toString(),
       studentName,
       fatherName,
       motherName,
@@ -100,17 +102,14 @@ export default function UpdateStudent() {
             <label className="label">
               <span className="label-text">Class Name:</span>
             </label>
-            {studentDetails.className && (
+            {studentDetails?.className && (
               <select
-                defaultValue={studentDetails.className}
+                // value={studentDetails?.className}
                 onChange={(e) => setClassName(e.target.value)}
                 name="class"
                 className="select select-bordered"
                 required
               >
-                <option value="" disabled>
-                  Select a class
-                </option>
                 {[
                   "Play",
                   "Nursery",
@@ -346,7 +345,6 @@ export default function UpdateStudent() {
             <input
               type="file"
               name="imageFile"
-              defaultValue={studentDetails?.image}
               onChange={(e) => setImageFile(e.target.files[0])}
               accept="image/*"
               className="select mb-2 px-4 py-2 select-bordered"
@@ -356,7 +354,7 @@ export default function UpdateStudent() {
 
         <div className="form-control w-fit ms-auto mt-6">
           <button className="btn bg-green-600 px-5 hover:bg-green-700 md:text-lg text-white">
-            Add Student's Data
+            Update Student's Data
           </button>
         </div>
       </form>

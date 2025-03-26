@@ -7,37 +7,46 @@ import { MdDelete } from "react-icons/md";
 import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import { FaFilePdf } from "react-icons/fa";
 const Results = () => {
-  const axiosSecure = useAxiosSec()
+  const axiosSecure = useAxiosSec();
   const [results, setResults] = useState([]);
   const [className, setClassName] = useState("");
   const [academicYear, setAcademicYear] = useState(new Date().getFullYear());
   const [examName, setExamName] = useState("");
   const [enabled, setUnabled] = useState(false);
-  const [message, setMessage] = useState(
+  const [error, setError] = useState(
     "Please choose class or subject for results"
   );
 
-  const {data: resultData=[], isLoading, refetch} = useQuery({
+  const {
+    data: resultData = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["resultData", className, academicYear, examName],
-    queryFn: async() =>{
+    queryFn: async () => {
       const { data } = await axiosSecure.get(
         `/results?className=${className}&&academicYear=${academicYear}&&examName=${examName}`
       );
+      if (data?.message) {
+        setError(data.message);
+      } else {
+        setError(null);
+      }
       return data;
     },
-    enabled
-  })
+    enabled,
+  });
 
   const handleFilter = () => {
     if (className === "" && examName === "") {
-      setMessage("Please select class, exam name!");
+      setError("Please select class, exam name!");
       return;
     }
     setUnabled(true);
-    refetch()
+    refetch();
   };
 
-  const handleDelete = async(id) =>{
+  const handleDelete = async (id) => {
     try {
       Swal.fire({
         title: "Are you sure?",
@@ -50,9 +59,7 @@ const Results = () => {
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const { data } = await axiosSecure.delete(
-            `/result/${id}`
-          );
+          const { data } = await axiosSecure.delete(`/result/${id}`);
           if (data.deletedCount) {
             Swal.fire({
               title: "Deleted!",
@@ -66,9 +73,8 @@ const Results = () => {
     } catch (err) {
       console.log("Delete student Error--->", err);
     }
-  }
+  };
 
- 
   return (
     <div className="max-sm:ml-1 max-sm:mt-1 md:w-11/12 mx-auto md:my-10">
       <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
@@ -170,44 +176,52 @@ const Results = () => {
         </div>
         <div className="divider my-0"></div>
 
-        {
-          isLoading && <Loading />
-        }
+        {isLoading && <Loading />}
         {/* Display Results */}
         {resultData.length === 0 ? (
-          <p className="text-center text-gray-500">{message}</p>
+          <p className="text-center text-gray-500">{error}</p>
+        ) : error ? (
+          <p className="py-2 text-center text-red-500">{error}</p>
         ) : (
           <table className="w-full table">
             <thead>
               <tr className="bg-green-600 text-green-50 ">
-                <th >Student Name</th>
-                <th >Class</th>
-                <th >Roll</th>
-                <th >Total Marks</th>
-                <th >Grade</th>
-                <th >Status</th>
-                <th >Actions</th>
+                <th>Student Name</th>
+                <th>Class</th>
+                <th>Roll</th>
+                <th>Total Marks</th>
+                <th>Grade</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {resultData?.map((result) => (
-                <tr key={result._id} className="">
-                  <td >{result.studentName}</td>
-                  <td >{result.className}</td>
-                  <td >{result.classRoll}</td>
-                  <td >{result.totalMarks}</td>
-                  <td >{result.totalLG}</td>
-                  <td >{result.status}</td>
-                  <td className="flex justify-center gap-1 items-center">
-                    <Link to={`/dashboard/result/${result._id}`} className="btn btn-sm bg-green-50 text-primary">Print <FaFilePdf /></Link>
-                    <button 
-                    onClick={() =>handleDelete(result._id)}
-                    className="btn btn-sm text-lg bg-red-500 hover:bg-red-600 text-white">
-                      <MdDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {!error &&
+                resultData.length > 0 &&
+                resultData?.map((result) => (
+                  <tr key={result._id} className="">
+                    <td>{result.studentName}</td>
+                    <td>{result.className}</td>
+                    <td>{result.classRoll}</td>
+                    <td>{result.totalMarks}</td>
+                    <td>{result.totalLG}</td>
+                    <td>{result.status}</td>
+                    <td className="flex justify-center gap-1 items-center">
+                      <Link
+                        to={`/dashboard/result/${result._id}`}
+                        className="btn btn-sm bg-green-50 text-primary"
+                      >
+                        Print <FaFilePdf />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(result._id)}
+                        className="btn btn-sm text-lg bg-red-500 hover:bg-red-600 text-white"
+                      >
+                        <MdDelete />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         )}
@@ -217,4 +231,3 @@ const Results = () => {
 };
 
 export default Results;
-
