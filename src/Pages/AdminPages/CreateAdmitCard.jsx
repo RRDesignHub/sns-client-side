@@ -78,7 +78,7 @@ export default function CreateAdmitCard() {
 
   //final admit card data post to db
   const handleSubmitAdmitCard = async () => {
-    if (!examData) {
+    if (examData.length === 0) {
       return setError("Please add subject.");
     }
 

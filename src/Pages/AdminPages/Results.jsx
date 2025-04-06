@@ -8,9 +8,8 @@ import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import { FaFilePdf } from "react-icons/fa";
 const Results = () => {
   const axiosSecure = useAxiosSec();
-  const [results, setResults] = useState([]);
   const [className, setClassName] = useState("");
-  const [academicYear, setAcademicYear] = useState(new Date().getFullYear());
+  const [session, setSession] = useState(new Date().getFullYear());
   const [examName, setExamName] = useState("");
   const [enabled, setUnabled] = useState(false);
   const [error, setError] = useState(
@@ -22,10 +21,10 @@ const Results = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["resultData", className, academicYear, examName],
+    queryKey: ["resultData", className, session, examName],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
-        `/results?className=${className}&&academicYear=${academicYear}&&examName=${examName}`
+        `/results?className=${className}&&session=${session}&&examName=${examName}`
       );
       if (data?.message) {
         setError(data.message);
@@ -122,9 +121,9 @@ const Results = () => {
               <span className="label-text max-sm:text-lg">Academic Year:</span>
             </label>
             <select
-              onChange={(e) => setAcademicYear(parseInt(e.target.value))}
+              onChange={(e) => setSession(parseInt(e.target.value))}
               name="session"
-              value={academicYear}
+              value={session}
               className="select select-bordered"
               required
             >

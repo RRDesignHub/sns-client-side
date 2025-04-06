@@ -4,9 +4,10 @@ import { Loading } from "../components/Shared/Loading";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 export const Result = () => {
-  const [examName, setExamName] = useState("1st Semester");
+  const [examName, setExamName] = useState("1st-Semester");
+  const [session, setSession] = useState(new Date().getFullYear());
   const [className, setClassName] = useState("Play");
-  const [classRoll, setClassRoll] = useState("");
+  const [classRoll, setClassRoll] = useState(null);
   const [serverError, setServerError] = useState("");
   const [enabled, setEnabled] = useState(false);
 
@@ -16,17 +17,17 @@ export const Result = () => {
     refetch,
   } = useQuery({
     enabled,
-    queryKey: ["result", className, classRoll, examName],
+    queryKey: ["result", session, className, classRoll, examName],
     queryFn: async () => {
       const { data } = await axios(
         `${
           import.meta.env.VITE_SERVER_API
-        }/results/${examName}/${className}/${classRoll}`
+        }/result/${session}/${examName}/${className}/${classRoll}`
       );
-      if(data?.message){
+      if (data?.message) {
         setServerError(data.message);
-      }else{
-        setServerError(null)
+      } else {
+        setServerError(null);
       }
       return data;
     },
@@ -43,11 +44,36 @@ export const Result = () => {
         <title>SN-Result</title>
       </Helmet>
       <div className="bg-blue-50">
-        <div className="card-body lg:w-3/4 md:mx-auto">
+        <div className="card-body lg:w-11/12 md:mx-auto">
           <div className="flex flex-col md:flex-row justify-center md:items-center gap-2 md:gap-5">
+            {/* select year */}
+            <div className="form-control justify-between md:items-start ">
+              <label className="block w-full label font-semibold">
+                শিক্ষাবর্ষ :
+              </label>
+              <select
+                onChange={(e) => setSession(e.target.value)}
+                name="session"
+                value={session}
+                className="select select-bordered"
+                required
+              >
+                <option value="" disabled>
+                  Select a year
+                </option>
+                {Array.from({ length: 10 }, (_, i) => {
+                  const year = new Date().getFullYear() - i;
+                  return (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
             {/* exam name */}
-            <div className="form-control flex-row justify-center md:justify-center md:items-center">
-              <label className="block w-full label text-lg  font-semibold">
+            <div className="form-control justify-between md:items-start ">
+              <label className="block w-full label font-semibold">
                 পরীক্ষার নাম :
               </label>
               <select
@@ -60,20 +86,16 @@ export const Result = () => {
                 <option value="" disabled>
                   Select
                 </option>
-                <option value="1st Semester">1st Semester</option>
-                <option value="2nd Semester">2nd Semester</option>
-                <option value="3rd Semester">3rd Semester</option>
-                <option value="Half Yearly">Half Yearly</option>
+                <option value="1st-Semester">1st Semester</option>
+                <option value="2nd-Semester">2nd Semester</option>
+                <option value="3rd-Semester">3rd Semester</option>
+                <option value="Half-Yearly">Half Yearly</option>
                 <option value="Annual">Annual</option>
               </select>
             </div>
             {/* class name */}
-            <div className="form-control flex-row justify-between md:items-start gap-1">
-              <label className="label">
-                <span className="label-text w-full text-lg font-semibold">
-                  শ্রেণী :
-                </span>
-              </label>
+            <div className="form-control justify-between md:items-start ">
+              <label className="block w-full label font-semibold">শ্রেণী :</label>
               <select
                 defaultValue={className}
                 onChange={(e) => setClassName(e.target.value)}
@@ -105,12 +127,8 @@ export const Result = () => {
               </select>
             </div>
             {/* class roll */}
-            <div className="form-control flex-row justify-between md:items-center gap-1">
-              <label className="label">
-                <span className="label-text text-lg font-semibold">
-                  রোল নং :
-                </span>
-              </label>
+            <div className="form-control justify-between md:items-start ">
+              <label className="block w-full label font-semibold">রোল নং :</label>
               <input
                 type="number"
                 name="classRoll"
@@ -120,7 +138,7 @@ export const Result = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control mt-auto">
               <button
                 onClick={handleDisplayStudentResult}
                 className="btn bg-green-700  hover:bg-green-600 text-white"
@@ -129,11 +147,8 @@ export const Result = () => {
               </button>
             </div>
           </div>
-          
         </div>
         <div className="w-[95%] md:w-11/12 mx-auto pb-5">
-          
-
           <div className={`max-sm:mx-2 md:w-11/12 mx-auto`}>
             {isLoading && <Loading />}
             {resultData.studentName && !isLoading ? (
@@ -248,12 +263,12 @@ export const Result = () => {
                   </table>
                 </div>
               </div>
-            ) : 
-            serverError ? <p className="text-red-500 text-center">{serverError}</p> :
-           (
+            ) : serverError ? (
+              <p className="text-red-500 text-center">{serverError}</p>
+            ) : (
               <p className="text-center">
-                দয়া করে পরীক্ষা, শ্রেণী ও রোল টাইপ করুন এবং ফলাফল দেখতে
-                "Search" এ ক্লিক করুন...
+                দয়া করে শিক্ষাবর্ষ, পরীক্ষা, শ্রেণী ও রোল টাইপ করুন এবং ফলাফল দেখতে
+                সার্চ এ ক্লিক করুন...
               </p>
             )}
           </div>

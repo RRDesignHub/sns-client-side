@@ -7,7 +7,6 @@ import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export const AddResult = () => {
   const axiosSecure = useAxiosSec();
   const [studentData, setStudentData] = useState({});
-  const [subjectsData, setSubjectsData] = useState([]);
   const [error, setError] = useState(null);
   const [result, setResult] = useState([]);
   const [examName, setExamName] = useState("");
@@ -17,6 +16,8 @@ export const AddResult = () => {
   const [gpaAverage, setGpaAverage] = useState(0);
   const [averageLetterGrade, setAverageLetterGrade] = useState("");
   const [serverError, setServerError] = useState("");
+
+  // bring student and subject data from db:
   const handleDisplayStudentInfo = async(e) => {
     e.preventDefault();
     const classRoll = e.target.classRoll.value;
@@ -42,39 +43,58 @@ export const AddResult = () => {
     const form = e.target;
     const subjectName = form.subjectName.value;
     const marks = parseInt(form.marks.value);
-    let GPA, letterGrade;
 
-    if (marks >= 80 && marks <= 100) {
-      GPA = 5.0;
-      letterGrade = "A+";
-    } else if (marks >= 70 && marks <= 79) {
-      GPA = 4.0;
-      letterGrade = "A";
-    } else if (marks >= 60 && marks <= 69) {
-      GPA = 3.5;
-      letterGrade = "A-";
-    } else if (marks >= 50 && marks <= 59) {
-      GPA = 3.0;
-      letterGrade = "B";
-    } else if (marks >= 40 && marks <= 49) {
-      GPA = 2.0;
-      letterGrade = "C";
-    } else if (marks >= 33 && marks <= 39) {
-      GPA = 1.0;
-      letterGrade = "D";
-    } else if (marks >= 0 && marks <= 32) {
-      GPA = 0.0;
-      letterGrade = "F";
-    } else {
+    // Find the subject from studentData.subjects to get totalMarks
+    const subject = studentData.subjects.find(
+      (sub) => sub.subjectName === subjectName
+    );
+    if (!subject) {
+      Swal.fire("Subject not found!");
+      return;
+    }
+
+    const totalMarksForSubject = subject.totalMarks; // 100 or 50
+
+    // Validate marks based on totalMarks
+    if (marks < 0 || marks > totalMarksForSubject) {
       Swal.fire(
-        "Invalid marks entered! Please enter a valid number between 0 and 100."
+        `Invalid marks entered! Please enter a valid number between 0 and ${totalMarksForSubject}.`
       );
       return;
+    }
+
+    // Calculate percentage to standardize grading
+    const percentage = (marks / totalMarksForSubject) * 100;
+    let GPA, letterGrade;
+
+    // Assign GPA and Letter Grade based on percentage
+    if (percentage >= 80) {
+      GPA = 5.0;
+      letterGrade = "A+";
+    } else if (percentage >= 70) {
+      GPA = 4.0;
+      letterGrade = "A";
+    } else if (percentage >= 60) {
+      GPA = 3.5;
+      letterGrade = "A-";
+    } else if (percentage >= 50) {
+      GPA = 3.0;
+      letterGrade = "B";
+    } else if (percentage >= 40) {
+      GPA = 2.0;
+      letterGrade = "C";
+    } else if (percentage >= 33) {
+      GPA = 1.0;
+      letterGrade = "D";
+    } else {
+      GPA = 0.0;
+      letterGrade = "F";
     }
 
     const resultData = {
       subjectName,
       marks,
+      totalMarks: totalMarksForSubject, // Include totalMarks in result
       GPA,
       letterGrade,
     };
@@ -82,17 +102,18 @@ export const AddResult = () => {
     const updatedResult = [...result, resultData];
     setResult(updatedResult);
 
-    //calculate total marks:
-    const totalMarks = updatedResult.reduce(
-      (total, subject) => total + subject.marks,
-      0
-    );
-    // Calculate GPA Average
-    const totalGPA = updatedResult.reduce(
-      (total, subject) => total + subject.GPA,
-      0
-    );
-    const gpaAverage = totalGPA / updatedResult.length;
+   // Calculate total marks achieved
+   const totalMarksAchieved = updatedResult.reduce(
+    (total, subject) => total + subject.marks,
+    0
+  );
+
+  // Calculate GPA Average
+  const totalGPA = updatedResult.reduce(
+    (total, subject) => total + subject.GPA,
+    0
+  );
+  const gpaAverage = totalGPA / updatedResult.length;
 
     // Determine Average Letter Grade
     let averageLetterGrade = "";
@@ -105,17 +126,14 @@ export const AddResult = () => {
     else averageLetterGrade = "F";
 
 
-    //update status pass/fail
-    updatedResult.map(result => {
-      if(result.marks > 32){
-        setStatus("Pass");
-      }else{
-        setStatus("Fail")
-      }
-    })
+    // Update status (Pass/Fail) - Check all subjects;  if less 33% = fail
+    const hasFailed = updatedResult.some(
+      (result) => (result.marks / result.totalMarks) * 100 < 33 
+    );
+    setStatus(hasFailed ? "Fail" : "Pass");
 
-    setResult(updatedResult);
-    setTotalMarks(totalMarks);
+    //update states
+    setTotalMarks(totalMarksAchieved);
     setGpaAverage(gpaAverage);
     setAverageLetterGrade(averageLetterGrade);
     form.reset();
@@ -127,15 +145,15 @@ export const AddResult = () => {
       return setServerError("Exam name select please.")
     }
     const resultInfo = {
-      studentID: student?.studentID,
-      studentName: student?.studentName,
-      fatherName: student.fatherName,
-      motherName: student.motherName,
-      image: student.image,
-      className: student?.className,
-      classRoll: student?.classRoll,
+      studentID: studentData?.studentID,
+      studentName: studentData?.studentName,
+      fatherName: studentData.fatherName,
+      motherName: studentData.motherName,
+      image: studentData.image,
+      className: studentData?.className,
+      classRoll: studentData?.classRoll,
       examName: examName,
-      academicYear: student?.session,
+      session: studentData?.session,
       resultData: result,
       totalMarks: totalMarks,
       totalGPA: gpaAverage,
@@ -157,15 +175,17 @@ export const AddResult = () => {
           timer: 1500,
         });
         setResult([]);
-        setStudent({});
         setError(null);
-        setResult([]);
+        setTotalMarks(0);
+        setGpaAverage(0);
+        setAverageLetterGrade("");
+        setStatus("");
       }
     } catch (err) {
       console.log("Add subject Error-->", err);
     }
   };
-
+console.log(studentData)
   return (
     <>
       <div className="w-11/12 mx-auto my-10">
@@ -257,6 +277,8 @@ export const AddResult = () => {
                   {studentData?.classRoll || ""}
                 </span>
               </h3>
+
+              {/* exam name */}
               <div className="form-control flex-row justify-center items-center">
                 <label className="block w-full label text-lg">
                   Exam Name :
@@ -362,6 +384,7 @@ export const AddResult = () => {
 
               <div className="form-control w-fit ms-auto mt-6">
                 <button
+                type="button"
                   onClick={handleSubmitResult}
                   className="btn bg-green-600 px-5 hover:bg-green-700 text-lg text-white"
                 >
