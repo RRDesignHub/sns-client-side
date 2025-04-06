@@ -23,7 +23,7 @@ export const AddResult = () => {
     setError(null)
     setStudentData({})
     try{
-      const {data} = await axiosSecure.get(`/student?className=${className}&&classRoll=${classRoll}`);
+      const {data} = await axiosSecure.get(`/student?className=${className}&&classRoll=${parseInt(classRoll)}`);
       if(data?.message){
         setServerError(data.message);
       }else{
@@ -34,7 +34,6 @@ export const AddResult = () => {
       setError(err.response.data.message);
       console.log("Bring student data Error-->", err);
     }
-
   };
 
   const handleSingleSubjectResult = (e) => {

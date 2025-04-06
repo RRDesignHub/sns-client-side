@@ -7,9 +7,7 @@ import { useAxiosSec } from "../../Hooks/useAxiosSec";
 
 const AllSubjects = () => {
   const axiosSecure = useAxiosSec();
-  const [classFilter, setClassFilter] = useState("Play"); // Selected class filter
-  const [selectedSubject, setSelectedSubject] = useState(null);
-  const [selectedSubjectIdx, setSelectedSubjectIdx] = useState(null);
+  const [classFilter, setClassFilter] = useState("Play"); 
   const {
     data: subjectsData = {},
     isLoading,
@@ -143,72 +141,7 @@ const AllSubjects = () => {
         </div>
       </div>
 
-      {/* Edit Subject Modal */}
-      <dialog id="editSubjectModal" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg mb-3">Edit Subject</h3>
-          {selectedSubject && (
-            <form onSubmit={handleUpdate}>
-              <label className="block mb-2">
-                Subject Name:
-                <input
-                  type="text"
-                  name="subjectName"
-                  defaultValue={selectedSubject.subjectName}
-                  className="input input-bordered w-full"
-                  required
-                />
-              </label>
-              <label className="block mb-2">
-                Subject Code:
-                <input
-                  type="text"
-                  name="subjectCode"
-                  defaultValue={selectedSubject.subjectCode}
-                  className="input input-bordered w-full"
-                />
-              </label>
-
-              <label className="block mb-2">
-                Total Marks:
-                <input
-                  type="number"
-                  name="totalMarks"
-                  defaultValue={selectedSubject.totalMarks}
-                  className="input input-bordered w-full"
-                  required
-                />
-              </label>
-              <label className="block mb-2">
-                Assigned Teacher:
-                <input
-                  type="text"
-                  name="assignedTeacher"
-                  defaultValue={selectedSubject.assignedTeacher}
-                  className="input input-bordered w-full"
-                />
-              </label>
-              <div className="modal-action">
-                <button
-                  type="submit"
-                  className="btn bg-primary text-green-50 hover:bg-green-600"
-                >
-                  Update
-                </button>
-                <button
-                  type="button"
-                  className="btn bg-red-400"
-                  onClick={() =>
-                    document.getElementById("editSubjectModal").close()
-                  }
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </dialog>
+     
     </div>
   );
 };

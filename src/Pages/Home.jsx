@@ -31,29 +31,30 @@ export const Home = () => {
       <div className="relative max-sm:mb-[280px] md:mb-40 lg:mb-10 ">
         <Hero></Hero>
         <div className="absolute z-50 -bottom-[260px] md:-bottom-[140px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12 mx-auto bg-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
-          <div className="flex max-sm:flex-col items-center gap-2 md:gap-5">
-            <img className="w-20" src={logo} alt="" />
-            <div className="flex max-sm:flex-col gap-2 items-center">
-              <h3 className="md:w-3/12 text-2xl font-bold py-2 text-center underline text-blue-50">
-                নোটিশ বোর্ড:
-              </h3>
-              <Link to="/all-notice">
-              <div className="max-sm:w-[300px] w-full bg-green-50 rounded-lg p-3">
-
-                <Marquee
-                  pauseOnHover={true}
-                  className="text-md font-medium text-blue-950"
-                >
-                  {notices.map((notice) => (
-                    <p key={notice._id} className="mx-6">
-                      {notice.title}।
-                    </p>
-                  ))}
-                </Marquee>
+          {!isLoading && (
+            <div className="flex max-sm:flex-col items-center gap-2 md:gap-5">
+              <img className=" w-20" src={logo} alt="" />
+              <div className="flex max-sm:flex-col gap-2 items-center">
+                <h3 className="md:w-fit text-2xl font-bold py-2 max-sm:text-center md:text-left underline text-blue-50">
+                  নোটিশ :
+                </h3>
+                <Link className="md:w-10/12" to="/all-notice">
+                  <div className="max-sm:w-[300px] w-full bg-green-50 rounded-lg p-3">
+                    <Marquee
+                      pauseOnHover={true}
+                      className="text-md font-medium text-blue-950"
+                    >
+                      {notices.map((notice, index) => (
+                        <p key={notice._id} className="mx-6">
+                          {index + 1}. {notice.title}।
+                        </p>
+                      ))}
+                    </Marquee>
+                  </div>
+                </Link>
               </div>
-              </Link>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <About></About>
