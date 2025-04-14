@@ -30,10 +30,10 @@ export const Home = () => {
       </Helmet>
       <div className="relative max-sm:mb-[280px] md:mb-40 lg:mb-10 ">
         <Hero></Hero>
-        <div className="absolute z-50 -bottom-[260px] md:-bottom-[140px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12 mx-auto bg-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
+        <div className="absolute z-30 -bottom-[260px] md:-bottom-[140px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12 mx-auto bg-gradient-to-br from-green-800 via-green-500 to-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
           {!isLoading && (
             <div className="flex max-sm:flex-col items-center gap-2 md:gap-5">
-              <img className=" w-20" src={logo} alt="" />
+              <img className="w-20 drop-shadow-xl" src={logo} alt="" />
               <div className="flex max-sm:flex-col gap-2 items-center">
                 <h3 className="md:w-fit text-2xl font-bold py-2 max-sm:text-center md:text-left underline text-blue-50">
                   নোটিশ :

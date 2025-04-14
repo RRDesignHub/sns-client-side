@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import { MainLayout } from "../layouts/MainLayout";
 import { Home } from "../Pages/Home";
 import { Teachers } from "../Pages/Teachers";
-import { Management } from "../Pages/Management";
 import { Result } from "../Pages/Result";
 import { PrivateRoute } from "./PrivateRoute";
 import { ErrorPage } from "../Pages/ErrorPage";

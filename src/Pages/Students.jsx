@@ -38,7 +38,7 @@ export default function Students() {
   };
 
   return (
-    <div className="w-11/12 mx-auto my-10">
+    <div className="w-11/12 mx-auto pt-10 mb-10">
       <div className="grid grid-cols-4 max-sm:gap-4">
         {/* Filter Section */}
         <div className="col-span-4 md:col-span-3 flex max-sm:flex-col gap-3 md:gap-8 ">

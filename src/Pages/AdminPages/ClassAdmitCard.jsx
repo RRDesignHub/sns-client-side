@@ -3,7 +3,7 @@ import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import { useQuery } from "@tanstack/react-query";
 import { FaFilePdf } from "react-icons/fa";
 import AdmitCardPDF from "../../components/Dashboard/AdmitCardPDF/AdmitCardPDF";
-
+import { Loading } from "../../components/Shared/Loading";
 export default function ClassAdmitCard() {
   const axiosSecure = useAxiosSec();
   const [classFilter, setClassFilter] = useState("Play");
@@ -156,7 +156,7 @@ export default function ClassAdmitCard() {
             </div>
           </div>
           {isLoading ? (
-            <h2 className="text-lg text-green-400 text-center">Loading...</h2>
+            <Loading />
           ) : 
           serverError ? <p className="pt-3 text-base text-red-400 text-center">{serverError}</p> :
           (

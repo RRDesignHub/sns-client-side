@@ -5,12 +5,12 @@ import { Navbar } from "../components/Shared/Navbar"
 export const MainLayout = () => {
   return (
     <>
-    <header className="bg-green-800 ">
+    <header className="fixed top-0 z-50 w-full bg-gradient-to-b from-green-900 via-green-700 to-green-500 shadow-xl">
     <Navbar />
 
     </header>
 
-    <main className="min-h-[calc(100vh-244px)]">
+    <main className="mt-[84px] min-h-[calc(100vh-244px)]">
       <Outlet></Outlet>
     </main>
 

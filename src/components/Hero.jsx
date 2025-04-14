@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay} from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -11,17 +11,15 @@ export const Hero = () => {
     <>
       
       <Swiper
+      loop={true}
+      speed={1000}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      }}
         spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        
-        modules={[Autoplay, Pagination, Navigation]}
+        modules={[Autoplay]}
         className="mySwiper"
       >
         <SwiperSlide>

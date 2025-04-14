@@ -3,3 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.mySwiper .swiper-slide {
+  transition: transform 0.5s ease-in-out;
+}
