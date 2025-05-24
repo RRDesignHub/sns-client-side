@@ -43,28 +43,28 @@ export default function AddNotice() {
         className="card-body max-sm:px-3 bg-green-200 rounded-2xl py-5 md:py-8"
       >
         <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-          Add Notice
+        নোটিশ যোগ করুন
         </h2>
         <div className="divider my-0"></div>
 
         {/* title */}
         <div className="form-control col-span-6 md:col-span-2">
           <label className="label">
-            <span className="label-text">Notice Title</span>
+            <span className="label-text">নোটিশের শিরোনাম</span>
           </label>
           <input
             type="text"
-            placeholder="Notice Title"
+            placeholder="যেমন: ‘বার্ষিক পরীক্ষা-২০২৫ এর রুটিন’"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+            className="w-full px-4 py-2 border text-sm rounded-lg focus:outline-none"
             required
           />
         </div>
         {/* pdf url */}
         <div className="form-control col-span-6 md:col-span-2">
           <label className="label">
-            <span className="label-text">Notice PDF URL</span>
+            <span className="label-text">PDF লিংক</span>
           </label>
           <input
             type="url"
@@ -79,7 +79,7 @@ export default function AddNotice() {
         {/* date */}
         <div className="form-control col-span-6 md:col-span-2">
           <label className="label">
-            <span className="label-text">Notice Publish Date</span>
+            <span className="label-text">নোটিশ প্রকাশের তারিখ</span>
           </label>
           <input
             type="date"
@@ -94,7 +94,7 @@ export default function AddNotice() {
           type="submit"
           className="btn bg-green-600 px-5 hover:bg-green-700 md:text-lg text-white"
         >
-          Add Notice
+          নোটিশ প্রকাশ
         </button>
       </form>
     </div>

@@ -7,7 +7,7 @@ import { useAxiosSec } from "../../Hooks/useAxiosSec";
 
 const AllSubjects = () => {
   const axiosSecure = useAxiosSec();
-  const [classFilter, setClassFilter] = useState("Play"); 
+  const [classFilter, setClassFilter] = useState("Play");
   const {
     data: subjectsData = {},
     isLoading,
@@ -50,13 +50,11 @@ const AllSubjects = () => {
     });
   };
 
- 
-
   return (
     <div className="w-11/12 mx-auto my-10">
       <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
         <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-          Class-Based Subjects
+          শ্রেণী ভিত্তিক বিষয়সমূহ
         </h1>
         <div className="divider my-0"></div>
         {/* Class Filter */}
@@ -80,7 +78,7 @@ const AllSubjects = () => {
               "10",
             ].map((className) => (
               <option key={className} value={className}>
-                Class {className}
+                {className}
               </option>
             ))}
           </select>
@@ -93,11 +91,11 @@ const AllSubjects = () => {
           <table className="table w-full">
             <thead>
               <tr className="bg-green-600 text-white">
-                <th>Subject Name</th>
-                <th>Subject Code</th>
-                <th>Subject Type</th>
-                <th>Total Marks</th>
-                <th>Assigned Teacher</th>
+                <th>বিষয়ের নাম</th>
+                <th>বিষয় কোড</th>
+                <th>বিষয়ের ধরণ</th>
+                <th>মোট নম্বর</th>
+                <th>শিক্ষক/ শিক্ষিকা</th>
               </tr>
             </thead>
             <tbody>
@@ -109,39 +107,29 @@ const AllSubjects = () => {
                     <td>{subject.subjectType}</td>
                     <td>{subject.totalMarks}</td>
                     <td>{subject.assignedTeacher}</td>
-                   
                   </tr>
                 ))
               ) : (
                 <tr>
                   <td colSpan="5" className="text-center py-4 text-gray-500">
-                    No subjects found for this class.
+                    প্রদত্ত শ্রেণীর জন্য কোনো বিষয় পাওয়া যায়নি...
                   </td>
                 </tr>
               )}
-              {
-                subjectsData && <tr className="text-left">
-                <td></td>
-                <td></td>
-                <td className="text-left">
-                  <button
-                    onClick={() => handleDelete(subjectsData?.className)}
-                    className="btn btn-md bg-red-500 text-white hover:bg-red-600"
-                  >
-                    Delete All Subjects
-                  </button>
-                </td>
-                <td></td>
-                <td></td>
-                
-              </tr>
-              }
             </tbody>
           </table>
         </div>
       </div>
-
-     
+      {subjectsData && (
+        <div className="w-full flex justify-center mt-4">
+          <button
+            onClick={() => handleDelete(subjectsData?.className)}
+            className="btn btn-md text-center bg-red-500 text-white hover:bg-red-600"
+          >
+            সকল বিষয় ডিলিট করুন
+          </button>
+        </div>
+      )}
     </div>
   );
 };

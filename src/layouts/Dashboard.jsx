@@ -27,23 +27,23 @@ export const Dashboard = () => {
       {/* Sidebar */}
       <aside
         className={`fixed shadow ${
-          openCloseMenu ? "max-sm:w-[180px]" : "max-sm:w-10"
-        } transform ease-in-out duration-700 md:w-64 relative bg-green-100 text-sand `}
+          openCloseMenu ? "max-sm:w-[140px]" : "max-sm:w-8"
+        } transform ease-in-out duration-700 md:w-64 relative bg-green-50 text-sand `}
       >
         <div className="md:hidden py-3 text-center">
           {openCloseMenu ? (
             <>
               <div className="mx-2 flex justify-between items-center gap-2">
-                <img src={logo} alt="" className={`max-sm:w-10`} />
+                <img src={logo} alt="" className={`max-sm:w-8`} />
                 <IoArrowBackCircle
-                  className={`text-4xl text-green-800`}
+                  className={`text-3xl text-green-800`}
                   onClick={handleOpenCloseMenu}
                 />
               </div>
             </>
           ) : (
             <IoArrowForwardCircle
-              className={`mx-auto  text-4xl text-green-800`}
+              className={`mx-auto text-3xl text-green-800`}
               onClick={handleOpenCloseMenu}
             />
           )}
@@ -63,7 +63,7 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <MdDashboard className="w-5 h-5" />
+                  <MdDashboard className="w-4 h-4" />
                   <span className="text-xs ">
                     {openCloseMenu ? "Overview" : ""}
                   </span>
@@ -78,9 +78,9 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <IoMdPersonAdd className="w-5 h-5" />
+                  <IoMdPersonAdd className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Add Student" : ""}
+                    {openCloseMenu ? "শিক্ষার্থী যোগ" : ""}
                   </span>
                 </NavLink>
 
@@ -93,9 +93,9 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <HiSpeakerphone className="w-5 h-5" />
+                  <HiSpeakerphone className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Add Notice" : ""}
+                    {openCloseMenu ? "নোটিশ যোগ" : ""}
                   </span>
                 </NavLink>
 
@@ -108,9 +108,9 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <PiBookOpenTextFill className="w-5 h-5" />
+                  <PiBookOpenTextFill className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Add Subjects" : ""}
+                    {openCloseMenu ? "বিষয় যোগ" : ""}
                   </span>
                 </NavLink>
 
@@ -123,9 +123,9 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <MdOutlineAddchart className="w-5 h-5" />
+                  <MdOutlineAddchart className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Add Result" : ""}
+                    {openCloseMenu ? "ফলাফল তৈরি" : ""}
                   </span>
                 </NavLink>
 
@@ -138,9 +138,9 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <MdOutlineAddchart className="w-5 h-5" />
+                  <MdOutlineAddchart className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Create Admit Card" : ""}
+                    {openCloseMenu ? "এডমিট কার্ড তৈরি" : ""}
                   </span>
                 </NavLink>
 
@@ -153,9 +153,9 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <PiUsersFourFill className="w-5 h-5" />
+                  <PiUsersFourFill className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "All Students" : ""}
+                    {openCloseMenu ? "সকল শিক্ষার্থী" : ""}
                   </span>
                 </NavLink>
 
@@ -169,13 +169,13 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <RiBookShelfFill className="w-5 h-5" />
+                  <RiBookShelfFill className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Subjects" : ""}
+                    {openCloseMenu ? "বিষয়সমূহ" : ""}
                   </span>
                 </NavLink>
 
-                {/* subjects */}
+                {/*  এডমিট কার্ড */}
                 <NavLink
                   to="/dashboard/class-admit-cards"
                   className={({ isActive }) =>
@@ -184,12 +184,13 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <FaRegIdCard className="w-5 h-5" />
+                  <FaRegIdCard className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Admit Cards" : ""}
+                    {openCloseMenu ? "এডমিট কার্ড" : ""}
                   </span>
                 </NavLink>
                
+               {/* ফলাফল */}
                 <NavLink
                   to="/dashboard/results"
                   className={({ isActive }) =>
@@ -198,9 +199,9 @@ export const Dashboard = () => {
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <GiPapers className="w-5 h-5" />
+                  <GiPapers className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Results" : ""}
+                    {openCloseMenu ? "ফলাফল" : ""}
                   </span>
                 </NavLink>
               </>
@@ -219,18 +220,18 @@ export const Dashboard = () => {
                 : "flex items-center ps-2 gap-2 py-2 hover:bg-green-100 hover:text-white transition "
             }
           >
-            <FaHome className="w-5 h-5" />
+            <FaHome className="w-4 h-4" />
             <span className="text-xs ">{openCloseMenu ? "Home" : ""}</span>
           </NavLink>
           <button
             onClick={() => logoutUser()}
             className="w-full flex items-center ps-2 gap-2 py-2 bg-[#166534] hover:bg-[#166534] text-white "
           >
-            <LuLogOut className="w-5 h-5" />
+            <LuLogOut className="w-4 h-4" />
             <span className="text-xs ">{openCloseMenu ? "Logout" : ""}</span>
           </button>
           <div className="divider my-2 h-[2px] bg-[rgba(244,241,222,0.59)]"></div>
-          <p className="text-xs pt-2 text-terracotta text-center">
+          <p className="max-sm:hidden text-xs pt-2 text-terracotta text-center">
             @Shah Neyamat School
           </p>
         </div>
@@ -271,7 +272,7 @@ export const Dashboard = () => {
                   }
                 >
                   <IoMdPersonAdd className="w-5 h-5" />
-                  Add Student
+                  শিক্ষার্থী যোগ
                 </NavLink>
 
                 {/* add notice */}
@@ -284,7 +285,7 @@ export const Dashboard = () => {
                   }
                 >
                   <HiSpeakerphone className="w-5 h-5" />
-                  Add Notice
+                  নোটিশ যোগ
                 </NavLink>
 
                 {/* add subject */}
@@ -297,7 +298,7 @@ export const Dashboard = () => {
                   }
                 >
                   <PiBookOpenTextFill className="w-5 h-5" />
-                  Add Subjects
+                  বিষয় যোগ
                 </NavLink>
 
                 {/* add admit card */}
@@ -310,7 +311,7 @@ export const Dashboard = () => {
                   }
                 >
                   <FaIdCard className="w-5 h-5" />
-                  Create Admit Card
+                  এডমিট কার্ড তৈরি
                 </NavLink>
 
                   {/* // add result */}
@@ -323,7 +324,7 @@ export const Dashboard = () => {
                   }
                 >
                   <MdOutlineAddchart className="w-5 h-5" />
-                  Add Result
+                  ফলাফল তৈরি
                 </NavLink>
 
                 {/* all students */}
@@ -336,7 +337,7 @@ export const Dashboard = () => {
                   }
                 >
                   <PiUsersFourFill className="w-5 h-5" />
-                  All Students
+                  সকল শিক্ষার্থী
                 </NavLink>
 
                 {/* all subjects */}
@@ -349,7 +350,7 @@ export const Dashboard = () => {
                   }
                 >
                   <RiBookShelfFill className="w-5 h-5" />
-                  Subjects
+                  বিষয়সমূহ
                 </NavLink>
 
                  {/* all classbased admit cards */}
@@ -362,7 +363,7 @@ export const Dashboard = () => {
                   }
                 >
                   <FaRegIdCard className="w-5 h-5" />
-                  Admit Cards
+                  এডমিট কার্ড
                 </NavLink>
 
                 {/* all results */}
@@ -375,7 +376,7 @@ export const Dashboard = () => {
                   }
                 >
                   <GiPapers className="w-5 h-5" />
-                  Results
+                  ফলাফল
                 </NavLink>
               </>
             )}

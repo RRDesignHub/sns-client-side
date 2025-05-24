@@ -10,7 +10,7 @@ export const MainLayout = () => {
 
     </header>
 
-    <main className="mt-[84px] min-h-[calc(100vh-244px)]">
+    <main className="mt-[60px] lg:mt-[84px] min-h-[calc(100vh-244px)]">
       <Outlet></Outlet>
     </main>
 

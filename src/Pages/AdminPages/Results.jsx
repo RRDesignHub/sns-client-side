@@ -13,7 +13,7 @@ const Results = () => {
   const [examName, setExamName] = useState("");
   const [enabled, setUnabled] = useState(false);
   const [error, setError] = useState(
-    "Please choose class or subject for results"
+    "শ্রেণী, শিক্ষাবর্ষ ও পরীক্ষা নির্বাচন করুন!"
   );
 
   const {
@@ -38,7 +38,7 @@ const Results = () => {
 
   const handleFilter = () => {
     if (className === "" && examName === "") {
-      setError("Please select class, exam name!");
+      setError("শ্রেণী, শিক্ষাবর্ষ ও পরীক্ষা নির্বাচন করুন!");
       return;
     }
     setUnabled(true);
@@ -78,7 +78,7 @@ const Results = () => {
     <div className="max-sm:ml-1 max-sm:mt-1 md:w-11/12 mx-auto md:my-10">
       <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
         <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-          Class & Subject-Based Results
+          শ্রেণী/ বিষয় ভিত্তিক ফলাফল
         </h2>
         <div className="divider my-0"></div>
         {/* Filter Inputs */}
@@ -86,12 +86,12 @@ const Results = () => {
           {/* choose class */}
           <div className="form-control col-span-12 md:col-span-3">
             <label className="label">
-              <span className="label-text max-sm:text-lg">Class:</span>
+              <span className="label-text max-sm:text-lg">শ্রেণী:</span>
             </label>
             <select
               onChange={(e) => setClassName(e.target.value)}
               value={className}
-              className="select select-bordered bg-white w-64 text-gray-700"
+              className="select select-bordered bg-white  text-gray-700"
             >
               <option value="">Choose class...</option>
               {[
@@ -118,7 +118,7 @@ const Results = () => {
           {/* select year */}
           <div className="form-control col-span-12 md:col-span-2">
             <label className="label">
-              <span className="label-text max-sm:text-lg">Academic Year:</span>
+              <span className="label-text max-sm:text-lg">শিক্ষাবর্ষ:</span>
             </label>
             <select
               onChange={(e) => setSession(parseInt(e.target.value))}
@@ -144,7 +144,7 @@ const Results = () => {
           {/* choose exam */}
           <div className="form-control col-span-12 md:col-span-3">
             <label className="label">
-              <span className="label-text max-sm:text-lg">Exam Name:</span>
+              <span className="label-text max-sm:text-lg">পরীক্ষার নাম:</span>
             </label>
             <select
               onChange={(e) => setExamName(e.target.value)}
@@ -169,7 +169,7 @@ const Results = () => {
               onClick={handleFilter}
               className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
             >
-              Filter
+              সার্চ করুন
             </button>
           </div>
         </div>
@@ -185,10 +185,10 @@ const Results = () => {
           <table className="w-full table">
             <thead>
               <tr className="bg-green-600 text-green-50 ">
-                <th>Student Name</th>
-                <th>Class</th>
-                <th>Roll</th>
-                <th>Total Marks</th>
+                <th>শিক্ষার্থীর নাম</th>
+                <th>শ্রেণী</th>
+                <th>রোল</th>
+                <th>মোট নম্বর</th>
                 <th>Grade</th>
                 <th>Status</th>
                 <th>Actions</th>

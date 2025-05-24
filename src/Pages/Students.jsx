@@ -6,7 +6,7 @@ import StudentCard from "../components/StudentCard";
 
 export default function Students() {
   const [selectedClass, setSelectedClass] = useState("Play");
-  const [session, setSession] = useState(new Date().getFullYear());
+  const [session, setSession] = useState(new Date().getFullYear().toString());
   const [enabled, setUnabled] = useState(false);
   const [serverError, setServerError] = useState("");
   const {
@@ -30,7 +30,7 @@ export default function Students() {
     },
     enabled,
   });
-
+console.log(typeof session)
   const handleFilter = async () => {
     setServerError(null);
     setUnabled(true);
@@ -75,7 +75,7 @@ export default function Students() {
             <select
               className="border border-gray-300 p-2 rounded-md"
               value={session}
-              onChange={(e) => setSession(e.target.value)}
+              onChange={(e) => setSession(e.target.value.toString())}
             >
               <option value="" disabled>
                 Select a year

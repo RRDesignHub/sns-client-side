@@ -24,7 +24,7 @@ export const AddResult = () => {
     setError(null)
     setStudentData({})
     try{
-      const {data} = await axiosSecure.get(`/student?className=${className}&&classRoll=${parseInt(classRoll)}`);
+      const {data} = await axiosSecure.get(`/student?className=${className}&&classRoll=${classRoll}`);
       if(data?.message){
         setServerError(data.message);
       }else{
@@ -142,7 +142,7 @@ export const AddResult = () => {
   const handleSubmitResult = async() => {
 
     if(!examName){
-      return setServerError("Exam name select please.")
+      return setServerError("পরীক্ষার নাম নির্বাচন করুন.")
     }
     const resultInfo = {
       studentID: studentData?.studentID,
@@ -185,21 +185,23 @@ export const AddResult = () => {
       console.log("Add subject Error-->", err);
     }
   };
-console.log(studentData)
+
   return (
     <>
-      <div className="w-11/12 mx-auto my-10">
-        <div className="bg-green-200 px-6 py-8 rounded-lg">
+      <div className="w-full md:w-11/12 mx-auto my-10">
+        <div className="bg-green-200 p-2 md:px-6 md:py-8 rounded-lg">
           <form
             onSubmit={handleDisplayStudentInfo}
-            className="card-body w-3/4 mx-auto"
+            className="card-body max-sm:px-0 lg:w-3/4 mx-auto"
           >
+            <h3 className="text-center text-sm md:text-md text-red-500">প্রথমে শ্রেণী ও রোল দিয়ে শিক্ষার্থী নির্বাচন করুন</h3>
             <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-5">
+              
               {/* class name */}
               <div className="form-control flex-row items-center gap-1">
                 <label className="label">
                   <span className="label-text text-lg md:text-xl font-semibold">
-                    Class:
+                    শ্রেণী:
                   </span>
                 </label>
                 <select
@@ -210,7 +212,7 @@ console.log(studentData)
                   required
                 >
                   <option value="" disabled>
-                    Select a class
+                    একটি শ্রেণী নির্বাচন করুন
                   </option>
                   {[
                     "Play",
@@ -237,20 +239,20 @@ console.log(studentData)
               <div className="form-control flex-row items-center gap-1">
                 <label className="label">
                   <span className="label-text  md:text-xl font-semibold">
-                    Class Roll:
+                    রোল:
                   </span>
                 </label>
                 <input
                   type="number"
                   name="classRoll"
-                  placeholder="Student roll"
+                  placeholder="শ্রেণী রোল"
                   className="input input-bordered "
                   required
                 />
               </div>
               <div className="form-control">
                 <button className="btn bg-green-600  hover:bg-primary text-white">
-                  Search
+                  সার্চ...
                 </button>
               </div>
             </div>
@@ -259,35 +261,35 @@ console.log(studentData)
 
           <div className="bg-green-100 px-3 rounded-lg py-5 md:py-8">
             <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-              Add Student Result
+              ফলাফল তৈরি করুন
             </h1>
             <div className="divider my-0"></div>
             <div className="flex max-sm:flex-col justify-center items-center gap-2 md:gap-8 pt-2">
-              <h3 className="text-lg">
-                Student Name:{" "}
+              <h3 className="text-sm md:text-lg">
+                শিক্ষার্থীর নাম:
                 <span className="font-semibold">
                   {studentData?.studentName || ""}
                 </span>
               </h3>
-              <h3 className="text-lg">
-                Class:<span className="font-semibold">{studentData?.className || ""}</span>
+              <h3 className="text-sm md:text-lg">
+                শ্রেণী:<span className="font-semibold">{studentData?.className || ""}</span>
               </h3>
-              <h3 className="text-lg">
-                Class Roll:<span className="font-semibold">
+              <h3 className="text-sm md:text-lg">
+                রোল:<span className="font-semibold">
                   {studentData?.classRoll || ""}
                 </span>
               </h3>
 
               {/* exam name */}
               <div className="form-control flex-row justify-center items-center">
-                <label className="block w-full label text-lg">
-                  Exam Name :
+                <label className="block w-full label text-sm md:text-lg">
+                  পরীক্ষার নাম :
                 </label>
                 <select
                   onChange={(e) => setExamName(e.target.value)}
                   name="subjectName"
                   value={examName}
-                  className={`w-full h-12 p-2 border rounded-md ${error === "Exam name select please." ? "border-red-400" : "border-gray-300 "}`}
+                  className={`w-full h-12 p-2 border rounded-md ${error === "যেমন: ১ম সেমিস্টর পরীক্ষা..." ? "border-red-400" : "border-gray-300 "}`}
                   required
                 >
                   <option value={""} disabled>
@@ -309,8 +311,8 @@ console.log(studentData)
                     {/* head */}
                     <thead>
                       <tr>
-                        <th>Subject Name</th>
-                        <th>Marks</th>
+                        <th>বিষয়ের নাম</th>
+                        <th>প্রাপ্ত নম্বর</th>
                         <th>Grade Point</th>
                         <th>Latter Grade</th>
                       </tr>
@@ -327,7 +329,7 @@ console.log(studentData)
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td className="font-bold">Total</td>
+                        <td className="font-bold">মোট</td>
                         <td className="font-bold">{totalMarks}</td>
                         <td className="font-bold">{gpaAverage.toFixed(2)}</td>
                         <td className="font-bold">{averageLetterGrade}</td>
@@ -347,7 +349,7 @@ console.log(studentData)
               <div className="grid gap-3 grid-cols-12 items-end">
                 <div className="form-control col-span-12 md:col-span-6">
                   <label className="block label text-gray-700">
-                    Subject Name
+                    বিষয়ের নাম
                   </label>
                   <select
                     defaultValue="Select"
@@ -366,7 +368,7 @@ console.log(studentData)
                 </div>
                 <div className="form-control col-span-6 md:col-span-3">
                   <label className="label">
-                    <span className="label-text">Marks</span>
+                    <span className="label-text">প্রাপ্ত নম্বর</span>
                   </label>
                   <input
                     type="number"
@@ -378,7 +380,7 @@ console.log(studentData)
                 </div>
 
                 <button className="max-sm:col-span-6 md:col-span-3 btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
-                  Add
+                  যোগ করুন
                 </button>
               </div>
 
@@ -386,9 +388,9 @@ console.log(studentData)
                 <button
                 type="button"
                   onClick={handleSubmitResult}
-                  className="btn bg-green-600 px-5 hover:bg-green-700 text-lg text-white"
+                  className="btn bg-green-600 px-5 hover:bg-green-700 text-base md:text-lg text-white"
                 >
-                  Submit Result
+                  ফলাফল আপলোড
                 </button>
               </div>
             </form>

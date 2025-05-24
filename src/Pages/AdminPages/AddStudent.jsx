@@ -4,7 +4,7 @@ import imageUpload from "../../Api/Utils";
 import { useAxiosSec } from "../../Hooks/useAxiosSec";
 export const AddStudent = () => {
   const axiosSecure = useAxiosSec();
-  const [session, setSession] = useState(new Date().getFullYear());
+  const [session, setSession] = useState(new Date().getFullYear().toString());
   const [className, setClassName] = useState("Play");
   const [bloodGroup, setBloodGroup] = useState("A+");
   const [gender, setGender] = useState("Male");
@@ -26,7 +26,7 @@ export const AddStudent = () => {
     const groupName = form.departmentName.value;
     const birthRegNo = parseInt(form.birthRegNo.value);
     const studentName = form.studentName.value;
-    const classRoll = form.classRoll.value;
+    const classRoll = form.classRoll.value.toString();
     const fatherName = form.fatherName.value;
     const motherName = form.motherName.value;
 
@@ -80,14 +80,14 @@ export const AddStudent = () => {
           className="card-body max-sm:px-3 bg-green-200 rounded-2xl py-5 md:py-8 "
         >
           <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-            Add Student Details
+            শিক্ষার্থীর তথ্য সংযুক্তি
           </h1>
           <div className="divider my-0"></div>
           <div className="grid gap-2 grid-cols-12">
             {/* class name */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Class Name:</span>
+                <span className="label-text">শ্রেণী: (*)</span>
               </label>
               <select
                 defaultValue={"Select a class"}
@@ -97,7 +97,7 @@ export const AddStudent = () => {
                 required
               >
                 <option value="" disabled>
-                  Select a class
+                একটি শ্রেণী নির্বাচন করুন...
                 </option>
                 {[
                   "Play",
@@ -122,12 +122,13 @@ export const AddStudent = () => {
             {/* roll */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Class Roll:</span>
+                <span className="label-text">রোল: (*)</span>
               </label>
               <input
                 type="number"
                 name="classRoll"
-                placeholder="Type class roll..."
+                min={1}
+                placeholder="শ্রেণী রোল..."
                 className="input input-bordered"
                 required
               />
@@ -135,7 +136,7 @@ export const AddStudent = () => {
             {/* section */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Section:</span>
+                <span className="label-text">শাখা:</span>
               </label>
               <input
                 type="text"
@@ -147,7 +148,7 @@ export const AddStudent = () => {
             {/* Group */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Group:</span>
+                <span className="label-text">বিভাগ:</span>
               </label>
               <input
                 type="text"
@@ -159,12 +160,12 @@ export const AddStudent = () => {
             {/* Birth reg no */}
             <div className="form-control col-span-12 md:col-span-8">
               <label className="label">
-                <span className="label-text">Birth Registration No:</span>
+                <span className="label-text">জন্মনিবন্ধন নম্বর: (*)</span>
               </label>
               <input
                 type="number"
                 name="birthRegNo"
-                placeholder="Type birth registration no..."
+                placeholder="জন্মনিবন্ধন নম্বর লিখুন..."
                 className="input input-bordered"
                 required
               />
@@ -172,7 +173,7 @@ export const AddStudent = () => {
             {/* Date of Birth */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text">Date Of Birth:</span>
+                <span className="label-text">জন্ম তারিখ: (*)</span>
               </label>
               <input
               type="date"
@@ -185,12 +186,12 @@ export const AddStudent = () => {
             {/* Academic year */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text">Academic Year:</span>
+                <span className="label-text">শিক্ষাবর্ষ: (*)</span>
               </label>
               <select
-                onChange={(e) => setSession(e.target.value)}
+                onChange={(e) => setSession(e.target.value.toString())}
                 name="session"
-                defaultValue={"Select a year"}
+                defaultValue={"একটি বছর নির্বাচন করুন..."}
                 className="select select-bordered"
                 required
               >
@@ -210,12 +211,12 @@ export const AddStudent = () => {
             {/* student name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text">Student Name:</span>
+                <span className="label-text">শিক্ষার্থীর নাম: (*)</span>
               </label>
               <input
                 type="text"
                 name="studentName"
-                placeholder="Type student name..."
+                placeholder="ইংরেজিতে শিক্ষার্থীর নাম..."
                 className="input input-bordered"
                 required
               />
@@ -223,31 +224,31 @@ export const AddStudent = () => {
             {/* fathers name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text">Father's Name:</span>
+                <span className="label-text">বাবার নাম: (*)</span>
               </label>
               <input
                 type="text"
                 name="fatherName"
-                placeholder="Father's name..."
+                placeholder="ইংরেজিতে বাবার নাম..."
                 className="input input-bordered"
               />
             </div>
             {/* Mother's name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text">Mother's Name:</span>
+                <span className="label-text">মায়ের নাম: (*)</span>
               </label>
               <input
                 type="text"
                 name="motherName"
-                placeholder="Mother's name..."
+                placeholder="ইংরেজিতে মায়ের নাম..."
                 className="input input-bordered"
               />
             </div>
             {/* Blood group */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Blood Group:</span>
+                <span className="label-text">রক্তের গ্রুফ:</span>
               </label>
               <select
                 defaultValue={"Select blood group"}
@@ -271,7 +272,7 @@ export const AddStudent = () => {
             {/* Gender */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Gender:</span>
+                <span className="label-text">লিঙ্গ: (*)</span>
               </label>
               <select
                 defaultValue={"Select gender"}
@@ -293,7 +294,7 @@ export const AddStudent = () => {
             {/* Religion */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Religion:</span>
+                <span className="label-text">ধর্ম:</span>
               </label>
               <select
                 defaultValue={"Select religion"}
@@ -316,11 +317,10 @@ export const AddStudent = () => {
             {/* Images */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">Image (jpg, jpeg, png)</span>
+                <span className="label-text">শিক্ষার্থীর ছবি (jpg, jpeg, png)</span>
               </label>
               <input
                 type="file"
-                required
                 name="imageFile"
                 onChange={(e) => setImageFile(e.target.files[0])}
                 accept="image/*"
@@ -331,7 +331,7 @@ export const AddStudent = () => {
 
           <div className="form-control w-fit ms-auto mt-6">
             <button className="btn bg-green-600 px-5 hover:bg-green-700 md:text-lg text-white">
-              Add Student's Data
+              শিক্ষার্থীর তথ্য যোগ করুন
             </button>
           </div>
         </form>

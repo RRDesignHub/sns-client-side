@@ -69,11 +69,11 @@ export const AddSubject = () => {
   return (
     <div className="w-11/12 mx-auto my-10">
       <div className="bg-green-200 px-6 py-8 rounded-lg">
-        <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">Add Subject</h1>
+        <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">বিষয় সংযুক্তি</h1>
         <div className="divider my-0"></div>
         
         <div className="flex justify-center items-center gap-4 mb-4">
-          <label className="label text-xl font-semibold">Class:</label>
+          <label className="label text-xl font-semibold">শ্রেণী:</label>
           <select
             value={className}
             onChange={(e) => setClassName(e.target.value)}
@@ -108,11 +108,11 @@ export const AddSubject = () => {
         >
           {/* subject name */}
           <div className="flex flex-col">
-            <label className="label font-semibold">Subject Name:</label>
+            <label className="label font-semibold">বিষয়ের নাম:</label>
             <input
               type="text"
               name="subject"
-              placeholder="Subject Name"
+              placeholder="ইংরেজিতে বিষয়ের নাম..."
               className="input input-bordered w-full"
               required
             />
@@ -120,11 +120,11 @@ export const AddSubject = () => {
 
           {/*subjectCode*/}
           <div className="flex flex-col">
-            <label className="label font-semibold">Subject Code:</label>
+            <label className="label font-semibold">বিষয় কোড:</label>
             <input
               type="text"
               name="subjectCode"
-              placeholder="Subject Code"
+              placeholder="ইংরেজিতে বিষয় কোড..."
               className="input input-bordered w-full"
               required
             />
@@ -132,7 +132,7 @@ export const AddSubject = () => {
 
           {/*subject type*/}
           <div className="flex flex-col">
-            <label className="label font-semibold">Subject Type:</label>
+            <label className="label font-semibold">বিষয়ের ধরণ:</label>
             <select
               name="subjectType"
               value={subjectType}
@@ -146,11 +146,11 @@ export const AddSubject = () => {
 
           {/*totalMarks*/}
           <div className="flex flex-col">
-            <label className="label font-semibold">Total Marks:</label>
+            <label className="label font-semibold">মোট নম্বর:</label>
             <input
               type="number"
               name="totalMarks"
-              placeholder="Total Marks"
+              placeholder="কয় নম্বরে পরীক্ষা?"
               className="input input-bordered w-full"
               required
             />
@@ -158,34 +158,34 @@ export const AddSubject = () => {
 
           {/*assigned teacher*/}
           <div className="flex flex-col">
-            <label className="label font-semibold">Assigned Teacher:</label>
+            <label className="label font-semibold">শিক্ষক/শিক্ষিকা:</label>
             <input
               type="text"
               name="teacher"
-              placeholder="Assigned Teacher (Optional)"
+              placeholder="শিক্ষক/শিক্ষিকা যিনি পড়ান (Optional)"
               className="input input-bordered w-full"
             />
           </div>
 
           <div className="flex flex-col items-center justify-end">
             <button className="btn btn-outline w-full border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
-              Add Subject
+              বিষয় যোগ করুন
             </button>
           </div>
         </form>
 
         {subjects.length > 0 && (
           <div className="bg-white p-4 rounded-lg shadow-md mt-5">
-            <h2 className="text-lg font-semibold mb-3">Subject List</h2>
+            <h2 className="text-lg text-center font-semibold mb-3">সংযুক্ত বিষয়ের তালিকা : {subjects.length} টি</h2>
             <div className="overflow-x-auto">
               <table className="table w-full">
                 <thead>
                   <tr>
-                    <th>Subject Name</th>
-                    <th>Code</th>
-                    <th>Type</th>
-                    <th>Total Marks</th>
-                    <th>Teacher</th>
+                    <th>বিষয়ের নাম</th>
+                    <th>বিষয় কোড</th>
+                    <th>বিষয়ের ধরণ</th>
+                    <th>মোট নম্বর</th>
+                    <th>শিক্ষক/শিক্ষিকা</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -209,7 +209,7 @@ export const AddSubject = () => {
             onClick={handleSubjectsDataSubmit}
             className="btn bg-green-600 hover:bg-green-700 text-white px-6 text-lg"
           >
-            Submit
+            বিষয়সমূহ যোগ করুন
           </button>
         </div>
       </div>
