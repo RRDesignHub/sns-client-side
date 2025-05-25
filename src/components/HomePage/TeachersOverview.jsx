@@ -51,7 +51,7 @@ export default function TeachersOverview() {
           breakpoints={{
             320: {
               slidesPerView: 1,
-              spaceBetween: 10,
+              spaceBetween: 5,
             },
             640: {
               slidesPerView: 2,

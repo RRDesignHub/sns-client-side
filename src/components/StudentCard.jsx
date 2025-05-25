@@ -22,22 +22,19 @@ export default function StudentCard({ student }) {
         </div>
 
         {/* Name and Details */}
-        <h3 className="text-xl text-center font-semibold text-green-700 mb-2">
+        <h3 className="text-sm md:text-xl text-center font-semibold text-green-700 mb-2">
           {studentName}
         </h3>
-        <p className="text-center text-green-950/90 font-medium">
+        <p className="max-sm:text-xs text-center text-green-950/90 font-medium">
           শ্রেণী: {className}
         </p>
         <div className="grow"></div>
         <div className="text-center pb-3">
-          <p className="text-green-950/80">
+          <p className="max-sm:text-xs text-green-950/80">
             <span className=" text-green-900">রোল নং:</span> {classRoll}
           </p>
-          {/* <p className="text-green-950/80">
-            <span className=" text-green-900">শিক্ষার্থী আইডি:</span>
-          </p> */}
           <p className="text-green-950/80">
-            <span className=" text-green-900">রক্তের গ্রুপ:</span> {bloodGroup}
+            <span className="max-sm:text-xs text-green-900">রক্তের গ্রুপ:</span> {bloodGroup}
           </p>
         </div>
       </div>

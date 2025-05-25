@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../components/Shared/Loading";
@@ -8,21 +7,26 @@ import { useAxiosSec } from "../../Hooks/useAxiosSec";
 const AllSubjects = () => {
   const axiosSecure = useAxiosSec();
   const [classFilter, setClassFilter] = useState("Play");
+  const [error, setError] = useState("");
   const {
     data: subjectsData = {},
     isLoading,
     refetch,
   } = useQuery({
     enabled: !!classFilter,
-    queryKey: ["subjects", classFilter],
+    queryKey: ["subjectsData", classFilter],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
         `/subjects?className=${classFilter}`
       );
-      return data;
+      if(data?.message){
+        setError(data.message)
+        return {}
+      }else{setError(null)}
+      return data || {};
     },
   });
-
+  
   // Handle delete subject
   const handleDelete = async (className) => {
     Swal.fire({
@@ -112,7 +116,7 @@ const AllSubjects = () => {
               ) : (
                 <tr>
                   <td colSpan="5" className="text-center py-4 text-gray-500">
-                    প্রদত্ত শ্রেণীর জন্য কোনো বিষয় পাওয়া যায়নি...
+                    {error}
                   </td>
                 </tr>
               )}
@@ -120,7 +124,7 @@ const AllSubjects = () => {
           </table>
         </div>
       </div>
-      {subjectsData && (
+      {subjectsData.subjects && (
         <div className="w-full flex justify-center mt-4">
           <button
             onClick={() => handleDelete(subjectsData?.className)}

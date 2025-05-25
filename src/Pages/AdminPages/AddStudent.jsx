@@ -29,7 +29,7 @@ export const AddStudent = () => {
     const classRoll = form.classRoll.value.toString();
     const fatherName = form.fatherName.value;
     const motherName = form.motherName.value;
-
+    const mobileNo = parseInt(form.mobileNo.value);
     const studentData = {
       studentID: `SN-${session}-${birthRegNo.toString().slice(-4)}`,
       className,
@@ -46,6 +46,7 @@ export const AddStudent = () => {
       gender,
       religion,
       image: photoURL,
+      mobileNo
     };
 
     try{
@@ -87,7 +88,7 @@ export const AddStudent = () => {
             {/* class name */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">শ্রেণী: (*)</span>
+                <span className="label-text max-sm:text-xs">শ্রেণী: (*)</span>
               </label>
               <select
                 defaultValue={"Select a class"}
@@ -122,7 +123,7 @@ export const AddStudent = () => {
             {/* roll */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">রোল: (*)</span>
+                <span className="label-text max-sm:text-xs">রোল: (*)</span>
               </label>
               <input
                 type="number"
@@ -136,35 +137,36 @@ export const AddStudent = () => {
             {/* section */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">শাখা:</span>
+                <span className="label-text max-sm:text-xs">শাখা:</span>
               </label>
               <input
                 type="text"
                 name="branchName"
-                placeholder="Type branch name..."
+                placeholder="যেমন: ক/ খ/ গ..."
                 className="input input-bordered"
               />
             </div>
             {/* Group */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">বিভাগ:</span>
+                <span className="label-text max-sm:text-xs">বিভাগ:</span>
               </label>
               <input
                 type="text"
                 name="departmentName"
-                placeholder="Type department..."
+                placeholder="যেমন: বিজ্ঞান/ ব্যণিজ্য/ মানবিক..."
                 className="input input-bordered"
               />
             </div>
             {/* Birth reg no */}
             <div className="form-control col-span-12 md:col-span-8">
               <label className="label">
-                <span className="label-text">জন্মনিবন্ধন নম্বর: (*)</span>
+                <span className="label-text max-sm:text-xs">জন্মনিবন্ধন নম্বর: (*)</span>
               </label>
               <input
                 type="number"
                 name="birthRegNo"
+                min={0}
                 placeholder="জন্মনিবন্ধন নম্বর লিখুন..."
                 className="input input-bordered"
                 required
@@ -173,7 +175,7 @@ export const AddStudent = () => {
             {/* Date of Birth */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text">জন্ম তারিখ: (*)</span>
+                <span className="label-text max-sm:text-xs">জন্ম তারিখ: (*)</span>
               </label>
               <input
               type="date"
@@ -186,7 +188,7 @@ export const AddStudent = () => {
             {/* Academic year */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text">শিক্ষাবর্ষ: (*)</span>
+                <span className="label-text max-sm:text-xs">শিক্ষাবর্ষ: (*)</span>
               </label>
               <select
                 onChange={(e) => setSession(e.target.value.toString())}
@@ -211,7 +213,7 @@ export const AddStudent = () => {
             {/* student name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text">শিক্ষার্থীর নাম: (*)</span>
+                <span className="label-text max-sm:text-xs">শিক্ষার্থীর নাম: (*)</span>
               </label>
               <input
                 type="text"
@@ -224,7 +226,7 @@ export const AddStudent = () => {
             {/* fathers name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text">বাবার নাম: (*)</span>
+                <span className="label-text max-sm:text-xs">বাবার নাম: (*)</span>
               </label>
               <input
                 type="text"
@@ -236,7 +238,7 @@ export const AddStudent = () => {
             {/* Mother's name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text">মায়ের নাম: (*)</span>
+                <span className="label-text max-sm:text-xs">মায়ের নাম: (*)</span>
               </label>
               <input
                 type="text"
@@ -248,7 +250,7 @@ export const AddStudent = () => {
             {/* Blood group */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">রক্তের গ্রুফ:</span>
+                <span className="label-text max-sm:text-xs">রক্তের গ্রুপ:</span>
               </label>
               <select
                 defaultValue={"Select blood group"}
@@ -272,7 +274,7 @@ export const AddStudent = () => {
             {/* Gender */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">লিঙ্গ: (*)</span>
+                <span className="label-text max-sm:text-xs">লিঙ্গ: (*)</span>
               </label>
               <select
                 defaultValue={"Select gender"}
@@ -294,7 +296,7 @@ export const AddStudent = () => {
             {/* Religion */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">ধর্ম:</span>
+                <span className="label-text max-sm:text-xs">ধর্ম:</span>
               </label>
               <select
                 defaultValue={"Select religion"}
@@ -317,7 +319,7 @@ export const AddStudent = () => {
             {/* Images */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text">শিক্ষার্থীর ছবি (jpg, jpeg, png)</span>
+                <span className="label-text max-sm:text-xs">শিক্ষার্থীর ছবি (jpg, jpeg, png)</span>
               </label>
               <input
                 type="file"
@@ -325,6 +327,21 @@ export const AddStudent = () => {
                 onChange={(e) => setImageFile(e.target.files[0])}
                 accept="image/*"
                 className="select mb-2 px-4 py-2 select-bordered"
+              />
+            </div>
+
+            {/* mobile no */}
+            <div className="form-control col-span-12 md:col-span-6">
+              <label className="label">
+                <span className="label-text max-sm:text-xs">মা/বাবার মোবাইল নম্বর: (*)</span>
+              </label>
+              <input
+                type="number"
+                name="mobileNo"
+                min={0}
+                placeholder="+880123-4567890"
+                className="input input-bordered"
+                required
               />
             </div>
           </div>

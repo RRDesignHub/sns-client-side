@@ -59,27 +59,27 @@ export default function ClassAdmitCard() {
     setIsPrint(true);
   }
   return (
-    <div className="w-11/12 mx-auto my-10">
-      <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
+    <div className="w-full md:w-11/12 mx-auto max-sm:px-2 my-10">
+      <div className="bg-green-200 px-2 rounded-lg py-5 md:py-8">
         <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-          Create Admit Card
+          প্রিন্ট এডমিট কার্ড
         </h1>
         <div className="divider my-0"></div>
         {/* Class Filter */}
 
         <form
           onSubmit={handleAdmitCards}
-          className="card-body w-full mx-auto pt-2 pb-5 px-3"
+          className="card-body w-full mx-auto pt-2 pb-5 px-2"
         >
-          <div className="flex flex-col md:flex-row justify-center items-end gap-2 md:gap-5">
+          <div className="flex flex-col md:flex-row justify-center md:items-end gap-2 md:gap-5">
             {/* exam name */}
-            <div className="form-control flex-col">
-              <label className="label ">Exam Name :</label>
+            <div className="form-control flex-row md:flex-col">
+              <label className="label ">পরীক্ষার নাম :</label>
               <select
                 onChange={(e) => setExamName(e.target.value)}
                 name="subjectName"
                 value={examName}
-                className={`w-full h-12 p-2 border rounded-md ${
+                className={`w-1/2 md:w-full h-12 p-2 border rounded-md ${
                   error === "Exam name select please."
                     ? "border-red-400"
                     : "border-gray-300 "
@@ -98,13 +98,13 @@ export default function ClassAdmitCard() {
             </div>
 
             {/* Academic year */}
-            <div className="form-control flex-col">
-              <label className="label">Academic Year:</label>
+            <div className="form-control flex-row md:flex-col">
+              <label className="label">শিক্ষাবর্ষ:</label>
               <select
                 onChange={(e) => setSession(e.target.value)}
                 name="session"
                 defaultValue={"Select a year"}
-                className="select select-bordered"
+                className="w-1/2 md:w-full h-12 p-2 border rounded-md"
                 required
               >
                 <option value="" disabled>
@@ -122,11 +122,11 @@ export default function ClassAdmitCard() {
             </div>
 
             {/* class name */}
-            <div className="form-control flex-col">
-              <label className="label">Select Class:</label>
+            <div className="form-control flex-row md:flex-col">
+              <label className="label">শ্রেণী:</label>
               <select
                 onChange={(e) => setClassFilter(e.target.value)}
-                className="select select-bordered bg-white w-64 text-gray-700"
+                className="w-1/2 md:w-full h-12 p-2 border rounded-md"
               >
                 {[
                   "Play",
@@ -151,7 +151,7 @@ export default function ClassAdmitCard() {
 
             <div className="form-control">
               <button className="btn bg-green-600  hover:bg-primary text-white">
-                Search
+                সার্চ
               </button>
             </div>
           </div>
@@ -169,17 +169,16 @@ export default function ClassAdmitCard() {
         {admitCards.length > 0 && !isPrint && (
           <div className="overflow-x-auto border-2 border-green-600 shadow-md rounded-lg">
             <div className="py-2 flex max-sm: flex-wrap items-center gap-2 justify-evenly text-xl font-semibold">
-              <h2>Class Name: {admitCards[0]?.className}</h2>
-              <h2>Exam Name: {admitCards[0]?.examName}</h2>
-              <h2>Session: {admitCards[0]?.session}</h2>
+              <h2>শ্রেণী : {admitCards[0]?.className}</h2>
+              <h2>{admitCards[0]?.examName} পরীক্ষা-{admitCards[0]?.session}</h2>
             </div>
             <table className="table w-full">
               {/* Table Header */}
               <thead className="bg-green-600 text-white">
                 <tr>
-                  <th>Student Name</th>
-                  <th>Roll</th>
-                  <th>Father's Name</th>
+                  <th>শিক্ষার্থীর নাম</th>
+                  <th>রোল</th>
+                  <th>বাবার নাম</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -206,7 +205,7 @@ export default function ClassAdmitCard() {
                 ) : (
                   <tr>
                     <td colSpan="6" className="text-center py-4 text-gray-600">
-                      No students found.
+                      কোনো শিক্ষার্থী পাওয়া যায়নি
                     </td>
                   </tr>
                 )}

@@ -60,9 +60,6 @@ export const Home = () => {
       <About></About>
       <TeachersOverview />
       <StudentsOverview />
-      <Achievement></Achievement>
-      <AnnualProgram></AnnualProgram>
-      {/* <Testimonial></Testimonial> */}
       <ContactSection></ContactSection>
     </>
   );

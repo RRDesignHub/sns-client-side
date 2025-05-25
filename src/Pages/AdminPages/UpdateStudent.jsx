@@ -23,9 +23,7 @@ export default function UpdateStudent() {
   const { data: studentDetails = {}, isLoading } = useQuery({
     queryKey: ["studen", id],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(
-        `/student/${id}`
-      );
+      const { data } = await axiosSecure.get(`/student/${id}`);
       return data;
     },
   });
@@ -33,9 +31,9 @@ export default function UpdateStudent() {
     e.preventDefault();
     // image file upload to imageBB:
     let photoURL;
-    if(imageFile){
+    if (imageFile) {
       photoURL = await imageUpload(imageFile);
-    }else{
+    } else {
       photoURL = studentDetails?.image;
     }
 
@@ -47,7 +45,7 @@ export default function UpdateStudent() {
     const classRoll = parseInt(form.classRoll.value);
     const fatherName = form.fatherName.value;
     const motherName = form.motherName.value;
-
+    const mobileNo = parseInt(form.mobileNo.value);
     const updateData = {
       className,
       classRoll,
@@ -63,11 +61,14 @@ export default function UpdateStudent() {
       gender,
       religion,
       image: photoURL,
+      mobileNo,
     };
-
-    try{
-      const {data} = await axiosSecure.patch(`/update-student/${id}`, updateData);
-      if(data.modifiedCount){
+    try {
+      const { data } = await axiosSecure.patch(
+        `/update-student/${id}`,
+        updateData
+      );
+      if (data.modifiedCount) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -76,9 +77,9 @@ export default function UpdateStudent() {
           timer: 1500,
         });
         form.reset();
-        navigate("/dashboard/students")
+        navigate("/dashboard/students");
       }
-    }catch(err){
+    } catch (err) {
       console.log("Student data adding Error-->", err);
     }
   };
@@ -87,26 +88,27 @@ export default function UpdateStudent() {
     return <Loading />;
   }
   return (
-    <div className="w-11/12 mx-auto my-10">
+    <div className="w-full md:w-11/12 max-sm:px-2 mx-auto my-10">
       <form
         onSubmit={handleUpdateData}
-        className="card-body max-sm:px-3 bg-green-200 rounded-2xl py-5 md:py-8 "
+        className="card-body max-sm:px-2 bg-green-200 rounded-2xl py-5 md:py-8 "
       >
         <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-          Update Student Data
+          শিক্ষার্থীর তথ্য পরিবর্তন
         </h1>
         <div className="divider my-0"></div>
         <div className="grid gap-2 grid-cols-12">
           {/* class name */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Class Name:</span>
+              <span className="label-text max-sm:text-xs">শ্রেণি:</span>
             </label>
             {studentDetails?.className && (
               <select
                 // value={studentDetails?.className}
                 onChange={(e) => setClassName(e.target.value)}
                 name="class"
+                defaultValue={studentDetails?.className}
                 className="select select-bordered"
                 required
               >
@@ -134,7 +136,7 @@ export default function UpdateStudent() {
           {/* roll */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Class Roll:</span>
+              <span className="label-text max-sm:text-xs">রোল নম্বর:</span>
             </label>
             <input
               type="number"
@@ -148,7 +150,7 @@ export default function UpdateStudent() {
           {/* section */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Section:</span>
+              <span className="label-text max-sm:text-xs">শাখা:</span>
             </label>
             <input
               type="text"
@@ -161,7 +163,7 @@ export default function UpdateStudent() {
           {/* Group */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Group:</span>
+              <span className="label-text max-sm:text-xs">বিভাগ:</span>
             </label>
             <input
               type="text"
@@ -174,7 +176,9 @@ export default function UpdateStudent() {
           {/* Birth reg no */}
           <div className="form-control col-span-12 md:col-span-8">
             <label className="label">
-              <span className="label-text">Birth Registration No:</span>
+              <span className="label-text max-sm:text-xs">
+                জন্ম নিবন্ধন নম্বর:
+              </span>
             </label>
             <input
               type="number"
@@ -188,7 +192,7 @@ export default function UpdateStudent() {
           {/* Date of Birth */}
           <div className="form-control col-span-6 md:col-span-2">
             <label className="label">
-              <span className="label-text">Date Of Birth:</span>
+              <span className="label-text max-sm:text-xs">জন্ম তারিখ:</span>
             </label>
             {studentDetails.dateOfBirth && (
               <DatePicker
@@ -202,7 +206,7 @@ export default function UpdateStudent() {
           {/* Academic year */}
           <div className="form-control col-span-6 md:col-span-2">
             <label className="label">
-              <span className="label-text">Academic Year:</span>
+              <span className="label-text max-sm:text-xs">শিক্ষাবর্ষ:</span>
             </label>
 
             <select
@@ -228,7 +232,9 @@ export default function UpdateStudent() {
           {/* student name */}
           <div className="form-control col-span-12 md:col-span-6">
             <label className="label">
-              <span className="label-text">Student Name:</span>
+              <span className="label-text max-sm:text-xs">
+                শিক্ষার্থীর নাম:
+              </span>
             </label>
             <input
               type="text"
@@ -242,7 +248,7 @@ export default function UpdateStudent() {
           {/* fathers name */}
           <div className="form-control col-span-12 md:col-span-6">
             <label className="label">
-              <span className="label-text">Father's Name:</span>
+              <span className="label-text max-sm:text-xs">বাবার নাম:</span>
             </label>
             <input
               type="text"
@@ -255,7 +261,7 @@ export default function UpdateStudent() {
           {/* Mother's name */}
           <div className="form-control col-span-12 md:col-span-6">
             <label className="label">
-              <span className="label-text">Mother's Name:</span>
+              <span className="label-text max-sm:text-xs">মায়ের নাম:</span>
             </label>
             <input
               type="text"
@@ -268,7 +274,7 @@ export default function UpdateStudent() {
           {/* Blood group */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Blood Group:</span>
+              <span className="label-text max-sm:text-xs">রক্তের গ্রুপ:</span>
             </label>
 
             <select
@@ -293,7 +299,7 @@ export default function UpdateStudent() {
           {/* Gender */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Gender:</span>
+              <span className="label-text max-sm:text-xs">লিঙ্গ:</span>
             </label>
 
             <select
@@ -316,7 +322,7 @@ export default function UpdateStudent() {
           {/* Religion */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Religion:</span>
+              <span className="label-text max-sm:text-xs">ধর্ম:</span>
             </label>
 
             <select
@@ -340,7 +346,9 @@ export default function UpdateStudent() {
           {/* Images */}
           <div className="form-control col-span-6 md:col-span-3">
             <label className="label">
-              <span className="label-text">Image (jpg, jpeg, png)</span>
+              <span className="label-text max-sm:text-xs">
+                ছবি (jpg, jpeg, png):
+              </span>
             </label>
             <input
               type="file"
@@ -348,6 +356,24 @@ export default function UpdateStudent() {
               onChange={(e) => setImageFile(e.target.files[0])}
               accept="image/*"
               className="select mb-2 px-4 py-2 select-bordered"
+            />
+          </div>
+
+          {/* mobile no */}
+          <div className="form-control col-span-12 md:col-span-6">
+            <label className="label">
+              <span className="label-text max-sm:text-xs">
+                মা/বাবার মোবাইল নম্বর: (*)
+              </span>
+            </label>
+            <input
+              type="number"
+              name="mobileNo"
+              min={0}
+              defaultValue={studentDetails?.mobileNo}
+              placeholder="+880123-4567890"
+              className="input input-bordered"
+              required
             />
           </div>
         </div>

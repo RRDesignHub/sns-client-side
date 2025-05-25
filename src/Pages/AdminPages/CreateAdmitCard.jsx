@@ -27,19 +27,17 @@ export default function CreateAdmitCard() {
       const { data } = await axiosSecure.get(
         `/subjects?className=${classFilter}`
       );
-      return data;
+      if(data?.message){
+        setError(data.message);
+        return {};
+      }else{
+        setError("");
+      }
+      return data || {};
     },
     enabled,
   });
 
-  useEffect(() => {
-    // Handle success case
-    if (!subjectData.subjects) {
-      return setError("No subjects found for this class.");
-    } else {
-      setError("");
-    }
-  }, [subjectData]);
 
   const handleGetSubjects = (e) => {
     e.preventDefault();
@@ -56,7 +54,7 @@ export default function CreateAdmitCard() {
     );
 
     if (isAlreadyAdded) {
-      setMultipleAdd("This subject has already been added!");
+      setMultipleAdd("প্রদত্ত বিষয়টি যোগ করা হয়েছে!!!");
       return;
     }
 
@@ -79,7 +77,7 @@ export default function CreateAdmitCard() {
   //final admit card data post to db
   const handleSubmitAdmitCard = async () => {
     if (examData.length === 0) {
-      return setError("Please add subject.");
+      return setError("দয়া করে পরীক্ষার বিষয় যোগ করুন।");
     }
 
     const admitCardData = {
@@ -91,18 +89,18 @@ export default function CreateAdmitCard() {
 
     try {
       const { data } = await axiosSecure.post(`/add-admit-card`, admitCardData);
-      if(data.message === "Already added admit card."){
-        Swal.fire({
+      if(data?.message){
+        return Swal.fire({
           position: "center",
           icon: "info",
-          title: `${admitCardData.className}'s admit card already added!`,
+          title: `${data.message}`,
         });
       }
       if (data.insertedId) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `${admitCardData.className}'s admit card added successfully!!!`,
+          title: `${admitCardData.className} এর এডমিট কার্ড সফলভাবে তৈরি করা হয়েছে!!!`,
         });
         setExamData([]);
       }
@@ -111,26 +109,26 @@ export default function CreateAdmitCard() {
     }
   };
   return (
-    <div className="w-11/12 mx-auto my-10">
-      <div className="bg-green-200 px-3 rounded-lg py-5 md:py-8">
+    <div className="w-full px-2 md:w-11/12 mx-auto my-4 md:my-10">
+      <div className="bg-green-200 px-2 rounded-lg py-5 md:py-8">
         <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-          Create Admit Card
+        এডমিট কার্ড তৈরি
         </h1>
         <div className="divider my-0"></div>
         {/* Class Filter */}
 
-        <form onSubmit={handleGetSubjects} className="card-body w-full mx-auto">
-          <div className="flex flex-col md:flex-row justify-center items-end gap-2 md:gap-5">
+        <form onSubmit={handleGetSubjects} className="card-body px-0 w-full mx-auto">
+          <div className="flex flex-col md:flex-row justify-center md:items-end gap-2 md:gap-5">
              {/* exam name */}
-             <div className="form-control flex-col">
+             <div className="form-control flex-row md:flex-col">
                 <label className="label ">
-                  Exam Name :
+                  পরীক্ষার নাম:
                 </label>
                 <select
                   onChange={(e) => setExamName(e.target.value)}
                   name="subjectName"
                   value={examName}
-                  className={`w-full h-12 p-2 border rounded-md ${error === "Exam name select please." ? "border-red-400" : "border-gray-300 "}`}
+                  className={`max-sm:w-1/2 h-12 p-2 border rounded-md ${error === "Exam name select please." ? "border-red-400" : "border-gray-300 "}`}
                   required
                 >
                   <option value={""} disabled>
@@ -145,15 +143,15 @@ export default function CreateAdmitCard() {
               </div>
 
               {/* Academic year */}
-            <div className="form-control flex-col">
+            <div className="form-control flex-row md:flex-col">
               <label className="label">
-                Academic Year:
+                শিক্ষাবর্ষ:
               </label>
               <select
                 onChange={(e) => setSession(e.target.value)}
                 name="session"
                 defaultValue={"Select a year"}
-                className="select select-bordered"
+                className="select max-sm:w-1/2 select-bordered"
                 required
               >
                 <option value="" disabled>
@@ -171,13 +169,13 @@ export default function CreateAdmitCard() {
             </div>
 
             {/* class name */}
-            <div className="form-control flex-col">
+            <div className="form-control flex-row md:flex-col">
               <label className="label">
-                  Select Class:
+                  শ্রেণী:
               </label>
               <select
                 onChange={(e) => setClassFilter(e.target.value)}
-                className="select select-bordered bg-white w-64 text-gray-700"
+                className="select select-bordered bg-white max-sm:w-1/2 text-gray-700"
               >
                 {[
                   "Play",
@@ -202,7 +200,7 @@ export default function CreateAdmitCard() {
 
             <div className="form-control">
               <button className="btn bg-green-600  hover:bg-primary text-white">
-                Search
+                সার্চ করুন
               </button>
             </div>
           </div>
@@ -218,9 +216,9 @@ export default function CreateAdmitCard() {
           <table className="table w-full">
             <thead>
               <tr className="bg-green-600 text-white">
-                <th>Subject Name</th>
-                <th className="text-center">Exam Date</th>
-                <th className="text-center">Time</th>
+                <th>বিষয়ের নাম</th>
+                <th className="text-center">পরীক্ষার তারিখ</th>
+                <th className="text-center">পরীক্ষার সময়</th>
               </tr>
             </thead>
             <tbody>
@@ -240,7 +238,7 @@ export default function CreateAdmitCard() {
               ) : (
                 <tr>
                   <td colSpan="5" className="text-center py-4 text-gray-500">
-                    No exam added yet.
+                    
                   </td>
                 </tr>
               )}
@@ -251,7 +249,7 @@ export default function CreateAdmitCard() {
         <form onSubmit={handleSingleExamData} className="card-body max-sm:px-0">
           <div className="grid gap-3 grid-cols-12 items-end">
             <div className="form-control col-span-12 md:col-span-3">
-              <label className="block label text-gray-700">Subject Name</label>
+              <label className="block label text-gray-700">বিষয়ের নাম</label>
               <select
                 defaultValue="Select"
                 name="subjectName"
@@ -271,7 +269,7 @@ export default function CreateAdmitCard() {
             {/* exam date choose */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text">Exam Date</span>
+                <span className="label-text">পরীক্ষার তারিখ</span>
               </label>
               <input
                 type="date"
@@ -285,7 +283,7 @@ export default function CreateAdmitCard() {
             {/* time from */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text">Exam From</span>
+                <span className="label-text">সময়(হতে)</span>
               </label>
               <input
                 type="time"
@@ -298,7 +296,7 @@ export default function CreateAdmitCard() {
             {/* time to*/}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text">Exam To</span>
+                <span className="label-text">সময়(পর্যন্ত)</span>
               </label>
               <input
                 type="time"
@@ -323,7 +321,7 @@ export default function CreateAdmitCard() {
               onClick={handleSubmitAdmitCard}
               className="btn bg-green-600 px-5 hover:bg-green-700 text-lg text-white"
             >
-              Submit Admit Card
+              এডমিট কার্ড তৈরি
             </button>
           </div>
         </form>
