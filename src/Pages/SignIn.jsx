@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../Hooks/useAuth";
+import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
-import logo from "../../assets/logo.png";
+import logo from "../assets/logo.png";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 export const SignIn = () => {
@@ -21,7 +21,7 @@ export const SignIn = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `Admin successfully loged in!`,
+          title: `ইউজার লগইন সফল হয়েছে!`,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -32,9 +32,9 @@ export const SignIn = () => {
         if (err.code === "auth/invalid-email") {
           setAuthError("The email address you entered is not valid.");
         } else if (err.code === "auth/wrong-password") {
-          setAuthError("The password you entered is incorrect.");
+          setAuthError("সঠিক পাসওয়ার্ড প্রদান করুন!!!");
         } else if (err.code === "auth/user-not-found") {
-          setAuthError("No account exists with the provided email.");
+          setAuthError("প্রদত্ত ইমেইল দিয়ে কোনো ইউজার নেই!!!");
         } else {
           setAuthError("An unexpected error occurred.");
         }
@@ -52,7 +52,7 @@ export const SignIn = () => {
             <img className="h-20" src={logo} alt="TourHub Logo" />
           </div>
           <h2 className="text-xl font-nunito text-chocolate text-center mb-4">
-            Welcome Back!
+            আপনাকে স্বাগতম!
           </h2>
 
           {/* Login Form */}
@@ -94,17 +94,23 @@ export const SignIn = () => {
               type="submit"
               className="w-full px-6 py-3 text-white font-medium tracking-wide capitalize bg-green-500 rounded-lg hover:bg-green-400 transition focus:outline-none focus:ring focus:ring-chocolate"
             >
-              Login
+              লগইন করুন
             </button>
           </form>
 
           <div className="divider my-6"></div>
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4">
             <Link
               to="/"
-              className="text-sm text-dark font-heebo hover:underline"
+              className="btn btn-sm bg-green-100 text-sm text-green-900 font-heebo hover:underline"
             >
-              Go to Home
+              হোম পেইজে ফিরুন
+            </Link>
+            <Link
+              to="/sign-up"
+              className="btn btn-sm bg-green-100 text-green-900 text-sm text-dark font-heebo hover:underline"
+            >
+              রেজিস্ট্রেশন করুন
             </Link>
           </div>
         </div>

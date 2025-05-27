@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaUserGraduate } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import StudentCard from "../StudentCard";
 export default function StudentsOverview() {
   const { data: students = [], isLoading } = useQuery({
     queryKey: ["stedents"],
@@ -29,7 +30,14 @@ export default function StudentsOverview() {
         <div className="divider my-2"></div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
           {students.map((student) => (
-            <div
+            <StudentCard key={student._id} student={student}/>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+{/* <div
               key={student._id}
               className="bg-white border-2 border-green-300 shadow-lg rounded-lg p-2 md:px-4 md:py-2 md:pb-5 flex flex-col items-center"
             >
@@ -44,10 +52,4 @@ export default function StudentsOverview() {
               <p className="text-green-800/90 max-sm:text-xs ">শ্রেণী : {student.className}</p>
               <p className="text-green-800/90 max-sm:text-xs ">রোল : {student.classRoll}</p>
               <p className="text-green-800/80 max-sm:text-xs ">রক্তের গ্রুপ: {student?.bloodGroup}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+            </div> */}

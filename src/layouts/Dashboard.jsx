@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { IoArrowForwardCircle, IoArrowBackCircle } from "react-icons/io5";
 import logo from "./../assets/logo.png";
 import { RiBookShelfFill } from "react-icons/ri";
@@ -11,17 +11,15 @@ import { HiSpeakerphone } from "react-icons/hi";
 import { GiPapers } from "react-icons/gi";
 import { LuLogOut } from "react-icons/lu";
 import useAuth from "../Hooks/useAuth";
-import { FaCartPlus } from "react-icons/fa6";
 export const Dashboard = () => {
   const { logoutUser } = useAuth();
   const isAdmin = true;
-  const navigate = useNavigate();
   const [openCloseMenu, setOpenCloseMenu] = useState(true);
-
+  const location = useLocation();
+  
   const handleOpenCloseMenu = () => {
     setOpenCloseMenu(!openCloseMenu);
   };
-
   return (
     <div className="min-h-screen flex">
       {/* Sidebar */}
@@ -49,23 +47,50 @@ export const Dashboard = () => {
           )}
 
           <div className="divider my-2 h-[2px] bg-[rgba(244,241,222,0.59)]"></div>
-
+          {/* links for small screen */}
           <nav className="space-y-2 md:space-y-4">
             {/* Admin-Specific Links for small screen*/}
             {isAdmin && (
               <>
               {/* overview */}
                 <NavLink
-                  to="/dashboard/overview"
+                  to="/dashboard"
+                  className={`${location.pathname == "/dashboard" ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white" : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition"}`}
+                  
+                >
+                  <MdDashboard className="w-4 h-4" />
+                  <span className="text-xs ">
+                    {openCloseMenu ? "Overview" : ""}
+                  </span>
+                </NavLink>
+
+                {/* create user*/}
+                <NavLink
+                  to="/dashboard/create-user"
                   className={({ isActive }) =>
                     isActive
                       ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
                       : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
                   }
                 >
-                  <MdDashboard className="w-4 h-4" />
+                  <IoMdPersonAdd className="w-4 h-4" />
                   <span className="text-xs ">
-                    {openCloseMenu ? "Overview" : ""}
+                    {openCloseMenu ? "Create User" : ""}
+                  </span>
+                </NavLink>
+
+                {/* all user*/}
+                <NavLink
+                  to="/dashboard/all-user"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+                  }
+                >
+                  <IoMdPersonAdd className="w-4 h-4" />
+                  <span className="text-xs ">
+                    {openCloseMenu ? "All User" : ""}
                   </span>
                 </NavLink>
 
@@ -251,15 +276,37 @@ export const Dashboard = () => {
               <>
                 {/* overview */}
                 <NavLink
-                  to="/dashboard/overview"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-terracotta hover:text-green-950 transition rounded-lg"
-                  }
+                  to="/dashboard"
+                  className={`${location.pathname == "/dashboard" ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg" : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"}`}
                 >
                   <MdDashboard className="w-5 h-5" />
                   Overview
+                </NavLink>
+
+                {/* create user */}
+                <NavLink
+                  to="/dashboard/create-user"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+                  }
+                >
+                  <IoMdPersonAdd className="w-5 h-5" />
+                  Create User
+                </NavLink>
+
+                {/* সকল ইউজার */}
+                <NavLink
+                  to="/dashboard/all-user"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+                  }
+                >
+                  <IoMdPersonAdd className="w-5 h-5" />
+                  All User
                 </NavLink>
 
                 {/* add student */}

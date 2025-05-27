@@ -49,7 +49,7 @@ export const AddResult = () => {
       (sub) => sub.subjectName === subjectName
     );
     if (!subject) {
-      Swal.fire("Subject not found!");
+      Swal.fire("বিষয় পাওয়া যায়নি!!!");
       return;
     }
 
@@ -58,7 +58,7 @@ export const AddResult = () => {
     // Validate marks based on totalMarks
     if (marks < 0 || marks > totalMarksForSubject) {
       Swal.fire(
-        `Invalid marks entered! Please enter a valid number between 0 and ${totalMarksForSubject}.`
+        `০ এবং ${totalMarksForSubject} এর মধ্যে নম্বর বসান`
       );
       return;
     }
@@ -170,7 +170,7 @@ export const AddResult = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `${resultInfo?.studentName}'s result added successfully!!!`,
+          title: `${resultInfo?.studentName} এর ফলাফল সফলভাবে তৈরি হয়েছে!!!`,
           showConfirmButton: false,
           timer: 1500,
         });

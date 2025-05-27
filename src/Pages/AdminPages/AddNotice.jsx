@@ -23,7 +23,7 @@ export default function AddNotice() {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `Notice added successfully!!!`,
+          title: `সফলভাবে নোটিশ প্রকাশ করা হয়েছে!!!`,
           showConfirmButton: false,
           timer: 1500,
         });

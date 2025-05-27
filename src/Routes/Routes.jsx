@@ -6,7 +6,7 @@ import { Result } from "../Pages/Result";
 import { PrivateRoute } from "./PrivateRoute";
 import { ErrorPage } from "../Pages/ErrorPage";
 import { Dashboard } from "../layouts/Dashboard";
-import { SignIn } from "../Pages/AdminPages/SignIn";
+import { SignIn } from "../Pages/SignIn";
 import Overview from "../Pages/AdminPages/Overview";
 import { AddStudent } from "../Pages/AdminPages/AddStudent";
 import AllStudents from "../Pages/AdminPages/AllStudents";
@@ -21,6 +21,10 @@ import Students from "../Pages/Students";
 import CreateAdmitCard from "../Pages/AdminPages/CreateAdmitCard";
 import ClassAdmitCard from "../Pages/AdminPages/ClassAdmitCard";
 import ResultPDF from "../components/Dashboard/ResultPDF/ResultPDF";
+import CreateUserPage from "../Pages/AdminPages/CreateUser";
+import AllUsers from "../Pages/AdminPages/AllUsers";
+import UpdateUser from "../Pages/AdminPages/UpdateUser";
+import { SignUp } from "../Pages/SignUp";
 
 const router = createBrowserRouter(
   [
@@ -56,12 +60,28 @@ const router = createBrowserRouter(
       element:<SignIn></SignIn>
     },
     {
+      path: 'sign-up',
+      element:<SignUp />
+    },
+    {
       path: "dashboard",
       element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children: [
         {
-          path: "overview",
+          index: true,
           element: <Overview></Overview>
+        },
+         {
+          path: "create-user",
+          element: <CreateUserPage />
+        },
+         {
+          path: "all-user",
+          element: <AllUsers />
+        },
+         {
+          path: "update-user/:id",
+          element: <UpdateUser />
         },
         {
           path: "add-student",

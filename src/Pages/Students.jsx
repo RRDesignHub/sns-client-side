@@ -115,7 +115,9 @@ export default function Students() {
         ) : serverError ? (
           <p className="col-span-4 text-red-500 text-center max-sm:text-xs">{serverError}</p>
         ) : students.length > 0 ? (
-          students?.map((student) => (
+          students
+            .sort((a, b) => a.classRoll - b.classRoll)
+            .map((student) => (
             <StudentCard key={student._id} student={student} />
           ))
         ) : (

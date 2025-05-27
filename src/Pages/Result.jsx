@@ -44,11 +44,11 @@ export const Result = () => {
         <title>SN-Result</title>
       </Helmet>
       <div className="bg-blue-50">
-        <div className="card-body lg:w-11/12 md:mx-auto">
-          <div className="flex flex-col md:flex-row justify-center md:items-center gap-2 md:gap-5">
+        <div className="card-body max-sm:p-3 lg:w-11/12 md:mx-auto">
+          <div className="flex max-sm:flex-wrap md:justify-center md:items-center max-sm:gap-y-2 max-sm:gap-x-4 md:gap-5">
             {/* select year */}
-            <div className="form-control justify-between md:items-start ">
-              <label className="block w-full label font-semibold">
+            <div className="form-control flex-col justify-between md:items-start ">
+              <label className="block max-sm:text-sm w-full label font-semibold">
                 শিক্ষাবর্ষ :
               </label>
               <select
@@ -73,14 +73,14 @@ export const Result = () => {
             </div>
             {/* exam name */}
             <div className="form-control justify-between md:items-start ">
-              <label className="block w-full label font-semibold">
+              <label className="block max-sm:text-sm w-full label font-semibold">
                 পরীক্ষার নাম :
               </label>
               <select
                 defaultValue={examName}
                 onChange={(e) => setExamName(e.target.value)}
                 name="subjectName"
-                className="w-full h-12 p-2 border border-gray-300 rounded-md"
+                className="select select-bordered"
                 required
               >
                 <option value="" disabled>
@@ -95,7 +95,7 @@ export const Result = () => {
             </div>
             {/* class name */}
             <div className="form-control justify-between md:items-start ">
-              <label className="block w-full label font-semibold">শ্রেণী :</label>
+              <label className="block max-sm:text-sm w-full label font-semibold">শ্রেণী :</label>
               <select
                 defaultValue={className}
                 onChange={(e) => setClassName(e.target.value)}
@@ -128,7 +128,7 @@ export const Result = () => {
             </div>
             {/* class roll */}
             <div className="form-control justify-between md:items-start ">
-              <label className="block w-full label font-semibold">রোল নং :</label>
+              <label className="block max-sm:text-sm  w-full label font-semibold">রোল নং :</label>
               <input
                 type="number"
                 name="classRoll"
@@ -264,9 +264,9 @@ export const Result = () => {
                 </div>
               </div>
             ) : serverError ? (
-              <p className="text-red-500 text-center">{serverError}</p>
+              <p className="text-red-500 max-sm:text-xs text-center">{serverError}</p>
             ) : (
-              <p className="text-center">
+              <p className="max-sm:text-xs text-center">
                 দয়া করে শিক্ষাবর্ষ, পরীক্ষা, শ্রেণী ও রোল টাইপ করুন এবং ফলাফল দেখতে
                 সার্চ এ ক্লিক করুন...
               </p>

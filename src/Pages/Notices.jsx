@@ -32,13 +32,13 @@ export const Notices = () => {
             <thead className="bg-green-200">
               <tr>
                
-                <th className="px-4 py-2 text-left text-green-700 font-semibold">
-                  Title
+                <th className="px-1 md:px-4 py-2 text-left text-green-700 font-semibold">
+                  শিরোনাম
                 </th>
-                <th className="px-4 py-2 text-left text-green-700 font-semibold">
-                  Date
+                <th className="px-1 md:px-4 py-2 text-left text-green-700 font-semibold">
+                  তারিখ
                 </th>
-                <th className="px-4 py-2 text-left text-green-700 font-semibold">
+                <th className="px-1 md:px-4 py-2 text-left text-green-700 font-semibold">
                   PDF
                 </th>
               </tr>
@@ -51,9 +51,9 @@ export const Notices = () => {
                     key={notice._id}
                     className={index % 2 === 0 ? "bg-green-50" : "bg-white"}
                   >
-                    <td className="px-4 py-2 text-gray-700">{notice.title}</td>
-                    <td className="px-4 py-2 text-gray-700">{notice?.date && format(new Date(notice.date), "dd/MM/yyyy, EEEE")}</td>
-                    <td className="px-4 py-2 text-gray-700">
+                    <td className="px-1 md:px-4 py-2 max-sm:text-xs text-gray-700">{notice.title}</td>
+                    <td className="px-1 md:px-4 py-2 max-sm:text-xs text-gray-700">{notice?.date && format(new Date(notice.date), "dd/MM/yyyy, EEEE")}</td>
+                    <td className="px-1 md:px-4 py-2 max-sm:text-xs text-gray-700">
                       <Link className="text-green-800 text-xl" to={notice?.pdfUrl}><FaFile></FaFile></Link>
                     </td>
                    

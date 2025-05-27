@@ -18,44 +18,6 @@ export const ExistingSubjects = () => {
         setLoading(false);
       });
   };
-
-  // const handleDeleteStudent = (clsName, roll) => {
-  //   const queryInfo = { clsName, roll };
-
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to server!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       fetch(`https://snkh-school-server-side.vercel.app/students`, {
-  //         method: "DELETE",
-  //         headers: {
-  //           "content-type": "application/json",
-  //         },
-  //         body: JSON.stringify(queryInfo),
-  //       })
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //           if(data.deletedCount){
-  //             const remainingStuudents = students.filter(student=> student.classRoll != roll);
-  //             setStudents(remainingStuudents);
-  //             Swal.fire({
-  //               title: "Deleted!",
-  //               text: "Your file has been deleted.",
-  //               icon: "success"
-  //             });
-  //           }
-  //         });
-
-  //     }
-  //   });
-  // };
-
   return (
     <>
       <div>

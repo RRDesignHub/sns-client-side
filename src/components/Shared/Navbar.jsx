@@ -50,7 +50,7 @@ export const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar w-11/12 mx-auto text-white justify-between max-sm:items-center">
+    <div className="navbar w-full max-sm:px-2 md:w-11/12 mx-auto text-white justify-between max-sm:items-center">
         <div className="navbar-start w-fit">
           
           <Link to="/" className=" text-xl">

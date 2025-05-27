@@ -31,7 +31,7 @@ export const AddStudent = () => {
     const motherName = form.motherName.value;
     const mobileNo = parseInt(form.mobileNo.value);
     const studentData = {
-      studentID: `SN-${session}-${birthRegNo.toString().slice(-4)}`,
+      studentID: `SN-${session}${birthRegNo.toString().slice(-4)}`,
       className,
       classRoll,
       sectionName,
@@ -62,7 +62,7 @@ export const AddStudent = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `${studentName}'s data added successfully!!!`,
+          title: `সফলভাবে ${studentName} এর তথ্য যোগ করা হয়েছে!!!`,
           showConfirmButton: false,
           timer: 1500,
         });

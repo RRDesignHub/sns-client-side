@@ -1,4 +1,5 @@
 import {
+  createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
@@ -11,6 +12,13 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState(true);
+
+  // create user with email and password:
+    const userCreate = (email, password) => {
+      setLoader(true);
+      return createUserWithEmailAndPassword(auth, email, password);
+    };
+
   const userLogin = (email, password) => {
     setLoader(true);
     return signInWithEmailAndPassword(auth, email, password);
@@ -46,6 +54,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const authInfo = {
+    userCreate,
     userLogin,
     user,
     setUser,

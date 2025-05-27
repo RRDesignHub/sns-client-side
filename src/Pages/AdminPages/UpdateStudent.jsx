@@ -72,7 +72,7 @@ export default function UpdateStudent() {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `${studentName}'s data successfully updated!!!`,
+          title: `সফলভাবে ${studentName} এর তথ্য পরিবর্তন করা হয়েছে!!!`,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -108,7 +108,6 @@ export default function UpdateStudent() {
                 // value={studentDetails?.className}
                 onChange={(e) => setClassName(e.target.value)}
                 name="class"
-                defaultValue={studentDetails?.className}
                 className="select select-bordered"
                 required
               >

@@ -1,62 +1,75 @@
 export default function Overview() {
   return (
-    <div className="p-6 min-h-screen">
+    <div className="p-2 md:p-6 min-h-screen">
       {/* Welcome Section */}
-      <div className="bg-primary text-white p-6 rounded-xl shadow-lg">
-        <h1 className="text-2xl font-semibold">
-          Welcome to <span className="font-bold text-green-50 text-3xl">Shah Neyamat (RH:) KG & High School</span>
-        </h1>
-        <p className="text-lg mt-2">
-          Manage students, teachers, and school operations efficiently.
+      <div className="bg-primary text-white p-2 md:p-6 rounded-xl shadow-lg">
+        <h1 className="font-bold md:text-3xl">ডেসবোর্ডে আপনাকে স্বাগতম</h1>
+        <p className="text-xs md:text-lg mt-2">
+          শিক্ষক/শিক্ষিকা এবং শিক্ষার্থীর তথ্য পরিচালনা, এডমিট কার্ড ও রেজাল্ট
+          তৈরি, নোটিশ প্রকাশ...
         </p>
       </div>
 
       {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6 mt-6">
         {/* Total Students */}
-        <div className="bg-card p-6 rounded-xl shadow-md border-l-8 border-green-700">
-          <h2 className="text-xl font-semibold text-primary">Total Students</h2>
-          <p className="text-4xl font-bold mt-2 text-green-700">1,245</p>
+        <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-700">
+          <h2 className="text-xs md:text-xl font-semibold text-primary">
+            মোট শিক্ষার্থী
+          </h2>
+          <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
+            1,245 জন
+          </p>
         </div>
 
         {/* Total Teachers */}
-        <div className="bg-card p-6 rounded-xl shadow-md border-l-8 border-green-600">
-          <h2 className="text-xl font-semibold text-primary">Total Teachers</h2>
-          <p className="text-4xl font-bold mt-2 text-green-700">56</p>
+        <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-600">
+          <h2 className="text-xs md:text-xl font-semibold text-primary">
+            শিক্ষক/ শিক্ষিকা
+          </h2>
+          <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
+            56 জন
+          </p>
         </div>
 
         {/* Total Classrooms */}
-        <div className="bg-card p-6 rounded-xl shadow-md border-l-8 border-green-500">
-          <h2 className="text-xl font-semibold text-primary">
-            Total Classrooms
+        <div className="bg-card p-2 md:p-6  rounded-xl shadow-md border-l-8 border-green-500">
+          <h2 className="text-xs md:text-xl font-semibold text-primary">
+            মোট শ্রেণীকক্ষ
           </h2>
-          <p className="text-4xl font-bold mt-2 text-green-700">32</p>
+          <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
+            32 টি
+          </p>
         </div>
 
         {/* Ongoing Exams */}
-        <div className="bg-card p-6 rounded-xl shadow-md border-l-8 border-green-400">
-          <h2 className="text-xl font-semibold text-primary">Ongoing Exams</h2>
-          <p className="text-4xl font-bold mt-2 text-green-700">3</p>
+        <div className="bg-card p-2 md:p-6  rounded-xl shadow-md border-l-8 border-green-400">
+          <h2 className="text-xs md:text-xl font-semibold text-primary">
+            চলমান পরীক্ষা
+          </h2>
+          <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
+            3 টি
+          </p>
         </div>
       </div>
 
       {/* Recent Activities */}
-      <div className="bg-card p-6 rounded-xl shadow-md mt-6">
+      <div className="bg-card p-2 md:p-6  rounded-xl shadow-md mt-6">
         <h2 className="text-xl font-semibold text-primary">
-          Recent Activities
+          সর্বশেষ কার্যক্রম
         </h2>
-        <ul className="mt-4 space-y-2">
+        <ul className="mt-4 space-y-2 max-sm:text-xs">
           <li className="text-green-700">
-            ✅ New student "Arafat Hossain" admitted to Class 6.
+            <span className="font-bold">শিক্ষার্থীর তথ্য:</span> নতুন ছাত্র "আরাফাত হোসেন" শ্রেণি ৬-এ ভর্তি হয়েছে।
           </li>
           <li className="text-green-700">
-            ✅ Final term results uploaded for Class 8.
+            <span className="font-bold">রেজাল্ট:</span> শ্রেণি ৮-এর চূড়ান্ত পরীক্ষার ফলাফল আপলোড করা হয়েছে।
           </li>
           <li className="text-green-700">
-            ✅ Teacher "Ms. Rahima Begum" added to Mathematics Department.
+             <span className="font-bold">শিক্ষক/শিক্ষিকা:</span> প্রাইমারিতে "মিস আকি আকতার" যোগদান করেছেন।
           </li>
           <li className="text-green-700">
-            ✅ "Science Fair 2025" scheduled for March 10.
+            <span className="font-bold">নোটিশ:</span> "অর্ধবার্ষিক পরীক্ষা-২০২৫" অনুষ্ঠিত হবে ২৭ জুন।
           </li>
         </ul>
       </div>
