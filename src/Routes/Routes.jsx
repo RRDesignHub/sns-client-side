@@ -7,6 +7,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { ErrorPage } from "../Pages/ErrorPage";
 import { Dashboard } from "../layouts/Dashboard";
 import { SignIn } from "../Pages/SignIn";
+import AdminRoute from "./AdminRoute";
 import Overview from "../Pages/AdminPages/Overview";
 import { AddStudent } from "../Pages/AdminPages/AddStudent";
 import AllStudents from "../Pages/AdminPages/AllStudents";
@@ -73,7 +74,7 @@ const router = createBrowserRouter(
         },
          {
           path: "create-user",
-          element: <CreateUserPage />
+          element: <AdminRoute><CreateUserPage /></AdminRoute>
         },
          {
           path: "all-user",

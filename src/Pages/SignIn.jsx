@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import logo from "../assets/logo.png";
@@ -8,7 +8,6 @@ export const SignIn = () => {
   const [authError, setAuthError] = useState(null);
   const { setUser, userLogin } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const handleAdminLogin = (e) => {
     e.preventDefault();
     setAuthError(null);
@@ -25,7 +24,7 @@ export const SignIn = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate(location.state ? `${location.state}` : "/");
+        navigate("/dashboard");
         form.reset();
       })
       .catch((err) => {

@@ -1,15 +1,13 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo from "../assets/logo.png";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../Hooks/useAuth";
-import { useAxiosSec } from "../Hooks/useAxiosSec";
 import axios from "axios";
 export const SignUp = () => {
-  const axiosSecure = useAxiosSec();
   const [authError, setAuthError] = useState(null);
-  const { setUser, logoutUser, createUser } = useAuth();
+  const { setUser, userCreate } = useAuth();
   const navigate = useNavigate();
   const handleUserSignUp = async(e) => {
     e.preventDefault();
@@ -23,40 +21,38 @@ export const SignUp = () => {
       if(data.message){
         return setAuthError(data.message);
       }
-      console.log(data);
+      userCreate(email, password)
+            .then((result) => {
+              setUser(result.user);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `ইউজার রেজিস্ট্রেশন সফল হয়েছে!`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/dashboard");
+              form.reset();
+            })
+            .catch((err) => {
+              if (err.code === "auth/invalid-email") {
+                setAuthError("The email address you entered is not valid.");
+              } else if (err.code === "auth/wrong-password") {
+                setAuthError("সঠিক পাসওয়ার্ড প্রদান করুন!!!");
+              } else if (err.code === "auth/user-not-found") {
+                setAuthError("প্রদত্ত ইমেইল দিয়ে কোনো ইউজার নেই!!!");
+              } else {
+                setAuthError("প্রদত্ত তথ্য দিয়ে ইউজার রেজিস্ট্রেশন করা আছে!!!");
+              }
+            });
     }catch(err){
       console.log(err);
     }
-    // createUser(email, password)
-    //   .then((result) => {
-    //     setUser(result.user);
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "success",
-    //       title: `ইউজার লগইন সফল হয়েছে!`,
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-            //logoutUser()
-    //     navigate("/login");
-    //     form.reset();
-    //   })
-    //   .catch((err) => {
-    //     if (err.code === "auth/invalid-email") {
-    //       setAuthError("The email address you entered is not valid.");
-    //     } else if (err.code === "auth/wrong-password") {
-    //       setAuthError("সঠিক পাসওয়ার্ড প্রদান করুন!!!");
-    //     } else if (err.code === "auth/user-not-found") {
-    //       setAuthError("প্রদত্ত ইমেইল দিয়ে কোনো ইউজার নেই!!!");
-    //     } else {
-    //       setAuthError("An unexpected error occurred.");
-    //     }
-    //   });
   };
   return (
     <>
       <Helmet>
-        <title>SN-Admin Login</title>
+        <title>রেজিস্ট্রেশন</title>
       </Helmet>
       <div className="min-h-screen flex justify-center bg-green-50 items-center bg-sand">
         <div className="w-full max-w-md px-6 py-8 bg-background rounded-lg shadow-lg">
