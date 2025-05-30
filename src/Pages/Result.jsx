@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 export const Result = () => {
   const [examName, setExamName] = useState("1st-Semester");
-  const [session, setSession] = useState(new Date().getFullYear());
+  const [session, setSession] = useState(new Date().getFullYear().toString());
   const [className, setClassName] = useState("Play");
   const [classRoll, setClassRoll] = useState(null);
   const [serverError, setServerError] = useState("");
@@ -37,7 +37,7 @@ export const Result = () => {
     setEnabled(true);
     refetch();
   };
-
+console.log(session, examName, className, classRoll)
   return (
     <>
       <Helmet>
@@ -98,7 +98,7 @@ export const Result = () => {
               <label className="block max-sm:text-sm w-full label font-semibold">শ্রেণী :</label>
               <select
                 defaultValue={className}
-                onChange={(e) => setClassName(e.target.value)}
+                onChange={(e) => setClassName(e.target.value.toString())}
                 name="class"
                 className="select select-bordered"
                 required
@@ -132,7 +132,7 @@ export const Result = () => {
               <input
                 type="number"
                 name="classRoll"
-                onChange={(e) => setClassRoll(e.target.value)}
+                onChange={(e) => setClassRoll(e.target.value.toString())}
                 placeholder="Student roll"
                 className="input input-bordered max-sm:w-32"
                 required

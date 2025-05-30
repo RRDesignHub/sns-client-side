@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 
 export default function AddNotice() {
   const axiosSecure = useAxiosSec();

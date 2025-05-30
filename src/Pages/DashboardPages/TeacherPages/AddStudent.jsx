@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import imageUpload from "../../Api/Utils";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
+import imageUpload from "../../../Api/Utils";
 export const AddStudent = () => {
   const axiosSecure = useAxiosSec();
   const [session, setSession] = useState(new Date().getFullYear().toString());

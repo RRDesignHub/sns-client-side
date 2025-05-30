@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
-import { Loading } from "../../components/Shared/Loading";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
+import { Loading } from "../../../components/Shared/Loading";
 
 const AllSubjects = () => {
   const axiosSecure = useAxiosSec();

@@ -1,12 +1,12 @@
 import React from "react";
-import { Loading } from "../../components/Shared/Loading";
-import { useQuery } from "@tanstack/react-query";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { useQuery } from "@tanstack/react-query";;
 import { Link } from "react-router-dom";
 import { FaUserEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { format } from "date-fns";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
+import { Loading } from "../../../components/Shared/Loading";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSec();

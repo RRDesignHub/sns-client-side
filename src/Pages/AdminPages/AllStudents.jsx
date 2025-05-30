@@ -1,20 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { Loading } from "../../components/Shared/Loading";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
-import { FaUserEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { FaUserEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import Swal from "sweetalert2";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
+import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { useRole } from "../../Hooks/useRole";
+import { Loading } from "../../components/Shared/Loading";
 export default function AllStudents() {
   const axiosSecure = useAxiosSec();
+  const [userRole] = useRole();
   const [filterStudentsID, setFilterStudentsID] = useState("");
   const [filterByClass, setFilterByClass] = useState("");
   const [session, setSession] = useState(new Date().getFullYear());
   const [serverError, setServerError] = useState("");
   const [enabled, setUnabled] = useState(false);
-
+  const { isTeacher, isAccountant, isAdmin } = userRole;
   const {
     data: students = [],
     isLoading,
@@ -76,11 +78,6 @@ export default function AllStudents() {
         সকল শিক্ষার্থী
       </h2>
       <div className="divider"></div>
-      {students.length > 0 && (
-        <h3 className="text-xl text-green-950 font-semibold mb-2">
-          মোট শিক্ষার্থী: <span className="font-bold">{students.length}</span> জন
-        </h3>
-      )}
 
       {/* Filter Inputs */}
       <div className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5">
@@ -152,7 +149,7 @@ export default function AllStudents() {
           </label>
           <input
             type="text"
-            placeholder="যেমন: 'SN-2025-1234'"
+            placeholder="যেমন: 'SN-20251234'"
             name="classRoll"
             value={filterStudentsID}
             onChange={(e) => setFilterStudentsID(e.target.value)}
@@ -169,77 +166,85 @@ export default function AllStudents() {
           </button>
         </div>
       </div>
-
-      {isLoading && <Loading />}
-      {/* Student Table */}
-      <div className="overflow-x-auto bg-green-200 shadow-md rounded-lg">
-        <table className="table w-full">
-          {/* Table Header */}
-          <thead className="bg-green-600 text-white">
-            <tr>
-              <th>Student ID</th>
-              <th>শিক্ষার্থীর ছবি</th>
-              <th>নাম</th>
-              <th>রোল</th>
-              <th>জন্ম তাং</th>
-              <th>বাবার নাম</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          {/* Table Body */}
-          <tbody>
-            {students.length > 0 ? (
-              students
-                .sort((a, b) => a.classRoll - b.classRoll)
-                .map((student) => (
-                  <tr key={student._id}>
-                    <td>{student.studentID}</td>
-                    <td>
-                      <img
-                        src={student?.image}
-                        className="w-10 h-10 border border-green-600 rounded-full"
-                        alt=""
-                      />
-                    </td>
-                    <td>{student.studentName}</td>
-                    <td>{student.classRoll}</td>
-                    <td>
-                      {student?.dateOfBirth &&
-                        format(new Date(student?.dateOfBirth), "MMMM dd, yyyy")}
-                    </td>
-                    <td>{student.fatherName}</td>
-                    <td>
-                      <Link
-                        to={`/dashboard/update-student/${student?._id}`}
-                        className="btn btn-sm bg-secondary hover:bg-primary mr-2"
-                      >
-                        <FaUserEdit />
-                      </Link>
-                      <button
-                        className="btn btn-sm text-lg btn-error text-white"
-                        onClick={() => handleDelete(student._id)}
-                      >
-                        <MdDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-            ) : serverError ? (
+      <div className="divider my-0"></div>
+      {students.length > 0 && (
+        <div className="pb-2 flex justify-evenly text-sm md:text-lg text-green-950 font-semibold">
+          <h2>শ্রেণী : {filterByClass}</h2>
+          <h2>মোট শিক্ষার্থী: {students.length} জন</h2>
+        </div>
+      )}
+      {isLoading ? (
+        <Loading />
+      ) : students.length > 0 ? (
+        <div className="overflow-x-auto bg-green-200 shadow-md rounded-lg">
+          <table className="table w-full">
+            {/* Table Header */}
+            <thead className="bg-green-600 text-white">
               <tr>
-                <td colSpan="6" className="text-center py-4 text-gray-600">
-                  {serverError}
-                </td>
+                <th>Student ID</th>
+                <th>শিক্ষার্থীর ছবি</th>
+                <th>নাম</th>
+                <th>রোল</th>
+                <th>জন্ম তাং</th>
+                <th>বাবার নাম</th>
+                <th>Actions</th>
               </tr>
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center py-4 text-gray-600">
-                  শ্রেণী নির্বাচন করুন.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            {/* Table Body */}
+            <tbody>
+              {students.length > 0 &&
+                students
+                  .sort((a, b) => a.classRoll - b.classRoll)
+                  .map((student) => (
+                    <tr key={student._id}>
+                      <td>{student.studentID}</td>
+                      <td>
+                        <img
+                          src={student?.image}
+                          className="w-10 h-10 border border-green-600 rounded-full"
+                          alt=""
+                        />
+                      </td>
+                      <td>{student.studentName}</td>
+                      <td>{student.classRoll}</td>
+                      <td>
+                        {student?.dateOfBirth &&
+                          format(
+                            new Date(student?.dateOfBirth),
+                            "MMMM dd, yyyy"
+                          )}
+                      </td>
+                      <td>{student.fatherName}</td>
+                      {isAdmin ? (
+                        <td>
+                          <Link
+                            to={`/dashboard/update-student/${student?._id}`}
+                            className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                          >
+                            <FaUserEdit />
+                          </Link>
+                          <button
+                            className="btn btn-sm text-lg btn-error text-white"
+                            onClick={() => handleDelete(student._id)}
+                          >
+                            <MdDelete />
+                          </button>
+                        </td>
+                      ) : (
+                        <td>
+                          <Link to={`/dashboard/student-details/${student._id}`} className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2">Details</Link>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
+      ) : serverError ? (
+        <p className="text-center py-4 text-red-400">{serverError}</p>
+      ) : (
+        <p className="text-center py-4">শ্রেণী ও শিক্ষাবর্ষ নির্বাচন করুন.</p>
+      )}
     </div>
   );
 }

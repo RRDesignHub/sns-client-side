@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 export const AddSubject = () => {
   const axiosSecure = useAxiosSec();
   const [className, setClassName] = useState("Play");

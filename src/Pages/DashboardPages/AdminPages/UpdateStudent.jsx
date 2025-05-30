@@ -2,13 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Loading } from "../../components/Shared/Loading";
 import Swal from "sweetalert2";
-
-import imageUpload from "../../Api/Utils";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
+import { Loading } from "../../../components/Shared/Loading";
+import imageUpload from "../../../Api/Utils";
 export default function UpdateStudent() {
   const axiosSecure = useAxiosSec();
   const navigate = useNavigate();

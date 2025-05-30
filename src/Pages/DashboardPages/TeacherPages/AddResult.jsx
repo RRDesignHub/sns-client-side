@@ -2,8 +2,7 @@ import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { Loading } from "../../components/Shared/Loading";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 export const AddResult = () => {
   const axiosSecure = useAxiosSec();
   const [studentData, setStudentData] = useState({});

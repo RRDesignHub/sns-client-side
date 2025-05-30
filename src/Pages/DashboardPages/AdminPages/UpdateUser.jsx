@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import Swal from "sweetalert2";
+import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 
 const UpdateUser = () => {
   const navigate = useNavigate();
@@ -24,10 +24,9 @@ const UpdateUser = () => {
       e.preventDefault();
       const form = e.target;
       const name = form.name.value;
-      const password = form.password.value;
       const role = form.role.value;
       const status = form.status.value;
-      const newUser = { name, email: user?.email, password, role, status };
+      const newUser = { name, email: user?.email, role, status };
      
       try {
         // Save user data to the database:
@@ -89,21 +88,6 @@ const UpdateUser = () => {
             className="input input-bordered"
             required
           />
-        </div>
-
-        {/* Password */}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text text-primary">পাসওয়ার্ড</span>
-          </label>
-          <input
-            type="password"
-            name="password"
-            placeholder="********"
-            className="input input-bordered"
-            required
-          />
-          
         </div>
 
         {/* Role */}

@@ -48,20 +48,20 @@ const Results = () => {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You have to again add this!",
+        title: "আপনি কি নিশ্চিত?",
+        text: "পুনরায় তৈরি করতে হবে!",
         icon: "warning",
         color: "#064E3B",
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#16A34A",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যাঁ, ডিলিট!",
       }).then(async (result) => {
         if (result.isConfirmed) {
           const { data } = await axiosSecure.delete(`/result/${id}`);
           if (data.deletedCount) {
             Swal.fire({
-              title: "Deleted!",
+              title: "ডিলিট হয়েছে!",
               text: "Result has been deleted.",
               icon: "success",
             });
@@ -174,10 +174,16 @@ const Results = () => {
           </div>
         </div>
         <div className="divider my-0"></div>
-
-        {isLoading && <Loading />}
+        {resultData.length > 0 && (
+          <div className="pb-2 flex justify-between text-sm md:text-lg text-green-950 font-semibold">
+            <h2>শ্রেণী : {resultData[0]?.className}</h2>
+            <h2>মোট ফলাফল : {resultData.length} টি</h2>
+          </div>
+        )}
         {/* Display Results */}
-        {resultData.length === 0 ? (
+        {isLoading ? (
+          <Loading />
+        ) : resultData.length === 0 ? (
           <p className="text-center text-gray-500">{error}</p>
         ) : error ? (
           <p className="py-2 text-center text-red-500">{error}</p>
@@ -185,9 +191,8 @@ const Results = () => {
           <table className="w-full table">
             <thead>
               <tr className="bg-green-600 text-green-50 ">
-                <th>শিক্ষার্থীর নাম</th>
-                <th>শ্রেণী</th>
                 <th>রোল</th>
+                <th>শিক্ষার্থীর নাম</th>
                 <th>মোট নম্বর</th>
                 <th>Grade</th>
                 <th>Status</th>
@@ -199,9 +204,8 @@ const Results = () => {
                 resultData.length > 0 &&
                 resultData?.map((result) => (
                   <tr key={result._id} className="">
-                    <td>{result.studentName}</td>
-                    <td>{result.className}</td>
                     <td>{result.classRoll}</td>
+                    <td>{result.studentName}</td>
                     <td>{result.totalMarks}</td>
                     <td>{result.totalLG}</td>
                     <td>{result.status}</td>

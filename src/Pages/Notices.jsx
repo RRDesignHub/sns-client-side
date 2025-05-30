@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
 import { FaFile } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Loading } from "../components/Shared/Loading";

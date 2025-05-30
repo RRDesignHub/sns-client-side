@@ -1,29 +1,30 @@
 import { useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { IoArrowForwardCircle, IoArrowBackCircle } from "react-icons/io5";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "./../assets/logo.png";
-import { RiBookShelfFill } from "react-icons/ri";
-import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
-import { FaHome, FaIdCard, FaRegIdCard } from "react-icons/fa";
-import { IoMdPersonAdd } from "react-icons/io";
-import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
-import { HiSpeakerphone } from "react-icons/hi";
-import { GiPapers } from "react-icons/gi";
+import { IoArrowForwardCircle, IoArrowBackCircle } from "react-icons/io5";
+import { FaHome} from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
 import useAuth from "../Hooks/useAuth";
 import { useRole } from "../Hooks/useRole";
+import AdminsNavbars from "../components/Dashboard/Navbars/AdminsNavbars";
+import TeacherNavbars from "../components/Dashboard/Navbars/TeacherNavbars";
+import AdminsNavbarLg from "../components/Dashboard/Navbars/AdminNavLg";
+import TeacherNavbarLg from "../components/Dashboard/Navbars/TeacherNavbarsLg";
+import { Loading } from "../components/Shared/Loading";
 export const Dashboard = () => {
-  const [userRole] = useRole();
+  const [userRole, roleLoading] = useRole();
     const { isTeacher, isAccountant, isAdmin } = userRole;
   const { logoutUser } = useAuth();
   const [openCloseMenu, setOpenCloseMenu] = useState(true);
-  const location = useLocation();
   
   const handleOpenCloseMenu = () => {
     setOpenCloseMenu(!openCloseMenu);
   };
   return (
+    <>
+    {roleLoading && <Loading />}
     <div className="min-h-screen flex">
+      
       {/* Sidebar */}
       <aside
         className={`fixed shadow ${
@@ -53,271 +54,14 @@ export const Dashboard = () => {
           <nav className="space-y-2 md:space-y-4">
             {/* Admin-Specific Links for small screen*/}
             {isAdmin && (
-              <>
-              {/* overview */}
-                <NavLink
-                  to="/dashboard"
-                  className={`${location.pathname == "/dashboard" ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white" : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition"}`}
-                  
-                >
-                  <MdDashboard className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "Overview" : ""}
-                  </span>
-                </NavLink>
-
-                {/* create user*/}
-                <NavLink
-                  to="/dashboard/create-user"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <IoMdPersonAdd className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "Create User" : ""}
-                  </span>
-                </NavLink>
-
-                {/* all user*/}
-                <NavLink
-                  to="/dashboard/all-user"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <IoMdPersonAdd className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "All User" : ""}
-                  </span>
-                </NavLink>
-
-               
-
-                {/* add notice */}
-                <NavLink
-                  to="/dashboard/add-notice"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <HiSpeakerphone className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "নোটিশ যোগ" : ""}
-                  </span>
-                </NavLink>
-
-                {/* add subject */}
-                <NavLink
-                  to="/dashboard/add-subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <PiBookOpenTextFill className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "বিষয় যোগ" : ""}
-                  </span>
-                </NavLink>
-
-                
-
-                {/* create admit card */}
-                <NavLink
-                  to="/dashboard/add-admit-card"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <MdOutlineAddchart className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "এডমিট কার্ড তৈরি" : ""}
-                  </span>
-                </NavLink>
-
-                {/* all students */}
-                <NavLink
-                  to="/dashboard/students"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <PiUsersFourFill className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "সকল শিক্ষার্থী" : ""}
-                  </span>
-                </NavLink>
-
-
-                {/* subjects */}
-                <NavLink
-                  to="/dashboard/subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <RiBookShelfFill className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "বিষয়সমূহ" : ""}
-                  </span>
-                </NavLink>
-
-                {/*  এডমিট কার্ড */}
-                <NavLink
-                  to="/dashboard/class-admit-cards"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <FaRegIdCard className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "এডমিট কার্ড" : ""}
-                  </span>
-                </NavLink>
-               
-               {/* ফলাফল */}
-                <NavLink
-                  to="/dashboard/results"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <GiPapers className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "ফলাফল" : ""}
-                  </span>
-                </NavLink>
-              </>
+              <AdminsNavbars openCloseMenu={openCloseMenu}/>
             )}
             {isTeacher && <>
-              {/* overview */}
-                <NavLink
-                  to="/dashboard"
-                  className={`${location.pathname == "/dashboard" ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white" : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition"}`}
-                  
-                >
-                  <MdDashboard className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "Overview" : ""}
-                  </span>
-                </NavLink>
+             <TeacherNavbars openCloseMenu={openCloseMenu} />
+              </>}
 
-               
-
-                {/* add student */}
-                <NavLink
-                  to="/dashboard/add-student"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <IoMdPersonAdd className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "শিক্ষার্থী যোগ" : ""}
-                  </span>
-                </NavLink>
-
-                
-
-                {/* add subject */}
-                <NavLink
-                  to="/dashboard/add-subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <PiBookOpenTextFill className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "বিষয় যোগ" : ""}
-                  </span>
-                </NavLink>
-
-                {/* add result */}
-                <NavLink
-                  to="/dashboard/add-result"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <MdOutlineAddchart className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "ফলাফল তৈরি" : ""}
-                  </span>
-                </NavLink>
-
-                
-
-                {/* all students */}
-                <NavLink
-                  to="/dashboard/students"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <PiUsersFourFill className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "সকল শিক্ষার্থী" : ""}
-                  </span>
-                </NavLink>
-
-
-                
-
-                {/*  এডমিট কার্ড */}
-                <NavLink
-                  to="/dashboard/class-admit-cards"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <FaRegIdCard className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "এডমিট কার্ড" : ""}
-                  </span>
-                </NavLink>
-               
-               {/* ফলাফল */}
-                <NavLink
-                  to="/dashboard/results"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
-                      : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
-                  }
-                >
-                  <GiPapers className="w-4 h-4" />
-                  <span className="text-xs ">
-                    {openCloseMenu ? "ফলাফল" : ""}
-                  </span>
-                </NavLink>
+              {isAccountant && <>
+            {/* <TeacherNavbarLg /> */}
               </>}
           </nav>
         </div>
@@ -362,230 +106,14 @@ export const Dashboard = () => {
             {/* Admin-Specific Links */}
             {isAdmin && (
               <>
-                {/* overview */}
-                <NavLink
-                  to="/dashboard"
-                  className={`${location.pathname == "/dashboard" ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg" : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"}`}
-                >
-                  <MdDashboard className="w-5 h-5" />
-                  Overview
-                </NavLink>
-
-                {/* create user */}
-                <NavLink
-                  to="/dashboard/create-user"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <IoMdPersonAdd className="w-5 h-5" />
-                  Create User
-                </NavLink>
-
-                {/* সকল ইউজার */}
-                <NavLink
-                  to="/dashboard/all-user"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <IoMdPersonAdd className="w-5 h-5" />
-                  All User
-                </NavLink>
-
-               
-                {/* add notice */}
-                <NavLink
-                  to="/dashboard/add-notice"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <HiSpeakerphone className="w-5 h-5" />
-                  নোটিশ যোগ
-                </NavLink>
-
-                {/* add subject */}
-                <NavLink
-                  to="/dashboard/add-subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <PiBookOpenTextFill className="w-5 h-5" />
-                  বিষয় যোগ
-                </NavLink>
-
-                {/* add admit card */}
-                <NavLink
-                  to="/dashboard/add-admit-card"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <FaIdCard className="w-5 h-5" />
-                  এডমিট কার্ড তৈরি
-                </NavLink>
-
-
-                {/* all students */}
-                <NavLink
-                  to="/dashboard/students"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <PiUsersFourFill className="w-5 h-5" />
-                  সকল শিক্ষার্থী
-                </NavLink>
-
-                {/* all subjects */}
-                <NavLink
-                  to="/dashboard/subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <RiBookShelfFill className="w-5 h-5" />
-                  বিষয়সমূহ
-                </NavLink>
-
-                 {/* all classbased admit cards */}
-                 <NavLink
-                  to="/dashboard/class-admit-cards"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <FaRegIdCard className="w-5 h-5" />
-                  এডমিট কার্ড
-                </NavLink>
-
-                {/* all results */}
-                <NavLink
-                  to="/dashboard/results"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <GiPapers className="w-5 h-5" />
-                  ফলাফল
-                </NavLink>
+                <AdminsNavbarLg />
               </>
             )}
             {isTeacher && <>
-             {/* overview */}
-                <NavLink
-                  to="/dashboard"
-                  className={`${location.pathname == "/dashboard" ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg" : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"}`}
-                >
-                  <MdDashboard className="w-5 h-5" />
-                  Overview
-                </NavLink>
-
-                
-
-                {/* add student */}
-                <NavLink
-                  to="/dashboard/add-student"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <IoMdPersonAdd className="w-5 h-5" />
-                  শিক্ষার্থী যোগ
-                </NavLink>
-
-               
-
-                {/* add subject */}
-                <NavLink
-                  to="/dashboard/add-subjects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <PiBookOpenTextFill className="w-5 h-5" />
-                  বিষয় যোগ
-                </NavLink>
-
-                
-
-                  {/* // add result */}
-                <NavLink
-                  to="/dashboard/add-result"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <MdOutlineAddchart className="w-5 h-5" />
-                  ফলাফল তৈরি
-                </NavLink>
-
-                {/* all students */}
-                <NavLink
-                  to="/dashboard/students"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <PiUsersFourFill className="w-5 h-5" />
-                  সকল শিক্ষার্থী
-                </NavLink>
-
-               
-
-                 {/* all classbased admit cards */}
-                 <NavLink
-                  to="/dashboard/class-admit-cards"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <FaRegIdCard className="w-5 h-5" />
-                  এডমিট কার্ড
-                </NavLink>
-
-                {/* all results */}
-                <NavLink
-                  to="/dashboard/results"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
-                      : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
-                  }
-                >
-                  <GiPapers className="w-5 h-5" />
-                  ফলাফল
-                </NavLink>
+            <TeacherNavbarLg />
+              </>}
+              {isAccountant && <>
+            {/* <TeacherNavbarLg /> */}
               </>}
           </nav>
 
@@ -623,5 +151,6 @@ export const Dashboard = () => {
         </section>
       </main>
     </div>
+    </>
   );
 };

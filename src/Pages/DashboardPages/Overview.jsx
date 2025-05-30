@@ -1,9 +1,14 @@
+import { useRole } from "../../Hooks/useRole";
+
 export default function Overview() {
+   const [userRole] = useRole();
+  const { isTeacher, isAccountant, isAdmin } = userRole;
+
   return (
     <div className="p-2 md:p-6 min-h-screen">
       {/* Welcome Section */}
       <div className="bg-primary text-white p-2 md:p-6 rounded-xl shadow-lg">
-        <h1 className="font-bold md:text-3xl">ডেসবোর্ডে আপনাকে স্বাগতম</h1>
+        <h1 className="md:text-3xl">{isTeacher ? <span className="font-extrabold">শিক্ষক/শিক্ষিকা</span> : isAccountant ? <span className="font-extrabold">একাউন্টেন্ড</span> : <span className="font-extrabold">এডমিন</span>} এর ডেসবোর্ডে আপনাকে স্বাগতম</h1>
         <p className="text-xs md:text-lg mt-2">
           শিক্ষক/শিক্ষিকা এবং শিক্ষার্থীর তথ্য পরিচালনা, এডমিট কার্ড ও রেজাল্ট
           তৈরি, নোটিশ প্রকাশ...
