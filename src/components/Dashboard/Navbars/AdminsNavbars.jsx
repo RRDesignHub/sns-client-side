@@ -91,6 +91,20 @@ const AdminsNavbars = ({openCloseMenu}) => {
         </span>
       </NavLink>
 
+{/* create teacher*/}
+      <NavLink
+        to="/dashboard/add-teacher"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+            : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+        }
+      >
+        <MdOutlineAddchart className="w-4 h-4" />
+        <span className="text-xs ">
+          {openCloseMenu ? "শিক্ষক/শিক্ষিকা যোগ" : ""}
+        </span>
+      </NavLink>
       {/* all students */}
       <NavLink
         to="/dashboard/students"
@@ -143,6 +157,21 @@ const AdminsNavbars = ({openCloseMenu}) => {
       >
         <GiPapers className="w-4 h-4" />
         <span className="text-xs ">{openCloseMenu ? "ফলাফল" : ""}</span>
+      </NavLink>
+
+        {/* all students */}
+      <NavLink
+        to="/dashboard/all-teacher"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+            : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+        }
+      >
+        <PiUsersFourFill className="w-4 h-4" />
+        <span className="text-xs ">
+          {openCloseMenu ? "সকল শিক্ষক/শিক্ষিকা" : ""}
+        </span>
       </NavLink>
     </>
   );

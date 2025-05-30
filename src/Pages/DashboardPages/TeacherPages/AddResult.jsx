@@ -193,7 +193,7 @@ export const AddResult = () => {
             onSubmit={handleDisplayStudentInfo}
             className="card-body max-sm:px-0 lg:w-3/4 mx-auto"
           >
-            <h3 className="text-center text-sm md:text-md text-red-500">প্রথমে শ্রেণী ও রোল দিয়ে শিক্ষার্থী নির্বাচন করুন</h3>
+            {!studentData?.studentName && <h3 className="text-center text-sm md:text-md text-red-500">প্রথমে শ্রেণী ও রোল দিয়ে শিক্ষার্থী নির্বাচন করুন</h3>}
             <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-5">
               
               {/* class name */}
@@ -257,12 +257,12 @@ export const AddResult = () => {
             </div>
             {serverError && <p className="text-red-500 text-md text-center pt-3">{serverError}</p>}
           </form>
-
-          <div className="bg-green-100 px-3 rounded-lg py-5 md:py-8">
+          {studentData?.studentName && <div className="bg-green-100 px-3 rounded-lg py-5 md:py-8">
             <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
               ফলাফল তৈরি করুন
             </h1>
             <div className="divider my-0"></div>
+            <p className="text-xs md:text-sm text-center">বিষয়ের নাম, পরীক্ষার তারিখ, সময় নির্বাচন করুন এবং “Add” বাটনে ক্লিক করুন</p>
             <div className="flex max-sm:flex-col justify-center items-center gap-2 md:gap-8 pt-2">
               <h3 className="text-sm md:text-lg">
                 শিক্ষার্থীর নাম:
@@ -288,7 +288,7 @@ export const AddResult = () => {
                   onChange={(e) => setExamName(e.target.value)}
                   name="subjectName"
                   value={examName}
-                  className={`w-full h-12 p-2 border rounded-md ${error === "যেমন: ১ম সেমিস্টর পরীক্ষা..." ? "border-red-400" : "border-gray-300 "}`}
+                  className={`w-full h-12 p-2 border rounded-md ${serverError === "পরীক্ষার নাম নির্বাচন করুন." ? "border-red-400" : "border-gray-300 "}`}
                   required
                 >
                   <option value={""} disabled>
@@ -302,44 +302,6 @@ export const AddResult = () => {
                 </select>
               </div>
             </div>
-
-            {result.length ? (
-              <div className="bg-green-50 p-5 rounded-xl mt-5 mx-8">
-                <div className="overflow-x-auto">
-                  <table className="table">
-                    {/* head */}
-                    <thead>
-                      <tr>
-                        <th>বিষয়ের নাম</th>
-                        <th>প্রাপ্ত নম্বর</th>
-                        <th>Grade Point</th>
-                        <th>Latter Grade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {result.map((singleSubject, index) => (
-                        <tr key={index}>
-                          <td>{singleSubject?.subjectName}</td>
-                          <td>{singleSubject?.marks}</td>
-                          <td>{singleSubject?.GPA}</td>
-                          <td>{singleSubject?.letterGrade}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td className="font-bold">মোট</td>
-                        <td className="font-bold">{totalMarks}</td>
-                        <td className="font-bold">{gpaAverage.toFixed(2)}</td>
-                        <td className="font-bold">{averageLetterGrade}</td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
 
             <form
               onSubmit={handleSingleSubjectResult}
@@ -379,21 +341,61 @@ export const AddResult = () => {
                 </div>
 
                 <button className="max-sm:col-span-6 md:col-span-3 btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
-                  যোগ করুন
+                  Add
                 </button>
               </div>
 
-              <div className="form-control w-fit ms-auto mt-6">
+              
+            </form>
+            {result.length > 0 ? (
+              <div className="bg-green-50 p-5 rounded-xl mt-5 mx-8">
+                <div className="overflow-x-auto">
+                  <table className="table">
+                    {/* head */}
+                    <thead>
+                      <tr>
+                        <th>বিষয়ের নাম</th>
+                        <th>প্রাপ্ত নম্বর</th>
+                        <th>Grade Point</th>
+                        <th>Latter Grade</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {result.map((singleSubject, index) => (
+                        <tr key={index}>
+                          <td>{singleSubject?.subjectName}</td>
+                          <td>{singleSubject?.marks}</td>
+                          <td>{singleSubject?.GPA}</td>
+                          <td>{singleSubject?.letterGrade}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td className="font-bold">মোট</td>
+                        <td className="font-bold">{totalMarks}</td>
+                        <td className="font-bold">{gpaAverage.toFixed(2)}</td>
+                        <td className="font-bold">{averageLetterGrade}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+
+            <div className="w-fit mx-auto mt-6">
                 <button
                 type="button"
                   onClick={handleSubmitResult}
-                  className="btn bg-green-600 px-5 hover:bg-green-700 text-base md:text-lg text-white"
+                  className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
                 >
                   ফলাফল আপলোড
                 </button>
               </div>
-            </form>
-          </div>
+          </div>}
+          
         </div>
       </div>
     </>

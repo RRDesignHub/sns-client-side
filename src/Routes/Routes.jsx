@@ -29,6 +29,9 @@ import ClassAdmitCard from "../Pages/DashboardPages/ClassAdmitCard";
 import { AddResult } from "../Pages/DashboardPages/TeacherPages/AddResult";
 import { AddStudent } from "../Pages/DashboardPages/TeacherPages/AddStudent";
 import StudentDetails from "../Pages/DashboardPages/StudentDetails";
+import AddTeacher from "../Pages/DashboardPages/AdminPages/AddTeacher";
+import AllTeachers from "../Pages/DashboardPages/AdminPages/AllTeachers";
+import TeachersDetails from "../Pages/TeachersDetails";
 
 const router = createBrowserRouter(
   [
@@ -56,7 +59,11 @@ const router = createBrowserRouter(
         {
           path: '/result',
           element: <Result></Result>
-        }
+        },
+        {
+          path: "/teacher-details/:id",
+          element: <TeachersDetails />
+        },
       ]
     },
     {
@@ -108,7 +115,14 @@ const router = createBrowserRouter(
           path: "subjects",
           element: <AdminRoute><AllSubjects /></AdminRoute>
         },
-
+        {
+          path: "add-teacher",
+          element: <AdminRoute><AddTeacher /></AdminRoute>
+        },
+        {
+          path: "all-teacher",
+          element: <AdminRoute><AllTeachers /></AdminRoute>
+        },
         // --------------------teachers routes--------------------
         {
           path: "add-student",
@@ -141,6 +155,7 @@ const router = createBrowserRouter(
           path: "student-details/:id",
           element: <StudentDetails />
         },
+        
       ]
     }
   ]

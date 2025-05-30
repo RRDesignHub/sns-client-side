@@ -18,7 +18,7 @@ export const Hero = () => {
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }}
-        spaceBetween={30}
+        spaceBetween={0}
         modules={[Autoplay]}
         className="mySwiper"
       >

@@ -1,54 +1,75 @@
-
 import { FaCircleUser } from "react-icons/fa6";
-export const TeacherCard = ({teacher}) => {
-  const {name, profileImage, role, category, specialization, qualification} = teacher;
-  
+import { Link } from "react-router-dom";
+export const TeacherCard = ({ teacher }) => {
+  const { _id, name, profileImage, role, category, specialization, qualification } =
+    teacher;
+
   return (
     <>
-      <div className="card bg-gradient-to-r from-green-50 to-white border-2 border-green-400 shadow-md rounded-lg ">
-        <div className="flex flex-col">
-          {/* Profile Image */}
-          <div className="avatar placeholder flex flex-col justify-center items-center mb-4">
-            <div className="  text-green-700 w-[200px] h-[265px] flex items-center justify-center mt-5">
-              {
-                profileImage ? 
-                <img src={profileImage} className="w-full h-full border-l-[6px] border-b-[6px] border-l-green-500 border-b-green-500 rounded-lg object-top " alt={name} /> :
-                <FaCircleUser className="text-green-700 text-[180px]" />
-              }
+      <Link to={`/teacher-details/${_id}`}>
+        <div className="group relative bg-white border border-green-200 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative flex flex-col items-center p-2 md:p-6">
+            {/* Profile Image */}
+            <div className="avatar mb-2 md:mb-4">
+              <div className="w-20 h-20 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-green-500">
+                {profileImage ? (
+                  <img
+                    src={profileImage}
+                    alt={name}
+                    className="w-full h-full object-cover"
+                    onError={(e) =>
+                      (e.target.src = "https://via.placeholder.com/160")
+                    }
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-green-100">
+                    <FaCircleUser className="text-green-600 text-6xl" />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Name and Role */}
+            <h3 className="text-sm md:text-xl font-bold text-green-800 text-center md:mb-2">
+              {name || "N/A"}
+            </h3>
+            <p className="text-xs md:text-sm font-medium text-gray-600 text-center">
+              {role || "N/A"}
+            </p>
+
+            {/* Details Section */}
+            <div className="mt-2 md:mt-4 w-full space-y-1 md:space-y-3">
+              <p className="text-gray-700 max-sm:text-xs flex  md:items-center gap-2">
+                <span className="font-semibold max-sm:text-[10px] text-green-600">
+                  ক্যাটেগরি:
+                </span>
+                <span>{category || "N/A"}</span>
+              </p>
+              <p className="text-gray-700 max-sm:text-xs flex  md:items-center gap-2">
+                <span className="font-semibold max-sm:text-[10px] text-green-600">
+                  বিশেষত্ব:
+                </span>
+                <span>{specialization || "N/A"}</span>
+              </p>
+              <div>
+                <p className="font-semibold max-sm:text-[10px] text-green-600 mb-1">
+                  যোগ্যতা:
+                </p>
+                {qualification?.length > 0 ? (
+                  <ul className="list-disc list-inside text-gray-700 max-sm:text-[10px] space-y-1">
+                    {qualification.map((qal, index) => (
+                      <li key={index}>{qal}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-700">N/A</p>
+                )}
+              </div>
             </div>
           </div>
-
-          {/* Name and Role */}
-          <h3 className="text-xl text-center font-bold text-green-700">
-            {name}
-          </h3>
-          <p className="text-sm text-center text-gray-600 font-medium">{role}</p>
-
-          {/* Details Section */}
-          <div className="mt-4 px-3 pb-5">
-            <p className="text-gray-700">
-              <span className="font-semibold text-green-600">
-                Teacher Category:
-              </span>{" "}
-              {category}
-            </p>
-            <p className="text-gray-700">
-              <span className="font-semibold text-green-600">
-                Specialization:
-              </span>{" "}
-              {specialization}
-            </p>
-            <h3 className="text-md  mt-2">
-              <strong className="block font-semibold text-green-700">
-                Qualification:{" "}
-              </strong>
-              {
-                qualification?.map((qal,index) => <p className="block" key={index}>{qal}.</p>)
-              }
-            </h3>
-          </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };

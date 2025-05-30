@@ -22,7 +22,7 @@ export const Notices = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="bg-gradient-to-r from-green-100 to-green-50 border border-green-400 shadow-md rounded-lg overflow-hidden">
-        <h2 className="text-2xl font-bold text-green-700 text-center py-4">
+        <h2 className="text-xl md:text-2xl font-bold text-green-700 text-center py-4">
         নোটিশ বোর্ড:
         </h2>
         <div className="overflow-x-auto">

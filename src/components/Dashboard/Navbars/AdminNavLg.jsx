@@ -87,6 +87,18 @@ const AdminsNavbarLg = () => {
         <FaIdCard className="w-5 h-5" />
         এডমিট কার্ড তৈরি
       </NavLink>
+{/* add teacher */}
+      <NavLink
+        to="/dashboard/add-teacher"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+            : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+        }
+      >
+        <FaIdCard className="w-5 h-5" />
+        শিক্ষক/শিক্ষিকা যোগ
+      </NavLink>
 
       {/* all students */}
       <NavLink
@@ -138,6 +150,19 @@ const AdminsNavbarLg = () => {
       >
         <GiPapers className="w-5 h-5" />
         ফলাফল
+      </NavLink>
+
+      {/* all teachers */}
+      <NavLink
+        to="/dashboard/all-teacher"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+            : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+        }
+      >
+        <PiUsersFourFill className="w-5 h-5" />
+        সকল শিক্ষক/শিক্ষিকা
       </NavLink>
     </>
   );

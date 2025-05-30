@@ -129,10 +129,10 @@ const StudentDetails = () => {
               </div>
             </div>
             {/* <!-- Back Button --> */}
-            <div class="mt-6 text-center">
+            <div className="mt-6 text-center">
               <Link
                 to="/dashboard/students"
-                class="bg-green-600 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                className="bg-green-600 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
               >
                 আগের পেইজে ফিরে যান
               </Link>
