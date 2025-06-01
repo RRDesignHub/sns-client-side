@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 import imageUpload from "../../../Api/Utils";
@@ -11,13 +11,24 @@ export const AddStudent = () => {
   const [religion, setReligion] = useState("Islam");
   const [imageFile, setImageFile] = useState(null);
   const [birthDate, setBirthDate] = useState(new Date());
+  const [largeFile, setLargeFile] = useState(null);
+
+  useEffect(() => {
+    if (imageFile && imageFile?.size >= 40000) {
+      return setLargeFile("ছবি অবশ্যই 40kb এর সমান বা ছোট হতে হবে!");
+    } else {
+      setLargeFile(null);
+    }
+  }, [imageFile]);
 
   const handleStudentData = async (e) => {
     e.preventDefault();
-
+    if (imageFile && imageFile?.size >= 40000) {
+      return;
+    }
     // image file upload to imageBB:
     let photoURL;
-    if(imageFile){
+    if (imageFile) {
       photoURL = await imageUpload(imageFile);
     }
 
@@ -46,19 +57,19 @@ export const AddStudent = () => {
       gender,
       religion,
       image: photoURL,
-      mobileNo
+      mobileNo,
     };
 
-    try{
-      const {data} = await axiosSecure.post(`/add-student`, studentData);
-      if(data?.message){
-       return Swal.fire({
+    try {
+      const { data } = await axiosSecure.post(`/add-student`, studentData);
+      if (data?.message) {
+        return Swal.fire({
           position: "center",
           icon: "info",
           title: `${data?.message}`,
         });
       }
-      if(data.insertedId){
+      if (data.insertedId) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -68,7 +79,7 @@ export const AddStudent = () => {
         });
         form.reset();
       }
-    }catch(err){
+    } catch (err) {
       console.log("Student data adding Error-->", err);
     }
   };
@@ -98,7 +109,7 @@ export const AddStudent = () => {
                 required
               >
                 <option value="" disabled>
-                একটি শ্রেণী নির্বাচন করুন...
+                  একটি শ্রেণী নির্বাচন করুন...
                 </option>
                 {[
                   "Play",
@@ -161,7 +172,9 @@ export const AddStudent = () => {
             {/* Birth reg no */}
             <div className="form-control col-span-12 md:col-span-8">
               <label className="label">
-                <span className="label-text max-sm:text-xs">জন্মনিবন্ধন নম্বর: (*)</span>
+                <span className="label-text max-sm:text-xs">
+                  জন্মনিবন্ধন নম্বর: (*)
+                </span>
               </label>
               <input
                 type="number"
@@ -175,10 +188,12 @@ export const AddStudent = () => {
             {/* Date of Birth */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text max-sm:text-xs">জন্ম তারিখ: (*)</span>
+                <span className="label-text max-sm:text-xs">
+                  জন্ম তারিখ: (*)
+                </span>
               </label>
               <input
-              type="date"
+                type="date"
                 selected={birthDate}
                 required
                 onChange={(e) => setBirthDate(e.target.value)}
@@ -188,7 +203,9 @@ export const AddStudent = () => {
             {/* Academic year */}
             <div className="form-control col-span-6 md:col-span-2">
               <label className="label">
-                <span className="label-text max-sm:text-xs">শিক্ষাবর্ষ: (*)</span>
+                <span className="label-text max-sm:text-xs">
+                  শিক্ষাবর্ষ: (*)
+                </span>
               </label>
               <select
                 onChange={(e) => setSession(e.target.value.toString())}
@@ -213,7 +230,9 @@ export const AddStudent = () => {
             {/* student name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text max-sm:text-xs">শিক্ষার্থীর নাম: (*)</span>
+                <span className="label-text max-sm:text-xs">
+                  শিক্ষার্থীর নাম: (*)
+                </span>
               </label>
               <input
                 type="text"
@@ -226,7 +245,9 @@ export const AddStudent = () => {
             {/* fathers name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text max-sm:text-xs">বাবার নাম: (*)</span>
+                <span className="label-text max-sm:text-xs">
+                  বাবার নাম: (*)
+                </span>
               </label>
               <input
                 type="text"
@@ -238,7 +259,9 @@ export const AddStudent = () => {
             {/* Mother's name */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text max-sm:text-xs">মায়ের নাম: (*)</span>
+                <span className="label-text max-sm:text-xs">
+                  মায়ের নাম: (*)
+                </span>
               </label>
               <input
                 type="text"
@@ -319,7 +342,9 @@ export const AddStudent = () => {
             {/* Images */}
             <div className="form-control col-span-6 md:col-span-3">
               <label className="label">
-                <span className="label-text max-sm:text-xs">শিক্ষার্থীর ছবি (jpg, jpeg, png)</span>
+                <span className="label-text max-sm:text-xs">
+                  শিক্ষার্থীর ছবি (jpg, jpeg, png)
+                </span>
               </label>
               <input
                 type="file"
@@ -328,12 +353,19 @@ export const AddStudent = () => {
                 accept="image/*"
                 className="select mb-2 px-4 py-2 select-bordered"
               />
+              {largeFile && (
+                <small className="text-[7px] md:text-sm text-red-500">
+                  {largeFile}
+                </small>
+              )}
             </div>
 
             {/* mobile no */}
             <div className="form-control col-span-12 md:col-span-6">
               <label className="label">
-                <span className="label-text max-sm:text-xs">মা/বাবার মোবাইল নম্বর: (*)</span>
+                <span className="label-text max-sm:text-xs">
+                  মা/বাবার মোবাইল নম্বর: (*)
+                </span>
               </label>
               <input
                 type="number"
@@ -346,8 +378,11 @@ export const AddStudent = () => {
             </div>
           </div>
 
-          <div className="form-control w-fit ms-auto mt-6">
-            <button className="btn bg-green-600 px-5 hover:bg-green-700 md:text-lg text-white">
+          <div className="form-control w-fit flex-row gap-2 md:gap-4 ms-auto mt-6">
+            <button
+              type="submit"
+              className="btn bg-green-600 px-5 hover:bg-green-700 md:text-lg text-white"
+            >
               শিক্ষার্থীর তথ্য যোগ করুন
             </button>
           </div>

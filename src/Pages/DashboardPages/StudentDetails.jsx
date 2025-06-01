@@ -20,7 +20,7 @@ const StudentDetails = () => {
       ) : (
         <div className="flex-1 p-4 max-sm:p-2 overflow-auto">
           <div className="bg-green-800 w-full max-sm:px-2 md:w-11/12 mx-auto my-5 rounded-lg shadow-lg p-6 max-sm:p-4 text-white">
-            <h1 className="text-lg md:text-2xl font-bold text-green-200 mb-6 text-center">
+            <h1 className="text-lg md:text-2xl font-bold text-green-100 mb-6 text-center">
               শিক্ষার্থীর বিবরণী
             </h1>
             <div className="flex flex-col md:flex-row gap-6 max-sm:gap-4">
@@ -30,14 +30,14 @@ const StudentDetails = () => {
                   id="studentImage"
                   src={studentDetails?.image}
                   alt={studentDetails?.studentName}
-                  className="w-32 h-32 max-sm:w-24 max-sm:h-24 rounded-full object-cover border-4 border-green-400"
+                  className="w-32 h-32 max-sm:w-24 max-sm:h-24 rounded-full object-cover border-4 border-green-300"
                 />
               </div>
               {/* <!-- Student Details --> */}
               <div className="flex-1 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-sm:gap-2 max-sm:text-sm">
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">
+                    <p className="text-green-200 font-semibold">
                       শিক্ষার্থীর আইডি :
                     </p>
                     <p id="studentID" className="text-green-100">
@@ -45,37 +45,37 @@ const StudentDetails = () => {
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">নাম :</p>
+                    <p className="text-green-200 font-semibold">নাম :</p>
                     <p id="studentName" className="text-green-100">
                       {studentDetails?.studentName}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">শ্রেণী :</p>
+                    <p className="text-green-200 font-semibold">শ্রেণী :</p>
                     <p id="className" className="text-green-100">
                       {studentDetails?.className}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">সেকশন :</p>
-                    <p id="sectionName" class="text-green-100">
+                    <p className="text-green-200 font-semibold">শাখা :</p>
+                    <p id="sectionName" className="text-green-100">
                       {studentDetails?.sectionName}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">ক্লাস রোল :</p>
+                    <p className="text-green-200 font-semibold">শ্রেণী রোল :</p>
                     <p id="classRoll" className="text-green-100">
                       {studentDetails?.classRoll}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">গ্রুপ :</p>
+                    <p className="text-green-200 font-semibold">বিভাগ :</p>
                     <p id="groupName" className="text-green-100">
                       {studentDetails?.groupName}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">
+                    <p className="text-green-200 font-semibold">
                       জন্ম নিবন্ধন নম্বর :
                     </p>
                     <p id="birthRegNo" classNameName="text-green-100">
@@ -83,46 +83,52 @@ const StudentDetails = () => {
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">জন্ম তারিখ :</p>
+                    <p className="text-green-200 font-semibold">জন্ম তারিখ :</p>
                     <p id="dateOfBirth" className="text-green-100">
                        {studentDetails?.birthRegNo &&
                         format(new Date(studentDetails?.dateOfBirth), "dd/MM/yyyy, EEEE")}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">সেশন :</p>
+                    <p className="text-green-200 font-semibold">শিক্ষাবর্ষ :</p>
                     <p id="session" className="text-green-100">
                       {studentDetails?.session}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">রক্তের গ্রুপ :</p>
+                    <p className="text-green-200 font-semibold">রক্তের গ্রুপ :</p>
                     <p id="bloodGroup" className="text-green-100">
                       {studentDetails?.bloodGroup}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">লিঙ্গ :</p>
+                    <p className="text-green-200 font-semibold">লিঙ্গ :</p>
                     <p id="gender" className="text-green-100">
                       {studentDetails?.gender}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">ধর্ম :</p>
+                    <p className="text-green-200 font-semibold">ধর্ম :</p>
                     <p id="religion" className="text-green-100">
                       {studentDetails?.religion}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">পিতার নাম :</p>
+                    <p className="text-green-200 font-semibold">পিতার নাম :</p>
                     <p id="fatherName" className="text-green-100">
                       {studentDetails?.fatherName}
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <p className="text-green-300 font-semibold">মাতার নাম :</p>
+                    <p className="text-green-200 font-semibold">মাতার নাম :</p>
                     <p id="motherName" className="text-green-100">
                       {studentDetails?.motherName}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <p className="text-green-200 font-semibold">মোবাইল নং :</p>
+                    <p id="motherName" className="text-green-100">
+                      +880{studentDetails?.mobileNo}
                     </p>
                   </div>
                 </div>

@@ -4,38 +4,56 @@ export default function StudentCard({ student }) {
   const { studentName, image, className, classRoll, bloodGroup } = student;
 
   return (
-    <div className="card bg-gradient-to-r from-green-100 to-green-50 shadow-md rounded-lg">
-      <div className="flex flex-col">
+    <div className="group relative bg-white border border-green-200 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+      <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="relative flex flex-col items-center p-2 md:p-6">
         {/* Profile Image */}
-        <div className="avatar placeholder flex flex-col justify-center items-center mb-2">
-          <div className=" mt-3 text-green-700 w-[120px] h-[170px] flex items-center justify-center">
+        <div className="avatar mb-2 md:mb-4">
+          <div className="w-20 h-20 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-green-500">
             {image ? (
               <img
                 src={image}
-                className="w-full object-top shadow-md rounded-lg"
                 alt={studentName}
+                className="w-full h-full object-cover"
+                onError={(e) => (e.target.src = "https://via.placeholder.com/160")}
               />
             ) : (
-              <FaUserGraduate className="text-green-700 text-[150px]" />
+              <div className="w-full h-full flex items-center justify-center bg-green-100">
+                <FaUserGraduate className="text-green-600 text-6xl" />
+              </div>
             )}
           </div>
         </div>
 
-        {/* Name and Details */}
-        <h3 className="text-sm md:text-xl text-center font-semibold text-green-700 mb-2">
-          {studentName}
+        {/* Name and Role */}
+        <h3 className="text-sm md:text-xl font-bold text-green-800 text-center md:mb-2">
+          {studentName || "N/A"}
         </h3>
-        <p className="max-sm:text-xs text-center text-green-950/90 font-medium">
-          শ্রেণী: {className}
+        <p className="text-xs md:text-sm font-medium text-gray-600 text-center">
+          শিক্ষার্থী
         </p>
-        <div className="grow"></div>
-        <div className="text-center pb-3">
-          <p className="max-sm:text-xs text-green-950/80">
-            <span className=" text-green-900">রোল নং:</span> {classRoll}
+
+        {/* Details Section */}
+        <div className="mt-2 md:mt-4 w-full space-y-1 md:space-y-3">
+          <p className="text-gray-700 max-sm:text-xs flex md:items-center gap-2">
+            <span className="font-semibold max-sm:text-[10px] text-green-600">
+              শ্রেণী:
+            </span>
+            <span>{className || "N/A"}</span>
           </p>
-          <p className="text-green-950/80">
-            <span className="max-sm:text-xs text-green-900">রক্তের গ্রুপ:</span> {bloodGroup}
+          <p className="text-gray-700 max-sm:text-xs flex md:items-center gap-2">
+            <span className="font-semibold max-sm:text-[10px] text-green-600">
+              রক্তের গ্রুপ:
+            </span>
+            <span>{bloodGroup || "N/A"}</span>
           </p>
+          <p className="text-gray-700 max-sm:text-xs flex md:items-center gap-2">
+            <span className="font-semibold max-sm:text-[10px] text-green-600">
+              রোল নং:
+            </span>
+            <span>{classRoll || "N/A"}</span>
+          </p>
+          
         </div>
       </div>
     </div>

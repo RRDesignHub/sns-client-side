@@ -44,7 +44,7 @@ export const TeacherCard = ({ teacher }) => {
                 <span className="font-semibold max-sm:text-[10px] text-green-600">
                   ক্যাটেগরি:
                 </span>
-                <span>{category || "N/A"}</span>
+                <span>{category == "Primary" ? "প্রাথমিক" : category == "Higher" ? "মাধ্যমিক" : category == "Primary & Higher" ? "প্রাথমিক ও মাধ্যমিক" : "N/A"}</span>
               </p>
               <p className="text-gray-700 max-sm:text-xs flex  md:items-center gap-2">
                 <span className="font-semibold max-sm:text-[10px] text-green-600">

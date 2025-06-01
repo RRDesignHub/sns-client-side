@@ -157,6 +157,8 @@ const AddTeacher = () => {
             className="w-full px-2 md:px-4 py-2 md:py-3 max-sm:text-[7px] border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out text-gray-800 resize-y"
           ></textarea>
         </div>
+
+        {/* category */}
         <div className="col-span-6 md:col-span-4">
           <label
             htmlFor="category"
@@ -178,6 +180,7 @@ const AddTeacher = () => {
             </option>
             <option value="Primary">প্রাথমিক</option>
             <option value="Higher">মাধ্যমিক</option>
+            <option value="Primary & Higher">উভয়</option>
           </select>
         </div>
         {/* Specialization Input */}

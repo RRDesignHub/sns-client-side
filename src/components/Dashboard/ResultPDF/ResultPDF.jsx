@@ -1,7 +1,4 @@
-import { useParams } from "react-router-dom";
-import { useAxiosSec } from "../../../Hooks/useAxiosSec";
-import { useQuery } from "@tanstack/react-query";
-import { Loading } from "../../Shared/Loading";
+
 import {
   PDFViewer,
   Page,
@@ -12,26 +9,7 @@ import {
 } from "@react-pdf/renderer";
 import { styles } from "./Style";
 
-export default function ResultPDF() {
-   const { id } = useParams();
-    const axiosSecure = useAxiosSec();
-    const {
-      data: resultData = {},
-      isLoading,
-      refetch,
-    } = useQuery({
-      queryKey: ["result", id],
-      queryFn: async () => {
-        const { data } = await axiosSecure.get(
-          `/result?id=${id}`
-        );
-        return data;
-      },
-    });
-  
-    if (isLoading) {
-      return <Loading />;
-    }
+export default function ResultPDF({result}) {
   return (
     <PDFViewer width="100%" height="600px">
     <Document>
@@ -62,7 +40,7 @@ export default function ResultPDF() {
               Karnaphuli, Chattogram || ESTD: 2004
             </Text>
             <Text style={styles.subtitle}>
-              {resultData?.examName} Exam Result: {resultData?.academicYear}
+              {result?.examName} Exam Result: {result?.session}
             </Text>
           </View>
           <View style={styles.divider} />
@@ -72,28 +50,28 @@ export default function ResultPDF() {
             <View style={styles.infoLeft}>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
                 <Text style={{ fontSize: 11, fontWeight: 600 }}>Student Name:</Text>
-                <Text style={{ fontSize: 12, fontWeight: "bold" }}>{resultData?.studentName}</Text>
+                <Text style={{ fontSize: 12, fontWeight: "bold" }}>{result?.studentName}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
                 <Text style={{ fontSize: 11, fontWeight: 500 }}>Father's Name:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 600 }}>{resultData?.fatherName}</Text>
+                <Text style={{ fontSize: 11, fontWeight: 600 }}>{result?.fatherName}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
                 <Text style={{ fontSize: 11, fontWeight: 500 }}>Mother's Name:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 600 }}>{resultData?.motherName}</Text>
+                <Text style={{ fontSize: 11, fontWeight: 600 }}>{result?.motherName}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
                 <Text style={{ fontSize: 11, fontWeight: 600 }}>Class:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>{resultData?.className}</Text>
+                <Text style={{ fontSize: 11, fontWeight: 400 }}>{result?.className}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
                 <Text style={{ fontSize: 11, fontWeight: 500 }}>Roll:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>{resultData?.classRoll}</Text>
+                <Text style={{ fontSize: 11, fontWeight: 400 }}>{result?.classRoll}</Text>
               </View>
             </View>
             <View style={styles.infoRight}>
               <Image
-                src={resultData?.image || "/placeholder.png"} // Fallback if no image
+                src={result?.image || "/placeholder.png"} // Fallback if no image
                 style={{
                   width: 50,
                   height: 60,
@@ -105,21 +83,21 @@ export default function ResultPDF() {
               />
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Total Marks:</Text>
-                <Text style={styles.infoValue}>{resultData?.totalMarks}</Text>
+                <Text style={styles.infoValue}>{result?.totalMarks}</Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>GPA:</Text>
                 <Text style={styles.infoValue}>
-                  {resultData?.totalGPA < 1 ? 0 : resultData?.totalGPA?.toFixed(2)}
+                  {result?.totalGPA < 1 ? 0 : result?.totalGPA?.toFixed(2)}
                 </Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Letter Grade:</Text>
-                <Text style={styles.infoValue}>{resultData?.totalLG}</Text>
+                <Text style={styles.infoValue}>{result?.totalLG}</Text>
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Status:</Text>
-                <Text style={styles.infoValue}>{resultData?.status}</Text>
+                <Text style={styles.infoValue}>{result?.status}</Text>
               </View>
             </View>
           </View>
@@ -132,7 +110,7 @@ export default function ResultPDF() {
               <Text style={styles.tableCellOther}>Grade Point</Text>
               <Text style={styles.tableCellOther}>Letter Grade</Text>
             </View>
-            {resultData?.resultData?.map((subject, index) => (
+            {result?.resultData?.map((subject, index) => (
               <View key={index} style={styles.tableRow}>
                 <Text style={styles.tableCellSubject}>{subject?.subjectName}</Text>
                 <Text style={styles.tableCellOther}>{subject?.marks}</Text>

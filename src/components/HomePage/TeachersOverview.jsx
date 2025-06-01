@@ -71,26 +71,28 @@ export default function TeachersOverview() {
         >
           {teachers.map((teacher, idx) => (
             <SwiperSlide key={idx} className="pb-8 px-2">
-              <div
-                key={teacher.name}
-                className="bg-gradient-to-b from-green-200 via-green-100 to-green-50 drop-shadow-xl rounded-lg p-4 flex flex-col items-center"
-              >
-                <div className="text-green-700 w-[200px] h-[265px] flex items-center justify-center">
-                  {teacher.profileImage ? (
-                    <img
-                      src={teacher.profileImage}
-                      className="w-full object-cover object-top mt-5 rounded-lg"
-                      alt={teacher.name}
-                    />
-                  ) : (
-                    <FaCircleUser className="text-green-700 text-[180px]" />
-                  )}
+              <Link to={`/teacher-details/${teacher?._id}`}>
+                <div
+                  key={teacher.name}
+                  className="bg-gradient-to-b from-green-200 via-green-100 to-green-50 drop-shadow-xl rounded-lg p-4 flex flex-col items-center"
+                >
+                  <div className="text-green-700 w-[200px] h-[265px] flex items-center justify-center">
+                    {teacher.profileImage ? (
+                      <img
+                        src={teacher.profileImage}
+                        className="w-full object-cover object-top mt-5 rounded-lg"
+                        alt={teacher.name}
+                      />
+                    ) : (
+                      <FaCircleUser className="text-green-700 text-[180px]" />
+                    )}
+                  </div>
+                  <h3 className="text-lg text-green-950 font-semibold">
+                    {teacher.name}
+                  </h3>
+                  <p className="text-green-950/80">{teacher.role}</p>
                 </div>
-                <h3 className="text-lg text-green-950 font-semibold">
-                  {teacher.name}
-                </h3>
-                <p className="text-green-950/80">{teacher.role}</p>
-              </div>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

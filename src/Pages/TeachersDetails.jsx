@@ -92,18 +92,18 @@ const TeachersDetails = () => {
                   </div>
 
                   {/* Teacher Details */}
-                  <div className="md:w-2/3 p-6 space-y-6">
+                  <div className="md:w-2/3 p-4 space-y-3 md:space-y-6">
                     <div>
-                      <h2 className="text-3xl font-bold text-green-800">{name}</h2>
-                      <p className="text-lg text-gray-600 font-medium">{role}</p>
+                      <h2 className="text-xl md:text-3xl font-bold text-green-800">{name}</h2>
+                      <p className="text-sm md:text-lg text-gray-600 font-medium">{role}</p>
                     </div>
-                    <div className="space-y-4">
-                      <div className="flex items-center">
-                        <span className="font-semibold text-green-600 w-32">ক্যাটেগরি:</span>
-                        <span className="text-gray-700">{category}</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-green-600">ক্যাটেগরি:</span>
+                        <span className="text-gray-700">{category == "Primary" ? "প্রাথমিক" : category == "Higher" ? "মাধ্যমিক" : category == "Primary & Higher" ? "প্রাথমিক ও মাধ্যমিক" : "N/A"}</span>
                       </div>
-                      <div className="flex items-center">
-                        <span className="font-semibold text-green-600 w-32">বিশেষত্ব:</span>
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-green-600">বিশেষত্ব:</span>
                         <span className="text-gray-700">{specialization}</span>
                       </div>
                       <div>
@@ -118,8 +118,8 @@ const TeachersDetails = () => {
                           <p className="text-gray-700">N/A</p>
                         )}
                       </div>
-                      <div className="flex items-center">
-                        <span className="font-semibold text-green-600 w-32">যোগদানের তারিখ:</span>
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-green-600 ">যোগদানের তারিখ:</span>
                         <span className="text-gray-700">
                           {joinedAt ? format(new Date(joinedAt), 'MMMM dd, yyyy') : 'N/A'}
                         </span>

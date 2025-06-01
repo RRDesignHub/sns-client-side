@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { FaUserEdit } from "react-icons/fa";
+import { FaFilePdf, FaUserEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import { useRole } from "../../Hooks/useRole";
 import { Loading } from "../../components/Shared/Loading";
+import TabularStudentInfoPDF from "../../components/Dashboard/TabularStudentsPDF/TabularStudentsPDF";
 export default function AllStudents() {
   const axiosSecure = useAxiosSec();
   const [userRole] = useRole();
@@ -17,6 +18,7 @@ export default function AllStudents() {
   const [serverError, setServerError] = useState("");
   const [enabled, setUnabled] = useState(false);
   const { isTeacher, isAccountant, isAdmin } = userRole;
+  const [isTableModalOpen, setIsTableModalOpen] = useState(false);
   const {
     data: students = [],
     isLoading,
@@ -72,7 +74,22 @@ export default function AllStudents() {
     }
   };
 
+ 
+
+  // whole class pdf open modal:
+  const openTablePdfModal = () => {
+    setIsTableModalOpen(true);
+  };
+
+  // whole class pdf open modal:
+  const closeTablePdfModal = () => {
+    setIsTableModalOpen(false);
+  };
+
+
+
   return (
+    <>
     <div className="p-6 min-h-screen">
       <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
         সকল শিক্ষার্থী
@@ -168,8 +185,14 @@ export default function AllStudents() {
       </div>
       <div className="divider my-0"></div>
       {students.length > 0 && (
-        <div className="pb-2 flex justify-evenly text-sm md:text-lg text-green-950 font-semibold">
+        <div className="pb-2 flex justify-evenly items-center text-sm md:text-lg text-green-950 font-semibold">
           <h2>শ্রেণী : {filterByClass}</h2>
+          <button
+            onClick={openTablePdfModal}
+            className="btn btn-md bg-green-600 text-green-50 hover:bg-green-500"
+          >
+            সকল শিক্ষার্থী <FaFilePdf />
+          </button>
           <h2>মোট শিক্ষার্থী: {students.length} জন</h2>
         </div>
       )}
@@ -232,7 +255,12 @@ export default function AllStudents() {
                         </td>
                       ) : (
                         <td>
-                          <Link to={`/dashboard/student-details/${student._id}`} className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2">Details</Link>
+                          <Link
+                            to={`/dashboard/student-details/${student._id}`}
+                            className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                          >
+                            Details
+                          </Link>
                         </td>
                       )}
                     </tr>
@@ -246,5 +274,23 @@ export default function AllStudents() {
         <p className="text-center py-4">শ্রেণী ও শিক্ষাবর্ষ নির্বাচন করুন.</p>
       )}
     </div>
+
+     {/* table modal for all students result marksheet pdf */}
+          {/* pdf popup */}
+          {isTableModalOpen && (
+            <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+              <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
+                <button
+                  onClick={closeTablePdfModal}
+                  className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Close
+                </button>
+                <TabularStudentInfoPDF students={students} />
+              </div>
+            </div>
+          )}
+    
+    </>
   );
 }

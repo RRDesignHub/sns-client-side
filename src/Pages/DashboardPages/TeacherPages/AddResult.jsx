@@ -15,22 +15,24 @@ export const AddResult = () => {
   const [gpaAverage, setGpaAverage] = useState(0);
   const [averageLetterGrade, setAverageLetterGrade] = useState("");
   const [serverError, setServerError] = useState("");
-
+  const [multipleAdd, setMultipleAdd] = useState("");
   // bring student and subject data from db:
-  const handleDisplayStudentInfo = async(e) => {
+  const handleDisplayStudentInfo = async (e) => {
     e.preventDefault();
     const classRoll = e.target.classRoll.value;
-    setError(null)
-    setStudentData({})
-    try{
-      const {data} = await axiosSecure.get(`/student?className=${className}&&classRoll=${classRoll}`);
-      if(data?.message){
+    setError(null);
+    setStudentData({});
+    try {
+      const { data } = await axiosSecure.get(
+        `/student?className=${className}&&classRoll=${classRoll}`
+      );
+      if (data?.message) {
         setServerError(data.message);
-      }else{
+      } else {
         setServerError("");
       }
       setStudentData(data);
-    }catch(err){
+    } catch (err) {
       setError(err.response.data.message);
       console.log("Bring student data Error-->", err);
     }
@@ -42,6 +44,17 @@ export const AddResult = () => {
     const form = e.target;
     const subjectName = form.subjectName.value;
     const marks = parseInt(form.marks.value);
+
+    // Check if subject already exists in resultData
+    const isAlreadyAdded = result.some(
+      (data) => data.subjectName === subjectName
+    );
+    if (isAlreadyAdded) {
+      setMultipleAdd("প্রদত্ত বিষয়টি যোগ করা হয়েছে!!!");
+      return;
+    } else {
+      setMultipleAdd("");
+    }
 
     // Find the subject from studentData.subjects to get totalMarks
     const subject = studentData.subjects.find(
@@ -56,9 +69,7 @@ export const AddResult = () => {
 
     // Validate marks based on totalMarks
     if (marks < 0 || marks > totalMarksForSubject) {
-      Swal.fire(
-        `০ এবং ${totalMarksForSubject} এর মধ্যে নম্বর বসান`
-      );
+      Swal.fire(`0 এবং ${totalMarksForSubject} এর মধ্যে নম্বর বসান`);
       return;
     }
 
@@ -97,22 +108,21 @@ export const AddResult = () => {
       GPA,
       letterGrade,
     };
-
     const updatedResult = [...result, resultData];
     setResult(updatedResult);
 
-   // Calculate total marks achieved
-   const totalMarksAchieved = updatedResult.reduce(
-    (total, subject) => total + subject.marks,
-    0
-  );
+    // Calculate total marks achieved
+    const totalMarksAchieved = updatedResult.reduce(
+      (total, subject) => total + subject.marks,
+      0
+    );
 
-  // Calculate GPA Average
-  const totalGPA = updatedResult.reduce(
-    (total, subject) => total + subject.GPA,
-    0
-  );
-  const gpaAverage = totalGPA / updatedResult.length;
+    // Calculate GPA Average
+    const totalGPA = updatedResult.reduce(
+      (total, subject) => total + subject.GPA,
+      0
+    );
+    const gpaAverage = totalGPA / updatedResult.length;
 
     // Determine Average Letter Grade
     let averageLetterGrade = "";
@@ -124,10 +134,9 @@ export const AddResult = () => {
     else if (gpaAverage >= 1) averageLetterGrade = "D";
     else averageLetterGrade = "F";
 
-
     // Update status (Pass/Fail) - Check all subjects;  if less 33% = fail
     const hasFailed = updatedResult.some(
-      (result) => (result.marks / result.totalMarks) * 100 < 33 
+      (result) => (result.marks / result.totalMarks) * 100 < 33
     );
     setStatus(hasFailed ? "Fail" : "Pass");
 
@@ -138,10 +147,14 @@ export const AddResult = () => {
     form.reset();
   };
 
-  const handleSubmitResult = async() => {
+  const handleResetResult = () => {
+    setResult([]);
+    setServerError("");
+  };
 
-    if(!examName){
-      return setServerError("পরীক্ষার নাম নির্বাচন করুন.")
+  const handleSubmitResult = async () => {
+    if (!examName) {
+      return setServerError("পরীক্ষার নাম নির্বাচন করুন.");
     }
     const resultInfo = {
       studentID: studentData?.studentID,
@@ -157,14 +170,11 @@ export const AddResult = () => {
       totalMarks: totalMarks,
       totalGPA: gpaAverage,
       totalLG: averageLetterGrade,
-      status
+      status,
     };
 
     try {
-      const { data } = await axiosSecure.post(
-        `/add-result`,
-        resultInfo
-      );
+      const { data } = await axiosSecure.post(`/add-result`, resultInfo);
       if (data.insertedId) {
         Swal.fire({
           position: "center",
@@ -187,19 +197,27 @@ export const AddResult = () => {
 
   return (
     <>
-      <div className="w-full md:w-11/12 mx-auto my-10">
-        <div className="bg-green-200 p-2 md:px-6 md:py-8 rounded-lg">
+      <div className="w-full md:w-11/12 mx-auto my-4 md:my-10">
+        <div className="bg-green-200 px-1 py-4 md:px-6 md:py-8 rounded-lg">
           <form
             onSubmit={handleDisplayStudentInfo}
-            className="card-body max-sm:px-0 lg:w-3/4 mx-auto"
+            className="card-body max-sm:p-0 max-sm:mb-2 lg:w-3/4 mx-auto"
           >
-            {!studentData?.studentName && <h3 className="text-center text-sm md:text-md text-red-500">প্রথমে শ্রেণী ও রোল দিয়ে শিক্ষার্থী নির্বাচন করুন</h3>}
+            {!studentData?.studentName && (
+              <h3 className="text-center text-sm md:text-md text-red-500">
+                প্রথমে শ্রেণী ও রোল দিয়ে শিক্ষার্থী নির্বাচন করুন
+              </h3>
+            )}
+            {error && (
+              <h3 className="text-center text-sm md:text-md text-red-500">
+                {error}
+              </h3>
+            )}
             <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-5">
-              
               {/* class name */}
               <div className="form-control flex-row items-center gap-1">
                 <label className="label">
-                  <span className="label-text text-lg md:text-xl font-semibold">
+                  <span className="label-text text-sm md:text-xl font-semibold">
                     শ্রেণী:
                   </span>
                 </label>
@@ -237,7 +255,7 @@ export const AddResult = () => {
               {/* class roll */}
               <div className="form-control flex-row items-center gap-1">
                 <label className="label">
-                  <span className="label-text  md:text-xl font-semibold">
+                  <span className="label-text text-sm md:text-xl font-semibold">
                     রোল:
                   </span>
                 </label>
@@ -251,151 +269,178 @@ export const AddResult = () => {
               </div>
               <div className="form-control">
                 <button className="btn bg-green-600  hover:bg-primary text-white">
-                  সার্চ...
+                  সার্চ করুন
                 </button>
               </div>
             </div>
-            {serverError && <p className="text-red-500 text-md text-center pt-3">{serverError}</p>}
+            {serverError && (
+              <p className="text-red-500 text-md text-center pt-3">
+                {serverError}
+              </p>
+            )}
           </form>
-          {studentData?.studentName && <div className="bg-green-100 px-3 rounded-lg py-5 md:py-8">
-            <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-              ফলাফল তৈরি করুন
-            </h1>
-            <div className="divider my-0"></div>
-            <p className="text-xs md:text-sm text-center">বিষয়ের নাম, পরীক্ষার তারিখ, সময় নির্বাচন করুন এবং “Add” বাটনে ক্লিক করুন</p>
-            <div className="flex max-sm:flex-col justify-center items-center gap-2 md:gap-8 pt-2">
-              <h3 className="text-sm md:text-lg">
-                শিক্ষার্থীর নাম:
-                <span className="font-semibold">
-                  {studentData?.studentName || ""}
-                </span>
-              </h3>
-              <h3 className="text-sm md:text-lg">
-                শ্রেণী:<span className="font-semibold">{studentData?.className || ""}</span>
-              </h3>
-              <h3 className="text-sm md:text-lg">
-                রোল:<span className="font-semibold">
-                  {studentData?.classRoll || ""}
-                </span>
-              </h3>
+          {studentData?.studentName && (
+            <div className="bg-green-100 px-3 rounded-lg py-5 md:py-8">
+              <h1 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
+                ফলাফল তৈরি করুন
+              </h1>
+              <div className="divider my-0"></div>
+             
+              <div className="flex max-sm:flex-wrap justify-around md:justify-center items-center gap-2 md:gap-8 pt-2">
+                <h3 className="text-sm md:text-lg">
+                  শিক্ষার্থীর নাম:
+                  <span className="ms-1 font-semibold">
+                    {studentData?.studentName || ""}
+                  </span>
+                </h3>
+                <h3 className="text-sm md:text-lg">
+                  শ্রেণী : 
+                  <span className="ms-1 font-semibold">
+                    {studentData?.className || ""}
+                  </span>
+                </h3>
+                <h3 className="text-sm md:text-lg">
+                  রোল:
+                  <span className="ms-1 font-semibold">
+                    {studentData?.classRoll || ""}
+                  </span>
+                </h3>
 
-              {/* exam name */}
-              <div className="form-control flex-row justify-center items-center">
-                <label className="block w-full label text-sm md:text-lg">
-                  পরীক্ষার নাম :
-                </label>
-                <select
-                  onChange={(e) => setExamName(e.target.value)}
-                  name="subjectName"
-                  value={examName}
-                  className={`w-full h-12 p-2 border rounded-md ${serverError === "পরীক্ষার নাম নির্বাচন করুন." ? "border-red-400" : "border-gray-300 "}`}
-                  required
-                >
-                  <option value={""} disabled>
-                    Select
-                  </option>
-                  <option value="1st-Semester">1st Semester</option>
-                  <option value="2nd-Semester">2nd Semester</option>
-                  <option value="3rd-Semester">3rd Semester</option>
-                  <option value="Half-Yearly">Half Yearly</option>
-                  <option value="Annual">Annual</option>
-                </select>
-              </div>
-            </div>
-
-            <form
-              onSubmit={handleSingleSubjectResult}
-              className="card-body max-sm:px-0"
-            >
-              <div className="grid gap-3 grid-cols-12 items-end">
-                <div className="form-control col-span-12 md:col-span-6">
-                  <label className="block label text-gray-700">
-                    বিষয়ের নাম
+                {/* exam name */}
+                <div className="form-control flex-row justify-center items-center">
+                  <label className="block w-full label text-sm md:text-lg">
+                    পরীক্ষার নাম :
                   </label>
                   <select
-                    defaultValue="Select"
+                    onChange={(e) => setExamName(e.target.value)}
                     name="subjectName"
-                    className="w-full h-12 p-2 border border-gray-300 rounded-md"
+                    value={examName}
+                    className={`w-full h-10 md:h-12 p-2 border rounded-md ${
+                      serverError === "পরীক্ষার নাম নির্বাচন করুন."
+                        ? "border-red-400"
+                        : "border-gray-300 "
+                    }`}
                     required
                   >
-                    <option disabled>Select</option>
-                    {studentData.subjects &&
-                      studentData?.subjects?.map((singleSubData, index) => (
-                        <option value={singleSubData.subjectName} key={index}>
-                          {singleSubData.subjectName}
-                        </option>
-                      ))}
+                    <option value={""} disabled>
+                      Select
+                    </option>
+                    <option value="1st-Semester">1st Semester</option>
+                    <option value="2nd-Semester">2nd Semester</option>
+                    <option value="3rd-Semester">3rd Semester</option>
+                    <option value="Half-Yearly">Half Yearly</option>
+                    <option value="Annual">Annual</option>
                   </select>
                 </div>
-                <div className="form-control col-span-6 md:col-span-3">
-                  <label className="label">
-                    <span className="label-text">প্রাপ্ত নম্বর</span>
-                  </label>
-                  <input
-                    type="number"
-                    name="marks"
-                    placeholder="Marks"
-                    className="input input-bordered"
-                    required
-                  />
-                </div>
-
-                <button className="max-sm:col-span-6 md:col-span-3 btn bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
-                  Add
-                </button>
               </div>
+                     
+              <form
+                onSubmit={handleSingleSubjectResult}
+                className="card-body max-sm:px-0"
+              >
+                <p className="text-xs md:text-sm text-center text-green-950/60">
+                বিষয়ের নাম, পরীক্ষার তারিখ, সময় নির্বাচন করুন এবং “Add” বাটনে
+                ক্লিক করুন
+              </p>
+                <div className="grid gap-3 grid-cols-12 items-end">
+                  <div className="form-control col-span-6">
+                    <label className="block label max-sm:text-sm text-gray-700">
+                      বিষয়ের নাম
+                    </label>
+                    <select
+                      defaultValue="Select"
+                      name="subjectName"
+                      className="w-full h-10 md:h-12 p-1 md:p-2 border border-gray-300 rounded-md"
+                      required
+                    >
+                      <option disabled>Select</option>
+                      {studentData.subjects &&
+                        studentData?.subjects?.map((singleSubData, index) => (
+                          <option value={singleSubData.subjectName} key={index}>
+                            {singleSubData.subjectName}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="form-control col-span-6 md:col-span-3">
+                    <label className="block label max-sm:text-sm text-gray-700">প্রাপ্ত নম্বর</label>
+                    <input
+                      type="number"
+                      name="marks"
+                      placeholder="Marks"
+                      className="input h-10 md:h-12 p-1 md:p-2 input-bordered"
+                      required
+                    />
+                  </div>
 
-              
-            </form>
-            {result.length > 0 ? (
-              <div className="bg-green-50 p-5 rounded-xl mt-5 mx-8">
-                <div className="overflow-x-auto">
-                  <table className="table">
-                    {/* head */}
-                    <thead>
-                      <tr>
-                        <th>বিষয়ের নাম</th>
-                        <th>প্রাপ্ত নম্বর</th>
-                        <th>Grade Point</th>
-                        <th>Latter Grade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {result.map((singleSubject, index) => (
-                        <tr key={index}>
-                          <td>{singleSubject?.subjectName}</td>
-                          <td>{singleSubject?.marks}</td>
-                          <td>{singleSubject?.GPA}</td>
-                          <td>{singleSubject?.letterGrade}</td>
+                  <button className="max-sm:col-span-12 md:col-span-3 btn  bg-green-100 border border-green-500 text-green-500 hover:bg-green-500 hover:text-white">
+                    Add
+                  </button>
+                  {multipleAdd && (
+                    <small className="col-span-12 text-red-400">
+                      {multipleAdd}
+                    </small>
+                  )}
+                </div>
+              </form>
+              {result.length > 0 ? (
+                <div className="bg-green-50 p-2 md:p-5 rounded-xl mt-1 md:mt-5 mx-2 md:mx-8">
+                  <div className="overflow-x-auto">
+                    <table className="table">
+                      {/* head */}
+                      <thead>
+                        <tr>
+                          <th>বিষয়ের নাম</th>
+                          <th>প্রাপ্ত নম্বর</th>
+                          <th>Grade Point</th>
+                          <th>Latter Grade</th>
                         </tr>
-                      ))}
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td className="font-bold">মোট</td>
-                        <td className="font-bold">{totalMarks}</td>
-                        <td className="font-bold">{gpaAverage.toFixed(2)}</td>
-                        <td className="font-bold">{averageLetterGrade}</td>
-                      </tr>
-                    </tfoot>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {result.map((singleSubject, index) => (
+                          <tr key={index}>
+                            <td>{singleSubject?.subjectName}</td>
+                            <td>{singleSubject?.marks}</td>
+                            <td>{singleSubject?.GPA}</td>
+                            <td>{singleSubject?.letterGrade}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td className="font-bold">মোট</td>
+                          <td className="font-bold">{totalMarks}</td>
+                          <td className="font-bold">{gpaAverage.toFixed(2)}</td>
+                          <td className="font-bold">{averageLetterGrade}</td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              ""
-            )}
-
-            <div className="w-fit mx-auto mt-6">
+              ) : (
+                ""
+              )}
+              {
+                result.length > 0 && <div className="w-fit mx-auto mt-6 space-x-2 md:space-x-4">
                 <button
-                type="button"
+                  type="button"
+                  onClick={handleResetResult}
+                  className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
+                >
+                  রিসেট
+                </button>
+                <button
+                  type="button"
                   onClick={handleSubmitResult}
                   className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
                 >
                   ফলাফল আপলোড
                 </button>
               </div>
-          </div>}
-          
+              }
+              
+            </div>
+          )}
         </div>
       </div>
     </>

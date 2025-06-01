@@ -107,7 +107,7 @@ export default function Students() {
       </div>
       <div className="divider my-0"></div>
       {/* Student Grid */}
-      <div className="grid grid-cols-2   sm:grid-cols-3 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {isLoading ? (
           <div className="col-span-4 ">
             <Loading />

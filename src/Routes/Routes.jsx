@@ -10,8 +10,6 @@ import { PrivateRoute } from "./PrivateRoute";
 import { ErrorPage } from "../Pages/ErrorPage";
 import { SignIn } from "../Pages/SignIn";
 import Overview from "../Pages/DashboardPages/Overview";
-import AllStudents from "../Pages/AdminPages/AllStudents";
-import Results from "../Pages/AdminPages/Results";
 import { Notices } from "../Pages/Notices";
 import Students from "../Pages/Students";
 import ResultPDF from "../components/Dashboard/ResultPDF/ResultPDF";
@@ -32,6 +30,8 @@ import StudentDetails from "../Pages/DashboardPages/StudentDetails";
 import AddTeacher from "../Pages/DashboardPages/AdminPages/AddTeacher";
 import AllTeachers from "../Pages/DashboardPages/AdminPages/AllTeachers";
 import TeachersDetails from "../Pages/TeachersDetails";
+import AllStudents from "../Pages/DashboardPages/AllStudents";
+import Results from "../Pages/DashboardPages/Results";
 
 const router = createBrowserRouter(
   [
@@ -128,12 +128,7 @@ const router = createBrowserRouter(
           path: "add-student",
           element: <TeacherRoute><AddStudent></AddStudent></TeacherRoute>
         },
-        
-        {
-          path: "class-admit-cards",
-          element:<TeacherRoute> <ClassAdmitCard /></TeacherRoute>
-        },
-        
+       
         {
           path: "add-result",
           element: <TeacherRoute><AddResult></AddResult></TeacherRoute>
@@ -141,6 +136,11 @@ const router = createBrowserRouter(
         {
           path: "students",
           element: <AllStudents></AllStudents>
+        },
+         
+        {
+          path: "class-admit-cards",
+          element: <ClassAdmitCard />
         },
         
         {

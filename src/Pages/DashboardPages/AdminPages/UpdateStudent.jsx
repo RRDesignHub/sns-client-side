@@ -41,7 +41,7 @@ export default function UpdateStudent() {
     const groupName = form.departmentName.value;
     const birthRegNo = parseInt(form.birthRegNo.value);
     const studentName = form.studentName.value;
-    const classRoll = parseInt(form.classRoll.value);
+    const classRoll = form.classRoll.value.toString();
     const fatherName = form.fatherName.value;
     const motherName = form.motherName.value;
     const mobileNo = parseInt(form.mobileNo.value);

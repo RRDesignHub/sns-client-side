@@ -74,6 +74,16 @@ export default function CreateAdmitCard() {
     setExamTo("");
   };
 
+
+  const handleResetAdmitCard = () =>{
+    setExamData([]);
+    // Optional: Reset form fields after successful addition
+    setMultipleAdd("");
+    setExamDate(new Date());
+    setExamFrom("");
+    setExamTo("");
+  }
+
   //final admit card data post to db
   const handleSubmitAdmitCard = async () => {
     if (examData.length === 0) {
@@ -328,7 +338,14 @@ export default function CreateAdmitCard() {
               </tbody>
             </table>
             
-            <div className="w-fit mx-auto mt-6">
+            <div className="w-fit mx-auto mt-3 md:mt-6 space-x-2 md:space-x-4">
+              <button
+                type="button"
+                onClick={handleResetAdmitCard}
+                className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
+              >
+                রিসেট
+              </button>
               <button
                 type="button"
                 onClick={handleSubmitAdmitCard}

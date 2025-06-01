@@ -13,6 +13,8 @@ export default function ClassAdmitCard() {
   const [isPrint, setIsPrint] = useState(false);
   const [admitCardPdf, setAdmitCardPdf] = useState({});
   const [serverError, setServerError] = useState("");
+  
+    const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     data: admitCards = [],
     isLoading,
@@ -50,14 +52,15 @@ export default function ClassAdmitCard() {
     refetch();
   };
 
-  
-  
-  //prind admit card 
-  const handlePrintAdmitCard= async(cardData) =>{
-    console.log(cardData);
-    setAdmitCardPdf(cardData);
-    setIsPrint(true);
-  }
+  const openPdfModal = (result) => {
+    setAdmitCardPdf(result);
+    setIsModalOpen(true);
+  };
+
+  const closePdfModal = () => {
+    setAdmitCardPdf(null);
+    setIsModalOpen(false);
+  };
   return (
     <div className="w-full md:w-11/12 mx-auto max-sm:px-2 my-10">
       <div className="bg-green-200 px-2 rounded-lg py-5 md:py-8">
@@ -194,7 +197,7 @@ export default function ClassAdmitCard() {
                         <td>{student.fatherName}</td>
                         <td>
                           <button
-                            onClick={() =>handlePrintAdmitCard(student)}
+                            onClick={() =>openPdfModal(student)}
                             className="btn btn-sm text-white bg-secondary hover:bg-primary mr-2"
                           >
                             <FaFilePdf /> Print
@@ -214,10 +217,21 @@ export default function ClassAdmitCard() {
           </div>
         )}
       </div>
-
-      {
-        isPrint && <AdmitCardPDF admitCardData={admitCardPdf} />
-      }
+        {/* pdf popup */}
+              {isModalOpen && (
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+                  <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
+                    <button
+                      onClick={closePdfModal}
+                      className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
+                    >
+                      Close
+                    </button>
+                    <AdmitCardPDF admitCardData={admitCardPdf} />
+                  </div>
+                </div>
+              )}
+     
     </div>
   );
 }
