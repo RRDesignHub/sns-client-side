@@ -19,12 +19,14 @@ export default function AllStudents() {
   const [enabled, setUnabled] = useState(false);
   const { isTeacher, isAccountant, isAdmin } = userRole;
   const [isTableModalOpen, setIsTableModalOpen] = useState(false);
+
+  // all students data fro admin and teachers dashboard
   const {
     data: students = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["resultData", filterByClass, session],
+    queryKey: ["students", filterByClass, session],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
         `/students?session=${session}&&className=${filterByClass}`
@@ -49,37 +51,6 @@ export default function AllStudents() {
     setSession(session);
     setUnabled(true);
     refetch();
-  };
-
-  const handleSave = async (student) => {
-    const studentData = {
-      studentID: student.studentID,
-      studentName: student.studentName,
-      className: student.className,
-      classRoll: student.classRoll,
-      session: student.session,
-    };
-    try {
-      const { data } = await axiosSecure.post(`/add-student-fees`, studentData);
-      if (data?.message) {
-        return Swal.fire({
-          position: "center",
-          icon: "info",
-          title: `${data?.message}`,
-        });
-      }
-      if (data.insertedId) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: `সফলভাবে ${student.studentName} এর তথ্য যোগ করা হয়েছে!!!`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (err) {
-      console.log("Student data adding Error-->", err);
-    }
   };
 
   // Delete Student Function
@@ -233,129 +204,73 @@ export default function AllStudents() {
           <Loading />
         ) : students.length > 0 ? (
           <div className="overflow-x-auto bg-green-200 shadow-md rounded-lg">
-            {/* admin and teachers table */}
-            {isAdmin ||
-              (isTeacher && (
-                <table className="table w-full">
-                  {/* Table Header */}
-                  <thead className="bg-green-600 text-white">
-                    <tr>
-                      <th>Student ID</th>
-                      <th>শিক্ষার্থীর ছবি</th>
-                      <th>নাম</th>
-                      <th>রোল</th>
-                      <th>জন্ম তাং</th>
-                      <th>বাবার নাম</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  {/* Table Body */}
-                  <tbody>
-                    {students.length > 0 &&
-                      students
-                        .sort((a, b) => a.classRoll - b.classRoll)
-                        .map((student) => (
-                          <tr key={student._id}>
-                            <td>{student.studentID}</td>
-                            <td>
-                              <img
-                                src={student?.image}
-                                className="w-10 h-10 border border-green-600 rounded-full"
-                                alt=""
-                              />
-                            </td>
-                            <td>{student.studentName}</td>
-                            <td>{student.classRoll}</td>
-                            <td>
-                              {student?.dateOfBirth &&
-                                format(
-                                  new Date(student?.dateOfBirth),
-                                  "MMMM dd, yyyy"
-                                )}
-                            </td>
-                            <td>{student.fatherName}</td>
-                            {isAdmin ? (
-                              <td>
-                                <Link
-                                  to={`/dashboard/update-student/${student?._id}`}
-                                  className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
-                                >
-                                  <FaUserEdit />
-                                </Link>
-                                <button
-                                  className="btn btn-sm text-lg btn-error text-white"
-                                  onClick={() => handleDelete(student._id)}
-                                >
-                                  <MdDelete />
-                                </button>
-                              </td>
-                            ) : (
-                              <td>
-                                <Link
-                                  to={`/dashboard/student-details/${student._id}`}
-                                  className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
-                                >
-                                  Details
-                                </Link>
-                              </td>
-                            )}
-                          </tr>
-                        ))}
-                  </tbody>
-                </table>
-              ))}
-
-            {/* accountant table */}
-            {isAccountant && (
-              <table className="table w-full bg-white rounded shadow">
-                <thead className="bg-gradient-to-r from-green-100 to-green-300 text-green-950">
-                  <tr>
-                    <th className="py-2 px-4 text-center">রোল</th>
-                    <th className="py-2 px-4 text-left">নাম</th>
-                    <th className="py-2 px-4 text-center">মাসিক বেতন</th>
-                    <th className="py-2 px-4 text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students
+            <table className="table w-full">
+              {/* Table Header */}
+              <thead className="bg-green-600 text-white">
+                <tr>
+                  <th>Student ID</th>
+                  <th>শিক্ষার্থীর ছবি</th>
+                  <th>নাম</th>
+                  <th>রোল</th>
+                  <th>জন্ম তাং</th>
+                  <th>বাবার নাম</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              {/* Table Body */}
+              <tbody>
+                {students.length > 0 &&
+                  students
                     .sort((a, b) => a.classRoll - b.classRoll)
-                    .map((stu, index) => (
-                      <tr key={stu._id} className="border-b hover:bg-gray-50">
-                        <td className="py-2 px-4 text-center">
-                          {stu.classRoll}
+                    .map((student) => (
+                      <tr key={student._id}>
+                        <td>{student.studentID}</td>
+                        <td>
+                          <img
+                            src={student?.image}
+                            className="w-10 h-10 border border-green-600 rounded-full"
+                            alt=""
+                          />
                         </td>
-                        <td className="py-2 px-4">{stu.studentName}</td>
-                        <td className="py-2 px-4 text-center">
-                          {stu.customFee
-                            ? `${stu?.customFee}৳ (Discount)`
-                            : `300৳`}
+                        <td>{student.studentName}</td>
+                        <td>{student.classRoll}</td>
+                        <td>
+                          {student?.dateOfBirth &&
+                            format(
+                              new Date(student?.dateOfBirth),
+                              "MMMM dd, yyyy"
+                            )}
                         </td>
-                        <td className="py-2 px-4 mx-auto flex justify-center items-center gap-2 *:rounded-md">
-                          <button
-                            onClick={() => handleSave(stu)}
-                            className="btn-sm bg-green-600 hover:bg-green-700 text-white"
-                          >
-                            Save
-                          </button>
-                          <button
-                            onClick={() => console.log("Pay", stu)}
-                            className="btn-sm bg-transparent border border-green-500 hover:bg-green-500"
-                          >
-                            Pay
-                          </button>
-                          <button
-                            onClick={() => console.log("Details", stu)}
-                            className="btn-sm bg-gray-600 text-green-50 hover:bg-gray-700"
-                          >
-                            Details
-                          </button>
-                          {/* <button onClick={() => handleAdjustFee(stu)} className="bg-yellow-500 hover:bg-yellow-600 text-white">Adjust Fee</button> */}
-                        </td>
+                        <td>{student.fatherName}</td>
+                        {isAdmin ? (
+                          <td>
+                            <Link
+                              to={`/dashboard/update-student/${student?._id}`}
+                              className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                            >
+                              <FaUserEdit />
+                            </Link>
+                            <button
+                              className="btn btn-sm text-lg btn-error text-white"
+                              onClick={() => handleDelete(student._id)}
+                            >
+                              <MdDelete />
+                            </button>
+                          </td>
+                        ) : (
+                          <td>
+                            <Link
+                              to={`/dashboard/student-details/${student._id}`}
+                              className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                            >
+                              Details
+                            </Link>
+                          </td>
+                        )}
                       </tr>
                     ))}
-                </tbody>
-              </table>
-            )}
+              </tbody>
+            </table>
           </div>
         ) : serverError ? (
           <p className="text-center py-4 text-red-400">{serverError}</p>

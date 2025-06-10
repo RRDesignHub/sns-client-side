@@ -33,6 +33,8 @@ import TeachersDetails from "../Pages/TeachersDetails";
 import AllStudents from "../Pages/DashboardPages/AllStudents";
 import Results from "../Pages/DashboardPages/Results";
 import ClientAllSubjects from "../Pages/AllSubjects";
+import AccountantRoute from "./AccountantRoutes";
+import AllStudentsFees from "../Pages/DashboardPages/AccountantPages/AllStudentsFees";
 
 const router = createBrowserRouter(
   [
@@ -138,6 +140,14 @@ const router = createBrowserRouter(
           path: "add-result",
           element: <TeacherRoute><AddResult></AddResult></TeacherRoute>
         },
+
+        // accountant routes
+         {
+          path: "students-fees",
+          element: <AccountantRoute><AllStudentsFees /></AccountantRoute>
+        },
+
+        // all user routes
         {
           path: "students",
           element: <AllStudents></AllStudents>

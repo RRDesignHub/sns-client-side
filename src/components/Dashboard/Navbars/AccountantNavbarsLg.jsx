@@ -20,7 +20,7 @@ const AccountantNavbarLg = () => {
 
       {/* all students */}
       <NavLink
-        to="/dashboard/students"
+        to="/dashboard/students-fees"
         className={({ isActive }) =>
           isActive
             ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
