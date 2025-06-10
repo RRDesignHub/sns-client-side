@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 export const About = () => {
   return (
     <>
-      <div className="bg-gradient-to-tr from-green-800 to-green-500 py-8 lg:py-20 mb-10">
+      <div className="bg-gradient-to-tr from-green-800 to-green-500 py-8 lg:py-16 mb-10">
         <div className="w-11/12 mx-auto flex max-sm:flex-col gap-y-6 md:gap-5 items-center justify-between">
           <div className="flex-1">
             <h2 className="text-2xl md:text-4xl font-bold text-white mb-2">

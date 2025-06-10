@@ -11,6 +11,8 @@ import TeacherNavbars from "../components/Dashboard/Navbars/TeacherNavbars";
 import AdminsNavbarLg from "../components/Dashboard/Navbars/AdminNavLg";
 import TeacherNavbarLg from "../components/Dashboard/Navbars/TeacherNavbarsLg";
 import { Loading } from "../components/Shared/Loading";
+import AccountantNavbarLg from "../components/Dashboard/Navbars/AccountantNavbarsLg";
+import AccountantNavbars from "../components/Dashboard/Navbars/AccountantNavbarssm";
 export const Dashboard = () => {
   const [userRole, roleLoading] = useRole();
     const { isTeacher, isAccountant, isAdmin } = userRole;
@@ -61,7 +63,7 @@ export const Dashboard = () => {
               </>}
 
               {isAccountant && <>
-            {/* <TeacherNavbarLg /> */}
+            <AccountantNavbars openCloseMenu={openCloseMenu} />
               </>}
           </nav>
         </div>
@@ -113,7 +115,7 @@ export const Dashboard = () => {
             <TeacherNavbarLg />
               </>}
               {isAccountant && <>
-            {/* <TeacherNavbarLg /> */}
+            <AccountantNavbarLg />
               </>}
           </nav>
 

@@ -37,7 +37,6 @@ export const Result = () => {
     setEnabled(true);
     refetch();
   };
-console.log(session, examName, className, classRoll)
   return (
     <>
       <Helmet>

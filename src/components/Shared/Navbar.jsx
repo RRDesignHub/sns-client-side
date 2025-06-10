@@ -38,6 +38,11 @@ export const Navbar = () => {
       <li>
         <NavLink 
           className={({ isActive }) => (isActive ? "text-green-950 lg:text-white py-1 border-b-4 border-b-green-950 lg:border-b-green-50 bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
+          to="/subjects">পাঠ্যপুস্তক</NavLink>
+      </li>
+      <li>
+        <NavLink 
+          className={({ isActive }) => (isActive ? "text-green-950 lg:text-white py-1 border-b-4 border-b-green-950 lg:border-b-green-50 bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent" : "text-green-950 lg:text-white")} 
           to="/all-notice">নোটিশ</NavLink>
       </li>
       

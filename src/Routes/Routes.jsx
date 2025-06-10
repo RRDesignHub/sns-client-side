@@ -32,6 +32,7 @@ import AllTeachers from "../Pages/DashboardPages/AdminPages/AllTeachers";
 import TeachersDetails from "../Pages/TeachersDetails";
 import AllStudents from "../Pages/DashboardPages/AllStudents";
 import Results from "../Pages/DashboardPages/Results";
+import ClientAllSubjects from "../Pages/AllSubjects";
 
 const router = createBrowserRouter(
   [
@@ -59,6 +60,10 @@ const router = createBrowserRouter(
         {
           path: '/result',
           element: <Result></Result>
+        },
+        {
+          path: '/subjects',
+          element: <ClientAllSubjects />
         },
         {
           path: "/teacher-details/:id",

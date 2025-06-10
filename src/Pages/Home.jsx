@@ -1,15 +1,15 @@
-import React from "react";
 import { Hero } from "../components/Hero";
 import logo from "./../assets/logo.png";
 import { Link } from "react-router-dom";
 import { About } from "../components/About";
 import { Helmet } from "react-helmet-async";
-import ContactSection from "../components/Contact";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Marquee from "react-fast-marquee";
+import { BooksOverview } from "../components/HomePage/BooksOverview";
 import TeachersOverview from "../components/HomePage/TeachersOverview";
 import StudentsOverview from "../components/HomePage/StudentsOverview";
+import ContactSection from "../components/Contact";
 export const Home = () => {
   const { data: notices = [], isLoading } = useQuery({
     queryKey: ["notices"],
@@ -55,6 +55,7 @@ export const Home = () => {
         </div>
       </div>
       <About></About>
+      <BooksOverview />
       <TeachersOverview />
       <StudentsOverview />
       <ContactSection></ContactSection>

@@ -34,14 +34,52 @@ export default function AllStudents() {
       } else {
         setServerError("");
       }
-      return data;
+      return data || [];
     },
     enabled,
   });
 
-  const handleFilter = () => {
+  // filter all students from db
+  const handleFilter = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const className = form.className.value;
+    const session = form.session.value;
+    setFilterByClass(className);
+    setSession(session);
     setUnabled(true);
     refetch();
+  };
+
+  const handleSave = async (student) => {
+    const studentData = {
+      studentID: student.studentID,
+      studentName: student.studentName,
+      className: student.className,
+      classRoll: student.classRoll,
+      session: student.session,
+    };
+    try {
+      const { data } = await axiosSecure.post(`/add-student-fees`, studentData);
+      if (data?.message) {
+        return Swal.fire({
+          position: "center",
+          icon: "info",
+          title: `${data?.message}`,
+        });
+      }
+      if (data.insertedId) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `সফলভাবে ${student.studentName} এর তথ্য যোগ করা হয়েছে!!!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (err) {
+      console.log("Student data adding Error-->", err);
+    }
   };
 
   // Delete Student Function
@@ -74,8 +112,6 @@ export default function AllStudents() {
     }
   };
 
- 
-
   // whole class pdf open modal:
   const openTablePdfModal = () => {
     setIsTableModalOpen(true);
@@ -86,211 +122,263 @@ export default function AllStudents() {
     setIsTableModalOpen(false);
   };
 
-
-
   return (
     <>
-    <div className="p-6 min-h-screen">
-      <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-        সকল শিক্ষার্থী
-      </h2>
-      <div className="divider"></div>
+      <div className="p-6 min-h-screen">
+        <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
+          সকল শিক্ষার্থী
+        </h2>
+        <div className="divider"></div>
 
-      {/* Filter Inputs */}
-      <div className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5">
-        {/* choose class */}
-        <div className="form-control col-span-12 md:col-span-3">
-          <label className="label">
-            <span className="label-text max-sm:text-lg">শ্রেণী:</span>
-          </label>
-          <select
-            defaultValue={filterByClass}
-            onChange={(e) => setFilterByClass(e.target.value)}
-            name="class"
-            className="select select-bordered w-full"
-            required
-          >
-            <option value="" disabled>
-              Select a class
-            </option>
-            {[
-              "Play",
-              "Nursery",
-              "1",
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-            ].map((className) => (
-              <option key={className} value={className}>
-                {className}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* select year */}
-        <div className="form-control col-span-12 md:col-span-2">
-          <label className="label">
-            <span className="label-text max-sm:text-lg">শিক্ষাবর্ষ:</span>
-          </label>
-          <select
-            onChange={(e) => setSession(parseInt(e.target.value))}
-            name="session"
-            value={session}
-            className="select select-bordered"
-          >
-            <option value="" disabled>
-              Select a year
-            </option>
-            {Array.from({ length: 10 }, (_, i) => {
-              const year = new Date().getFullYear() - i;
-              return (
-                <option key={year} value={year}>
-                  {year}
+        {/* Filter Inputs */}
+        <form
+          className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5"
+          onSubmit={handleFilter}
+        >
+          {/* choose class */}
+          <div className="form-control col-span-12 md:col-span-3">
+            <label className="label">
+              <span className="label-text max-sm:text-lg">শ্রেণী:</span>
+            </label>
+            <select
+              defaultValue={""}
+              name="className"
+              className="select select-bordered w-full"
+              required
+            >
+              <option value="">শ্রেণী নির্বাচন করুন</option>
+              {[
+                "Play",
+                "Nursery",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+              ].map((className) => (
+                <option key={className} value={className}>
+                  {className}
                 </option>
-              );
-            })}
-          </select>
-        </div>
+              ))}
+            </select>
+          </div>
 
-        {/* choose exam */}
-        <div className="form-control col-span-12 md:col-span-3">
-          <label className="label">
-            <span className="label-text max-sm:text-lg">শিক্ষার্থী আইডি:</span>
-          </label>
-          <input
-            type="text"
-            placeholder="যেমন: 'SN-20251234'"
-            name="classRoll"
-            value={filterStudentsID}
-            onChange={(e) => setFilterStudentsID(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
+          {/* select year */}
+          <div className="form-control col-span-12 md:col-span-2">
+            <label className="label">
+              <span className="label-text max-sm:text-lg">শিক্ষাবর্ষ:</span>
+            </label>
+            <select
+              name="session"
+              defaultValue={""}
+              className="select select-bordered"
+            >
+              <option value="">শিক্ষাবর্ষ নির্বাচন করুন</option>
+              {Array.from({ length: 10 }, (_, i) => {
+                const year = new Date().getFullYear() - i;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
 
-        <div className="col-span-6 md:col-span-2 flex items-end">
-          <button
-            onClick={handleFilter}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-          >
-            সার্চ করুন
-          </button>
-        </div>
-      </div>
-      <div className="divider my-0"></div>
-      {students.length > 0 && (
-        <div className="pb-2 flex justify-evenly items-center text-sm md:text-lg text-green-950 font-semibold">
-          <h2>শ্রেণী : {filterByClass}</h2>
-          <button
-            onClick={openTablePdfModal}
-            className="btn btn-md bg-green-600 text-green-50 hover:bg-green-500"
-          >
-            সকল শিক্ষার্থী <FaFilePdf />
-          </button>
-          <h2>মোট শিক্ষার্থী: {students.length} জন</h2>
-        </div>
-      )}
-      {isLoading ? (
-        <Loading />
-      ) : students.length > 0 ? (
-        <div className="overflow-x-auto bg-green-200 shadow-md rounded-lg">
-          <table className="table w-full">
-            {/* Table Header */}
-            <thead className="bg-green-600 text-white">
-              <tr>
-                <th>Student ID</th>
-                <th>শিক্ষার্থীর ছবি</th>
-                <th>নাম</th>
-                <th>রোল</th>
-                <th>জন্ম তাং</th>
-                <th>বাবার নাম</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            {/* Table Body */}
-            <tbody>
-              {students.length > 0 &&
-                students
-                  .sort((a, b) => a.classRoll - b.classRoll)
-                  .map((student) => (
-                    <tr key={student._id}>
-                      <td>{student.studentID}</td>
-                      <td>
-                        <img
-                          src={student?.image}
-                          className="w-10 h-10 border border-green-600 rounded-full"
-                          alt=""
-                        />
-                      </td>
-                      <td>{student.studentName}</td>
-                      <td>{student.classRoll}</td>
-                      <td>
-                        {student?.dateOfBirth &&
-                          format(
-                            new Date(student?.dateOfBirth),
-                            "MMMM dd, yyyy"
-                          )}
-                      </td>
-                      <td>{student.fatherName}</td>
-                      {isAdmin ? (
-                        <td>
-                          <Link
-                            to={`/dashboard/update-student/${student?._id}`}
-                            className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
-                          >
-                            <FaUserEdit />
-                          </Link>
-                          <button
-                            className="btn btn-sm text-lg btn-error text-white"
-                            onClick={() => handleDelete(student._id)}
-                          >
-                            <MdDelete />
-                          </button>
+          {/* choose exam */}
+          <div className="form-control col-span-12 md:col-span-3">
+            <label className="label">
+              <span className="label-text max-sm:text-lg">
+                শিক্ষার্থী আইডি:
+              </span>
+            </label>
+            <input
+              type="text"
+              placeholder="যেমন: 'SN-20251234'"
+              name="classRoll"
+              value={filterStudentsID}
+              onChange={(e) => setFilterStudentsID(e.target.value)}
+              className="input input-bordered w-full"
+            />
+          </div>
+
+          <div className="col-span-6 md:col-span-2 flex items-end">
+            <button
+              type="submit"
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+            >
+              সার্চ করুন
+            </button>
+          </div>
+        </form>
+        <div className="divider my-0"></div>
+        {students.length > 0 && (
+          <div className="pb-2 flex justify-evenly items-center text-sm md:text-lg text-green-950 font-semibold">
+            <h2>শ্রেণী : {filterByClass}</h2>
+            <button
+              onClick={openTablePdfModal}
+              className="btn btn-md bg-green-600 text-green-50 hover:bg-green-500"
+            >
+              সকল শিক্ষার্থী <FaFilePdf />
+            </button>
+            <h2>মোট শিক্ষার্থী: {students.length} জন</h2>
+          </div>
+        )}
+        {isLoading ? (
+          <Loading />
+        ) : students.length > 0 ? (
+          <div className="overflow-x-auto bg-green-200 shadow-md rounded-lg">
+            {/* admin and teachers table */}
+            {isAdmin ||
+              (isTeacher && (
+                <table className="table w-full">
+                  {/* Table Header */}
+                  <thead className="bg-green-600 text-white">
+                    <tr>
+                      <th>Student ID</th>
+                      <th>শিক্ষার্থীর ছবি</th>
+                      <th>নাম</th>
+                      <th>রোল</th>
+                      <th>জন্ম তাং</th>
+                      <th>বাবার নাম</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  {/* Table Body */}
+                  <tbody>
+                    {students.length > 0 &&
+                      students
+                        .sort((a, b) => a.classRoll - b.classRoll)
+                        .map((student) => (
+                          <tr key={student._id}>
+                            <td>{student.studentID}</td>
+                            <td>
+                              <img
+                                src={student?.image}
+                                className="w-10 h-10 border border-green-600 rounded-full"
+                                alt=""
+                              />
+                            </td>
+                            <td>{student.studentName}</td>
+                            <td>{student.classRoll}</td>
+                            <td>
+                              {student?.dateOfBirth &&
+                                format(
+                                  new Date(student?.dateOfBirth),
+                                  "MMMM dd, yyyy"
+                                )}
+                            </td>
+                            <td>{student.fatherName}</td>
+                            {isAdmin ? (
+                              <td>
+                                <Link
+                                  to={`/dashboard/update-student/${student?._id}`}
+                                  className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                                >
+                                  <FaUserEdit />
+                                </Link>
+                                <button
+                                  className="btn btn-sm text-lg btn-error text-white"
+                                  onClick={() => handleDelete(student._id)}
+                                >
+                                  <MdDelete />
+                                </button>
+                              </td>
+                            ) : (
+                              <td>
+                                <Link
+                                  to={`/dashboard/student-details/${student._id}`}
+                                  className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                                >
+                                  Details
+                                </Link>
+                              </td>
+                            )}
+                          </tr>
+                        ))}
+                  </tbody>
+                </table>
+              ))}
+
+            {/* accountant table */}
+            {isAccountant && (
+              <table className="table w-full bg-white rounded shadow">
+                <thead className="bg-gradient-to-r from-green-100 to-green-300 text-green-950">
+                  <tr>
+                    <th className="py-2 px-4 text-center">রোল</th>
+                    <th className="py-2 px-4 text-left">নাম</th>
+                    <th className="py-2 px-4 text-center">মাসিক বেতন</th>
+                    <th className="py-2 px-4 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {students
+                    .sort((a, b) => a.classRoll - b.classRoll)
+                    .map((stu, index) => (
+                      <tr key={stu._id} className="border-b hover:bg-gray-50">
+                        <td className="py-2 px-4 text-center">
+                          {stu.classRoll}
                         </td>
-                      ) : (
-                        <td>
-                          <Link
-                            to={`/dashboard/student-details/${student._id}`}
-                            className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                        <td className="py-2 px-4">{stu.studentName}</td>
+                        <td className="py-2 px-4 text-center">
+                          {stu.customFee
+                            ? `${stu?.customFee}৳ (Discount)`
+                            : `300৳`}
+                        </td>
+                        <td className="py-2 px-4 mx-auto flex justify-center items-center gap-2 *:rounded-md">
+                          <button
+                            onClick={() => handleSave(stu)}
+                            className="btn-sm bg-green-600 hover:bg-green-700 text-white"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => console.log("Pay", stu)}
+                            className="btn-sm bg-transparent border border-green-500 hover:bg-green-500"
+                          >
+                            Pay
+                          </button>
+                          <button
+                            onClick={() => console.log("Details", stu)}
+                            className="btn-sm bg-gray-600 text-green-50 hover:bg-gray-700"
                           >
                             Details
-                          </Link>
+                          </button>
+                          {/* <button onClick={() => handleAdjustFee(stu)} className="bg-yellow-500 hover:bg-yellow-600 text-white">Adjust Fee</button> */}
                         </td>
-                      )}
-                    </tr>
-                  ))}
-            </tbody>
-          </table>
-        </div>
-      ) : serverError ? (
-        <p className="text-center py-4 text-red-400">{serverError}</p>
-      ) : (
-        <p className="text-center py-4">শ্রেণী ও শিক্ষাবর্ষ নির্বাচন করুন.</p>
-      )}
-    </div>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        ) : serverError ? (
+          <p className="text-center py-4 text-red-400">{serverError}</p>
+        ) : (
+          <p className="text-center py-4">শ্রেণী ও শিক্ষাবর্ষ নির্বাচন করুন.</p>
+        )}
+      </div>
 
-     {/* table modal for all students result marksheet pdf */}
-          {/* pdf popup */}
-          {isTableModalOpen && (
-            <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
-              <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
-                <button
-                  onClick={closeTablePdfModal}
-                  className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
-                >
-                  Close
-                </button>
-                <TabularStudentInfoPDF students={students} />
-              </div>
-            </div>
-          )}
-    
+      {/* table modal for all students result marksheet pdf */}
+      {/* pdf popup */}
+      {isTableModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+          <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
+            <button
+              onClick={closeTablePdfModal}
+              className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Close
+            </button>
+            <TabularStudentInfoPDF students={students} />
+          </div>
+        </div>
+      )}
     </>
   );
 }
