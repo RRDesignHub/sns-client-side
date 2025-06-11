@@ -69,22 +69,22 @@ const TeachersDetails = () => {
                     </div>
                     <div className="flex space-x-4">
                       {socialLinks.facebook && (
-                        <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 transition-colors">
-                          <FaFacebook className="text-2xl" />
+                        <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="bg-green-200 rounded-xl p-3 text-green-600 hover:text-green-800 flex justify-center items-center drop-shadow-md transition-colors">
+                          <FaFacebook className="p-0 m-0 text-2xl" />
                         </a>
                       )}
                       {socialLinks.twitter && (
-                        <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 transition-colors">
+                        <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="bg-green-200 rounded-xl p-3 text-green-600 hover:text-green-800 flex justify-center items-center drop-shadow-md transition-colors">
                           <FaTwitter className="text-2xl" />
                         </a>
                       )}
                       {socialLinks.linkedin && (
-                        <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 transition-colors">
+                        <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="bg-green-200 rounded-xl p-3 text-green-600 hover:text-green-800 flex justify-center items-center drop-shadow-md transition-colors">
                           <FaLinkedin className="text-2xl" />
                         </a>
                       )}
                       {socialLinks.email && (
-                        <a href={`mailto:${socialLinks.email}`} className="text-green-600 hover:text-green-800 transition-colors">
+                        <a href={`mailto:${socialLinks.email}`} className="bg-green-200 rounded-xl p-3 text-green-600 hover:text-green-800 flex justify-center items-center drop-shadow-md transition-colors">
                           <FaEnvelope className="text-2xl" />
                         </a>
                       )}

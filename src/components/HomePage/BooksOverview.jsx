@@ -17,7 +17,7 @@ export const BooksOverview = () => {
       <div className="w-11/12 mx-auto py-8 lg:py-16">
         <div className="flex max-sm:flex-col gap-3 items-center justify-between">
           <h2 className="text-2xl md:text-4xl font-bold text-green-800 text-center ">
-            মাধ্যমিক স্তরের পাঠ্যপুস্তক
+            প্রাথমিক ও মাধ্যমিক স্তরের পাঠ্যপুস্তক
           </h2>
           <Link
             className="btn max-sm:text-sm bg-green-600 text-green-50 hover:bg-green-300 hover:text-green-950"
@@ -33,7 +33,7 @@ export const BooksOverview = () => {
               শ্রেণী: {allSubjects?.className} এর পাঠ্যপুস্তক ({allSubjects?.subjects.length} টি)
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
-              {allSubjects?.subjects?.map((subject, index) => (
+              {allSubjects?.subjects?.slice(0, 6).map((subject, index) => (
                 <a
                   key={index}
                   href={subject?.pdfUrl}

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 import { useRole } from "../../../Hooks/useRole";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loading } from "../../../components/Shared/Loading";
 import { Link } from "react-router-dom";
 import { FaFilePdf } from "react-icons/fa";
@@ -17,7 +17,12 @@ const AllStudentsFees = () => {
   const [enabled, setUnabled] = useState(false);
   const { isTeacher, isAccountant, isAdmin } = userRole;
   const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState({});
+  const [toMonth, setToMonth] = useState("");
+  const [totalPaidAmount, setTotalPaidAmount] = useState(0);
+  const [monthsToPay, setMonthsToPay] = useState([]);
+
   // all students data for accountant from studentsFeesCollection
   const {
     data: studentsFees = [],
@@ -51,13 +56,25 @@ const AllStudentsFees = () => {
     refetch();
   };
 
+  useEffect(() => {
+    if (toMonth) {
+      const endIndex = selectedStudent?.dueMonths?.indexOf(toMonth);
+      const selected = selectedStudent?.dueMonths?.slice(0, endIndex + 1);
+      setMonthsToPay(selected);
+      setTotalPaidAmount(selected?.length * selectedStudent?.amount);
+    }
+  }, [selectedStudent, toMonth]);
+
+  // adjust fees and add due amount for specipic student
   const handleUpdateFees = async (e) => {
     e.preventDefault();
     const newFee = parseInt(e.target.newFee.value);
+    const dueAmount = parseInt(e.target.dueAmount.value);
     try {
       const { data } = await axiosSecure.patch("/update-fee", {
         studentID: selectedStudent.studentID,
         newFee,
+        dueAmount,
       });
 
       if (data.modifiedCount) {
@@ -70,10 +87,52 @@ const AllStudentsFees = () => {
         setSelectedStudent({});
       }
     } catch (err) {
-      console.log("Adjust fees Errro--->", err);
+      console.log("Adjust fees Error--->", err);
     }
+  };
 
-    
+  // paymnt func
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    const paymentData = {
+      studentID: selectedStudent.studentID,
+      session: selectedStudent.session,
+      className: selectedStudent.className,
+      classRoll: selectedStudent.classRoll,
+      monthsToPay,
+      totalPaidAmount,
+    };
+    try {
+      const { data } = await axiosSecure.patch("/fee-payment", paymentData);
+      if (data?.message) {
+        Swal.fire({
+          title: "!!!!",
+          text: `${data?.message}`,
+          icon: "success",
+        });
+      }
+      if (data.modifiedCount) {
+        setIsPaymentModalOpen(false);
+        Swal.fire({
+          title: "পরিশোধিত!",
+          text: `${selectedStudent.studentName}-এর বেতন পরিশোধ হয়েছে!!!`,
+          icon: "success",
+        });
+        refetch();
+        setSelectedStudent({});
+        setTotalPaidAmount(0);
+        setMonthsToPay([]);
+        setToMonth("");
+      }
+    } catch (err) {
+      console.log("Pay fees Error--->", err);
+    }
+  };
+
+  // open payment popup
+  const openPaymentModal = (student) => {
+    setIsPaymentModalOpen(true);
+    setSelectedStudent(student);
   };
 
   // whole class pdf open modal:
@@ -82,9 +141,14 @@ const AllStudentsFees = () => {
     setSelectedStudent(student);
   };
 
-  // whole class pdf open modal:
+  // close all modal:
   const closeAdjustModal = () => {
     setIsAdjustModalOpen(false);
+    setIsPaymentModalOpen(false);
+    setSelectedStudent({});
+    setTotalPaidAmount(0);
+    setMonthsToPay([]);
+    setToMonth("");
   };
   return (
     <>
@@ -204,7 +268,6 @@ const AllStudentsFees = () => {
                   <th className="py-2 px-4 text-left">নাম</th>
                   <th className="py-2 px-4 text-center">মাসিক বেতন(৳)</th>
                   <th className="py-2 px-4 text-center">বকেয়া(৳)</th>
-                  <th className="py-2 px-4 text-center">বকেয়া মাস</th>
                   <th className="py-2 px-4 text-center">সর্বশেষ পরিশোধ</th>
                   <th className="py-2 px-4 text-center">Actions</th>
                 </tr>
@@ -222,26 +285,24 @@ const AllStudentsFees = () => {
                       <td className="py-2 px-4 text-center">
                         {stu.dueAmount}৳
                       </td>
-                      <td className="py-2 px-4 text-center">
-                        {stu?.dueMonths && stu?.dueMonths.length} মাসের
-                      </td>
                       <td>
                         {stu?.paidAt &&
                           format(new Date(stu?.paidAt), "MMMM dd, yyyy")}
                       </td>
                       <td className="py-2 px-4 mx-auto flex justify-center items-center gap-2 *:rounded-md">
                         <button
-                          onClick={() => console.log("Pay", stu)}
+                          onClick={() => openPaymentModal(stu)}
                           className="btn-sm bg-green-500 hover:bg-green-700 text-white"
                         >
                           পরিশোধ
                         </button>
-                        <button
-                          onClick={() => console.log("Details", stu)}
-                          className="btn-sm bg-gray-600 text-green-50 hover:bg-gray-700"
+                        <Link
+                          to={`/dashboard/student-payment-history/${stu?.studentID}`}
                         >
-                          বিবরণী
-                        </button>
+                          <button className="btn-sm rounded-md bg-gray-600 text-green-50 hover:bg-gray-700">
+                            বিবরণী
+                          </button>
+                        </Link>
                         <button
                           onClick={() => openAdjustModal(stu)}
                           className="btn-sm bg-transparent border border-green-500 hover:bg-green-500 text-green-600 hover:text-white"
@@ -261,18 +322,18 @@ const AllStudentsFees = () => {
         )}
       </div>
 
-      {/* pdf popup */}
-      {isAdjustModalOpen && (
+      {/* payment modal */}
+      {isPaymentModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
-          <div className="bg-white w-[70%] h-[90%] rounded shadow-lg relative p-10">
-            <form onSubmit={handleUpdateFees} className="space-y-6">
+          <div className="bg-white w-[70%] h-fit md:h-[90%] rounded shadow-lg relative p-10">
+            <form onSubmit={handlePayment} className="space-y-6">
               <h2 className="text-2xl font-bold text-center text-gray-800">
-                বেতন পরিবর্তন
+                বেতন পরিশোধ
               </h2>
 
               {/* Student Details (Read-only) */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
+              <div className="grid grid-cols-2 md:grid-cols-12 gap-2">
+                <div className="col-span-2 md:col-span-4">
                   <label className="block text-sm font-medium text-gray-700">
                     শিক্ষার্থীর নাম
                   </label>
@@ -280,7 +341,7 @@ const AllStudentsFees = () => {
                     {selectedStudent?.studentName || "N/A"}
                   </p>
                 </div>
-                <div>
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700">
                     শিক্ষার্থীর ID
                   </label>
@@ -304,23 +365,76 @@ const AllStudentsFees = () => {
                     {selectedStudent?.classRoll || "N/A"}
                   </p>
                 </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    মাসিক বেতন
+                  </label>
+                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                    {selectedStudent?.amount || "N/A"}৳
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    বকেয়া মাস
+                  </label>
+                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                    {(selectedStudent?.dueMonths &&
+                      selectedStudent?.dueMonths.length) ||
+                      "0"}
+                    মাস
+                  </p>
+                </div>
               </div>
 
               {/* Editable Fee Field */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  মাসিক বেতন পরিবর্তন
-                </label>
-                <input
-                  type="number"
-                  defaultValue={selectedStudent?.amount}
-                  name="newFee"
-                  min="0"
-                  step="1"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="Enter new fee amount"
-                  required
-                />
+              <div className="grid grid-cols-2 md:grid-cols-12 gap-3">
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    বকেয়া
+                  </label>
+                  <input
+                    type="number"
+                    defaultValue={selectedStudent?.dueAmount}
+                    name="dueAmount"
+                    readOnly
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="পূর্বের বকেয়া..."
+                  />
+                </div>
+
+                <div className="md:col-span-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    পরিশোধ মাস (পর্যন্ত)
+                  </label>
+                  <select
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    onChange={(e) => setToMonth(e.target.value)}
+                    defaultValue={""}
+                  >
+                    <option value="">মাস নির্বাচন করুন</option>
+                    {selectedStudent?.dueMonths?.map((month) => (
+                      <option key={month} value={month}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {monthsToPay?.length > 0 && totalPaidAmount > 0 && (
+                  <div className="md:col-span-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                      পরিশোধের পরিমাণ
+                    </label>
+                    <input
+                      type="number"
+                      value={totalPaidAmount || 0}
+                      name="newFee"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      placeholder="Enter new fee amount"
+                      readOnly
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Form Actions */}
@@ -330,13 +444,113 @@ const AllStudentsFees = () => {
                   onClick={closeAdjustModal}
                   className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                 >
-                  Cancel
+                  বাতিল
                 </button>
                 <button
                   type="submit"
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                 >
-                  Save Changes
+                  পরিশোধ করুন
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* adjust fees and due amount modal popup */}
+      {isAdjustModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+          <div className="bg-white w-[70%]  h-fit rounded shadow-lg relative p-10">
+            <form onSubmit={handleUpdateFees} className="space-y-6">
+              <h2 className="text-2xl font-bold text-center text-gray-800">
+                বেতন পরিবর্তন
+              </h2>
+
+              {/* Student Details (Read-only) */}
+              <div className="grid grid-cols-3 md:grid-cols-12 gap-2">
+                <div className="col-span-3 md:col-span-6">
+                  <label className="block text-sm font-medium text-gray-700">
+                    শিক্ষার্থীর নাম
+                  </label>
+                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                    {selectedStudent?.studentName || "N/A"}
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    শিক্ষার্থীর ID
+                  </label>
+                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                    {selectedStudent?.studentID || "N/A"}
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    শ্রেণী
+                  </label>
+                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                    {selectedStudent?.className || "N/A"}
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    রোল
+                  </label>
+                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                    {selectedStudent?.classRoll || "N/A"}
+                  </p>
+                </div>
+              </div>
+
+              {/* Editable Fee Field */}
+              <div className="grid grid-cols-4 md:grid-cols-12 gap-3">
+                <div className="col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    পূর্বের বকেয়া
+                  </label>
+                  <input
+                    type="number"
+                    defaultValue={selectedStudent?.dueAmount}
+                    name="dueAmount"
+                    min="0"
+                    step="1"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="পূর্বের বকেয়া..."
+                    required
+                  />
+                </div>
+                <div className="col-span-2 md:col-span-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    মাসিক বেতন পরিবর্তন
+                  </label>
+                  <input
+                    type="number"
+                    defaultValue={selectedStudent?.amount}
+                    name="newFee"
+                    min="0"
+                    step="1"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="Enter new fee amount"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Form Actions */}
+              <div className="flex justify-end space-x-4">
+                <button
+                  type="button"
+                  onClick={closeAdjustModal}
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  বাতিল
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                >
+                  পরিবর্তন করুন
                 </button>
               </div>
             </form>

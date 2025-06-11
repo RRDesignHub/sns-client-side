@@ -35,6 +35,7 @@ import Results from "../Pages/DashboardPages/Results";
 import ClientAllSubjects from "../Pages/AllSubjects";
 import AccountantRoute from "./AccountantRoutes";
 import AllStudentsFees from "../Pages/DashboardPages/AccountantPages/AllStudentsFees";
+import StuPaymentHistory from "../Pages/DashboardPages/AccountantPages/StuPaymentHistory";
 
 const router = createBrowserRouter(
   [
@@ -145,6 +146,10 @@ const router = createBrowserRouter(
          {
           path: "students-fees",
           element: <AccountantRoute><AllStudentsFees /></AccountantRoute>
+        },
+         {
+          path: "student-payment-history/:id",
+          element: <AccountantRoute><StuPaymentHistory /></AccountantRoute>
         },
 
         // all user routes
