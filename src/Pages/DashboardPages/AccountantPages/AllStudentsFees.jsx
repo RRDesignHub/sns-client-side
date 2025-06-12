@@ -44,6 +44,59 @@ const AllStudentsFees = () => {
     enabled,
   });
 
+
+  // temporary fetch
+  // const {
+  //   data: allStudents = []
+  // } = useQuery({
+  //   queryKey: ["students", filterByClass, session],
+  //   queryFn: async () => {
+  //     const { data } = await axiosSecure.get(
+  //       `/students?session=${session}&&className=${filterByClass}`
+  //     );
+  //     if (data?.message) {
+  //       setServerError(data.message);
+  //     } else {
+  //       setServerError("");
+  //     }
+  //     return data || [];
+  //   },
+  //   enabled,
+  // });
+
+  // temporaty add stu to stuFeesColl
+  // const handleAddStu = async(stu) =>{
+  //   const studentData = {
+  //     studentID:stu?.studentID, 
+  //     studentName: stu?.studentName,
+  //     className: stu?.className,
+  //     classRoll: stu?.classRoll,
+  //     session: stu?.session,
+  //   }
+  //    try {
+  //     const { data } = await axiosSecure.post("/add-student-fees", studentData);
+
+  //     if (data?.message) {
+  //             return Swal.fire({
+  //               position: "center",
+  //               icon: "info",
+  //               title: `${data?.message}`,
+  //             });
+  //           }
+  //           if (data.insertedId) {
+  //             Swal.fire({
+  //               position: "center",
+  //               icon: "success",
+  //               title: `সফলভাবে ${stu?.studentName} এর তথ্য যোগ করা হয়েছে!!!`,
+  //               showConfirmButton: false,
+  //               timer: 1500,
+  //             });
+  //           }
+  //   } catch (err) {
+  //     console.log("Adjust fees Error--->", err);
+  //   }
+  // }
+
   // filter all students from db
   const handleFilter = (e) => {
     e.preventDefault();
@@ -55,6 +108,10 @@ const AllStudentsFees = () => {
     setUnabled(true);
     refetch();
   };
+
+
+
+  
 
   useEffect(() => {
     if (toMonth) {
@@ -150,6 +207,34 @@ const AllStudentsFees = () => {
     setMonthsToPay([]);
     setToMonth("");
   };
+
+  // temporary button for delete all data from studentsFeesColl
+  const deleteAllData = () =>{
+    Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#16A34A",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const { data } = await axiosSecure.delete(
+                `/delete-fees-data/${filterByClass}/${session}`
+              );
+              console.log(data?.message);
+              if (data.deletedCount > 0) {
+                refetch();
+                Swal.fire("Deleted!", "All data has been deleted.", "success");
+              }
+            } catch (error) {
+              console.error("Error deleting subject:", error);
+            }
+          }
+        });
+  }
   return (
     <>
       <div className="p-6 min-h-screen">
@@ -245,14 +330,49 @@ const AllStudentsFees = () => {
           </div>
         </form>
         <div className="divider my-0"></div>
+
+        {/* all student for add to stuFeesColl */}
+        {/* {
+          allStudents && <table className="table w-full bg-white rounded shadow">
+              <thead className="bg-gradient-to-r from-green-100 to-green-300 text-green-950">
+                <tr>
+                  <th className="py-2 px-4 text-center">রোল</th>
+                  <th className="py-2 px-4 text-left">নাম</th>
+                  <th className="py-2 px-4 text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allStudents
+                  .sort((a, b) => a.classRoll - b.classRoll)
+                  .map((stu, index) => (
+                    <tr key={stu._id} className="border-b hover:bg-gray-50">
+                      <td className="py-2 px-4 text-center">{stu.classRoll}</td>
+                      <td className="py-2 px-4">{stu.studentName}</td>
+                      
+                      <td className="py-2 px-4 mx-auto flex justify-center items-center gap-2 *:rounded-md">
+                        <button
+                          onClick={() => handleAddStu(stu)}
+                          className="btn-sm bg-green-500 hover:bg-green-700 text-white"
+                        >
+                          Add to FeesColl
+                        </button>
+                        
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+        } */}
+
+
         {studentsFees.length > 0 && (
           <div className="pb-2 flex justify-evenly items-center text-sm md:text-lg text-green-950 font-semibold">
             <h2>শ্রেণী : {filterByClass}</h2>
             <button
-              // onClick={openTablePdfModal}
+              onClick={deleteAllData}
               className="btn btn-md bg-green-600 text-green-50 hover:bg-green-500"
             >
-              সকল শিক্ষার্থী <FaFilePdf />
+              Delete All Data
             </button>
             <h2>মোট শিক্ষার্থী: {studentsFees.length} জন</h2>
           </div>

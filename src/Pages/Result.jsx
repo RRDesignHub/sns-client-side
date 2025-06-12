@@ -7,7 +7,7 @@ export const Result = () => {
   const [examName, setExamName] = useState("1st-Semester");
   const [session, setSession] = useState(new Date().getFullYear().toString());
   const [className, setClassName] = useState("Play");
-  const [classRoll, setClassRoll] = useState(null);
+  const [classRoll, setClassRoll] = useState(0);
   const [serverError, setServerError] = useState("");
   const [enabled, setEnabled] = useState(false);
 
@@ -16,7 +16,7 @@ export const Result = () => {
     isLoading,
     refetch,
   } = useQuery({
-    enabled,
+    enabled, 
     queryKey: ["result", session, className, classRoll, examName],
     queryFn: async () => {
       const { data } = await axios(
@@ -29,31 +29,42 @@ export const Result = () => {
       } else {
         setServerError(null);
       }
-      return data;
+      return data || {};
     },
   });
 
-  const handleDisplayStudentResult = () => {
+  const handleDisplayStudentResult = (e) => {
+    e.preventDefault();
+        const form = e.target;
+        const session = form.session.value;
+        const examName = form.examName.value;
+        const className = form.className.value;
+        const classRoll = form.classRoll.value;
+        setSession(session);
+        setExamName(examName);
+        setClassName(className);
+        setClassRoll(classRoll);
+        refetch();
     setEnabled(true);
     refetch();
   };
   return (
     <>
       <Helmet>
-        <title>SN-Result</title>
+        <title>SN-ফলাফল</title>
       </Helmet>
       <div className="bg-blue-50">
         <div className="card-body max-sm:p-3 lg:w-11/12 md:mx-auto">
-          <div className="flex max-sm:flex-wrap md:justify-center md:items-center max-sm:gap-y-2 max-sm:gap-x-4 md:gap-5">
+          <form 
+          onSubmit={handleDisplayStudentResult}
+          className="flex max-sm:flex-wrap md:justify-center md:items-center max-sm:gap-y-2 max-sm:gap-x-4 md:gap-5">
             {/* select year */}
             <div className="form-control flex-col justify-between md:items-start ">
               <label className="block max-sm:text-sm w-full label font-semibold">
                 শিক্ষাবর্ষ :
               </label>
               <select
-                onChange={(e) => setSession(e.target.value)}
                 name="session"
-                value={session}
                 className="select select-bordered"
                 required
               >
@@ -76,9 +87,7 @@ export const Result = () => {
                 পরীক্ষার নাম :
               </label>
               <select
-                defaultValue={examName}
-                onChange={(e) => setExamName(e.target.value)}
-                name="subjectName"
+                name="examName"
                 className="select select-bordered"
                 required
               >
@@ -96,9 +105,7 @@ export const Result = () => {
             <div className="form-control justify-between md:items-start ">
               <label className="block max-sm:text-sm w-full label font-semibold">শ্রেণী :</label>
               <select
-                defaultValue={className}
-                onChange={(e) => setClassName(e.target.value.toString())}
-                name="class"
+                name="className"
                 className="select select-bordered"
                 required
               >
@@ -131,7 +138,8 @@ export const Result = () => {
               <input
                 type="number"
                 name="classRoll"
-                onChange={(e) => setClassRoll(e.target.value.toString())}
+                min={0}
+                max={100}
                 placeholder="Student roll"
                 className="input input-bordered max-sm:w-32"
                 required
@@ -139,18 +147,18 @@ export const Result = () => {
             </div>
             <div className="form-control mt-auto">
               <button
-                onClick={handleDisplayStudentResult}
+              type="submit"
                 className="btn bg-green-700  hover:bg-green-600 text-white"
               >
                 সার্চ করুন
               </button>
             </div>
-          </div>
+          </form>
         </div>
         <div className="w-[95%] md:w-11/12 mx-auto pb-5">
           <div className={`max-sm:mx-2 md:w-11/12 mx-auto`}>
             {isLoading && <Loading />}
-            {resultData.studentName && !isLoading ? (
+            {resultData?.studentName && !isLoading ? (
               <div
                 style={{ backgroundColor: "#bbf7d0" }}
                 className=" px-3 rounded-lg py-5 md:py-8"
@@ -264,7 +272,7 @@ export const Result = () => {
               </div>
             ) : serverError ? (
               <p className="text-red-500 max-sm:text-xs text-center">{serverError}</p>
-            ) : (
+            ) :  (
               <p className="max-sm:text-xs text-center">
                 দয়া করে শিক্ষাবর্ষ, পরীক্ষা, শ্রেণী ও রোল টাইপ করুন এবং ফলাফল দেখতে
                 সার্চ এ ক্লিক করুন...

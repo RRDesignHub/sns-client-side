@@ -36,6 +36,7 @@ import ClientAllSubjects from "../Pages/AllSubjects";
 import AccountantRoute from "./AccountantRoutes";
 import AllStudentsFees from "../Pages/DashboardPages/AccountantPages/AllStudentsFees";
 import StuPaymentHistory from "../Pages/DashboardPages/AccountantPages/StuPaymentHistory";
+import AddExamFee from "../Pages/DashboardPages/AccountantPages/AddExamFee";
 
 const router = createBrowserRouter(
   [
@@ -150,6 +151,10 @@ const router = createBrowserRouter(
          {
           path: "student-payment-history/:id",
           element: <AccountantRoute><StuPaymentHistory /></AccountantRoute>
+        },
+         {
+          path: "add-exam-fee",
+          element: <AccountantRoute><AddExamFee /></AccountantRoute>
         },
 
         // all user routes
