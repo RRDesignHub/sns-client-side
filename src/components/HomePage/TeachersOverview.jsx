@@ -20,7 +20,7 @@ export default function TeachersOverview() {
       const { data } = await axios.get(
         `${import.meta.env.VITE_SERVER_API}/teachers`
       );
-      return data;
+      return data || [];
     },
   });
   return (
@@ -69,7 +69,7 @@ export default function TeachersOverview() {
           modules={[Autoplay]}
           className="mySwiper"
         >
-          {teachers.map((teacher, idx) => (
+          {teachers?.map((teacher, idx) => (
             <SwiperSlide key={idx} className="pb-8 px-2">
               <Link to={`/teacher-details/${teacher?._id}`}>
                 <div

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosSec } from "../../../Hooks/useAxiosSec";
-import { useRole } from "../../../Hooks/useRole";
 import { useEffect, useState } from "react";
 import { Loading } from "../../../components/Shared/Loading";
 import { Link } from "react-router-dom";
@@ -9,18 +8,17 @@ import { format } from "date-fns";
 import Swal from "sweetalert2";
 const AllStudentsFees = () => {
   const axiosSecure = useAxiosSec();
-  const [userRole] = useRole();
   const [filterStudentsID, setFilterStudentsID] = useState("");
   const [filterByClass, setFilterByClass] = useState("");
   const [session, setSession] = useState(new Date().getFullYear());
   const [serverError, setServerError] = useState("");
   const [enabled, setUnabled] = useState(false);
-  const { isTeacher, isAccountant, isAdmin } = userRole;
   const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState({});
   const [toMonth, setToMonth] = useState("");
   const [totalPaidAmount, setTotalPaidAmount] = useState(0);
+  const [dueExamFees, setDueExamFees] = useState(0);
   const [monthsToPay, setMonthsToPay] = useState([]);
 
   // all students data for accountant from studentsFeesCollection
@@ -44,59 +42,6 @@ const AllStudentsFees = () => {
     enabled,
   });
 
-
-  // temporary fetch
-  // const {
-  //   data: allStudents = []
-  // } = useQuery({
-  //   queryKey: ["students", filterByClass, session],
-  //   queryFn: async () => {
-  //     const { data } = await axiosSecure.get(
-  //       `/students?session=${session}&&className=${filterByClass}`
-  //     );
-  //     if (data?.message) {
-  //       setServerError(data.message);
-  //     } else {
-  //       setServerError("");
-  //     }
-  //     return data || [];
-  //   },
-  //   enabled,
-  // });
-
-  // temporaty add stu to stuFeesColl
-  // const handleAddStu = async(stu) =>{
-  //   const studentData = {
-  //     studentID:stu?.studentID, 
-  //     studentName: stu?.studentName,
-  //     className: stu?.className,
-  //     classRoll: stu?.classRoll,
-  //     session: stu?.session,
-  //   }
-  //    try {
-  //     const { data } = await axiosSecure.post("/add-student-fees", studentData);
-
-  //     if (data?.message) {
-  //             return Swal.fire({
-  //               position: "center",
-  //               icon: "info",
-  //               title: `${data?.message}`,
-  //             });
-  //           }
-  //           if (data.insertedId) {
-  //             Swal.fire({
-  //               position: "center",
-  //               icon: "success",
-  //               title: `সফলভাবে ${stu?.studentName} এর তথ্য যোগ করা হয়েছে!!!`,
-  //               showConfirmButton: false,
-  //               timer: 1500,
-  //             });
-  //           }
-  //   } catch (err) {
-  //     console.log("Adjust fees Error--->", err);
-  //   }
-  // }
-
   // filter all students from db
   const handleFilter = (e) => {
     e.preventDefault();
@@ -109,16 +54,21 @@ const AllStudentsFees = () => {
     refetch();
   };
 
-
-
-  
-
   useEffect(() => {
+    setDueExamFees(0);
+    const dueExam =
+      selectedStudent?.examFees?.filter((fee) => fee.status === "Due") || [];
+    const totalExamFeesAmount = dueExam.reduce((sum, fee) => {
+      return sum + (fee.amount || 0);
+    }, 0);
+    if (totalExamFeesAmount) {
+      setDueExamFees(totalExamFeesAmount);
+    }
     if (toMonth) {
       const endIndex = selectedStudent?.dueMonths?.indexOf(toMonth);
       const selected = selectedStudent?.dueMonths?.slice(0, endIndex + 1);
       setMonthsToPay(selected);
-      setTotalPaidAmount(selected?.length * selectedStudent?.amount);
+      setTotalPaidAmount(selected?.length * selectedStudent?.monthlyFee);
     }
   }, [selectedStudent, toMonth]);
 
@@ -156,8 +106,9 @@ const AllStudentsFees = () => {
       session: selectedStudent.session,
       className: selectedStudent.className,
       classRoll: selectedStudent.classRoll,
-      monthsToPay,
-      totalPaidAmount,
+      totalPaidMonths: monthsToPay,
+      paidMonthlyFees: totalPaidAmount,
+      paidExamFee: dueExamFees,
     };
     try {
       const { data } = await axiosSecure.patch("/fee-payment", paymentData);
@@ -209,37 +160,37 @@ const AllStudentsFees = () => {
   };
 
   // temporary button for delete all data from studentsFeesColl
-  const deleteAllData = () =>{
+  const deleteAllData = () => {
     Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#d33",
-          cancelButtonColor: "#16A34A",
-          confirmButtonText: "Yes, delete it!",
-        }).then(async (result) => {
-          if (result.isConfirmed) {
-            try {
-              const { data } = await axiosSecure.delete(
-                `/delete-fees-data/${filterByClass}/${session}`
-              );
-              console.log(data?.message);
-              if (data.deletedCount > 0) {
-                refetch();
-                Swal.fire("Deleted!", "All data has been deleted.", "success");
-              }
-            } catch (error) {
-              console.error("Error deleting subject:", error);
-            }
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#16A34A",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { data } = await axiosSecure.delete(
+            `/delete-fees-data/${filterByClass}/${session}`
+          );
+          if (data.deletedCount > 0) {
+            refetch();
+            Swal.fire("Deleted!", "All data has been deleted.", "success");
           }
-        });
-  }
+        } catch (error) {
+          console.error("Error deleting subject:", error);
+        }
+      }
+    });
+  };
+
   return (
     <>
       <div className="p-6 min-h-screen">
         <h2 className="text-2xl md:text-4xl text-green-950 font-bold text-center">
-          সকল শিক্ষার্থী
+          মাসিক বেতন ও পরীক্ষার ফি গ্রহণ
         </h2>
         <div className="divider"></div>
 
@@ -331,40 +282,6 @@ const AllStudentsFees = () => {
         </form>
         <div className="divider my-0"></div>
 
-        {/* all student for add to stuFeesColl */}
-        {/* {
-          allStudents && <table className="table w-full bg-white rounded shadow">
-              <thead className="bg-gradient-to-r from-green-100 to-green-300 text-green-950">
-                <tr>
-                  <th className="py-2 px-4 text-center">রোল</th>
-                  <th className="py-2 px-4 text-left">নাম</th>
-                  <th className="py-2 px-4 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allStudents
-                  .sort((a, b) => a.classRoll - b.classRoll)
-                  .map((stu, index) => (
-                    <tr key={stu._id} className="border-b hover:bg-gray-50">
-                      <td className="py-2 px-4 text-center">{stu.classRoll}</td>
-                      <td className="py-2 px-4">{stu.studentName}</td>
-                      
-                      <td className="py-2 px-4 mx-auto flex justify-center items-center gap-2 *:rounded-md">
-                        <button
-                          onClick={() => handleAddStu(stu)}
-                          className="btn-sm bg-green-500 hover:bg-green-700 text-white"
-                        >
-                          Add to FeesColl
-                        </button>
-                        
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-        } */}
-
-
         {studentsFees.length > 0 && (
           <div className="pb-2 flex justify-evenly items-center text-sm md:text-lg text-green-950 font-semibold">
             <h2>শ্রেণী : {filterByClass}</h2>
@@ -400,7 +317,7 @@ const AllStudentsFees = () => {
                       <td className="py-2 px-4 text-center">{stu.classRoll}</td>
                       <td className="py-2 px-4">{stu.studentName}</td>
                       <td className="py-2 px-4 text-center">
-                        {stu.amount ? `${stu?.amount}৳` : `300৳`}
+                        {stu.monthlyFee ? `${stu?.monthlyFee}৳` : `300৳`}
                       </td>
                       <td className="py-2 px-4 text-center">
                         {stu.dueAmount}৳
@@ -461,7 +378,7 @@ const AllStudentsFees = () => {
                     {selectedStudent?.studentName || "N/A"}
                   </p>
                 </div>
-                <div className="md:col-span-2">
+                <div className="md:col-span-4">
                   <label className="block text-sm font-medium text-gray-700">
                     শিক্ষার্থীর ID
                   </label>
@@ -469,7 +386,7 @@ const AllStudentsFees = () => {
                     {selectedStudent?.studentID || "N/A"}
                   </p>
                 </div>
-                <div>
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700">
                     শ্রেণী
                   </label>
@@ -477,7 +394,7 @@ const AllStudentsFees = () => {
                     {selectedStudent?.className || "N/A"}
                   </p>
                 </div>
-                <div>
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700">
                     রোল
                   </label>
@@ -490,27 +407,35 @@ const AllStudentsFees = () => {
                     মাসিক বেতন
                   </label>
                   <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
-                    {selectedStudent?.amount || "N/A"}৳
+                    {selectedStudent?.monthlyFee || 0} ৳
                   </p>
                 </div>
-                <div className="md:col-span-2">
+                <div className="md:col-span-8">
                   <label className="block text-sm font-medium text-gray-700">
                     বকেয়া মাস
                   </label>
                   <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
                     {(selectedStudent?.dueMonths &&
                       selectedStudent?.dueMonths.length) ||
-                      "0"}
+                      "0"} ৳
                     মাস
+                  </p>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    পরীক্ষার ফি:
+                  </label>
+                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                    {dueExamFees} ৳
                   </p>
                 </div>
               </div>
 
               {/* Editable Fee Field */}
               <div className="grid grid-cols-2 md:grid-cols-12 gap-3">
-                <div className="md:col-span-2">
+                <div className="md:col-span-4">
                   <label className="block text-sm font-medium text-gray-700">
-                    বকেয়া
+                    মাসিক বেতন বকেয়া
                   </label>
                   <input
                     type="number"
@@ -540,21 +465,19 @@ const AllStudentsFees = () => {
                   </select>
                 </div>
 
-                {monthsToPay?.length > 0 && totalPaidAmount > 0 && (
-                  <div className="md:col-span-4">
-                    <label className="block text-sm font-medium text-gray-700">
-                      পরিশোধের পরিমাণ
-                    </label>
+                <div className="md:col-span-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    পরিশোধের পরিমাণ
+                  </label>
                     <input
                       type="number"
-                      value={totalPaidAmount || 0}
+                      value={monthsToPay?.length > 0 && totalPaidAmount > 0 ? (dueExamFees + totalPaidAmount) : dueExamFees ? dueExamFees : 0}
                       name="newFee"
                       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       placeholder="Enter new fee amount"
                       readOnly
                     />
-                  </div>
-                )}
+                </div>
               </div>
 
               {/* Form Actions */}

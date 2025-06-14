@@ -57,7 +57,7 @@ export default function CreateUserPage() {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: `${name}’কে সফলভাবে ${role}-এ রেজিস্ট্রেশনের অনুমতি দেয়া হয়েছে!`,
+          title: `${name}’কে সফলভাবে ${role}-এ অনুমতি দেয়া হয়েছে!`,
           showConfirmButton: true,
           timer: 1500,
         });

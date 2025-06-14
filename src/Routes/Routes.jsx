@@ -5,7 +5,6 @@ import { Home } from "../Pages/Home";
 import AdminRoute from "./AdminRoute";
 import TeacherRoute from "./TeacherRoute";
 import { Teachers } from "../Pages/Teachers";
-import { Result } from "../Pages/Result";
 import { PrivateRoute } from "./PrivateRoute";
 import { ErrorPage } from "../Pages/ErrorPage";
 import { SignIn } from "../Pages/SignIn";
@@ -37,6 +36,8 @@ import AccountantRoute from "./AccountantRoutes";
 import AllStudentsFees from "../Pages/DashboardPages/AccountantPages/AllStudentsFees";
 import StuPaymentHistory from "../Pages/DashboardPages/AccountantPages/StuPaymentHistory";
 import AddExamFee from "../Pages/DashboardPages/AccountantPages/AddExamFee";
+import ClientResult from "../Pages/ClientResult";
+import AddAllStudents from "../Pages/DashboardPages/AccountantPages/AddAllStudents";
 
 const router = createBrowserRouter(
   [
@@ -55,15 +56,15 @@ const router = createBrowserRouter(
         },
         {
           path: '/teachers',
-          element: <Teachers></Teachers>,
+          element: <Teachers />,
         },
         {
           path: '/students',
           element: <Students />,
         },
         {
-          path: '/result',
-          element: <Result></Result>
+          path: '/client-result',
+          element: <ClientResult />
         },
         {
           path: '/subjects',
@@ -157,6 +158,11 @@ const router = createBrowserRouter(
           element: <AccountantRoute><AddExamFee /></AccountantRoute>
         },
 
+        {
+          path: "all-students-fees",
+          element: <AccountantRoute><AddAllStudents /></AccountantRoute>
+        },
+
         // all user routes
         {
           path: "students",
@@ -169,7 +175,7 @@ const router = createBrowserRouter(
         },
         
         {
-          path: "results",
+          path: "dashboard-results",
           element: <Results></Results>
         },
         {

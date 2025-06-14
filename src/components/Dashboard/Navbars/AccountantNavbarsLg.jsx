@@ -56,6 +56,19 @@ const AccountantNavbarLg = () => {
         < FaSitemap className="w-5 h-5" />
         বিক্রি (খাতা, টাই...)
       </NavLink>
+
+      {/* all students data fetch for add them into students fees collections */}
+      <NavLink
+        to="/dashboard/all-students-fees"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+            : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+        }
+      >
+        <TbCoinTakaFilled className="w-5 h-5" />
+        সকল শিক্ষার্থী
+      </NavLink>
     </>
   );
 };

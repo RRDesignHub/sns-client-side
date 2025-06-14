@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Loading } from "../components/Shared/Loading";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-export const Result = () => {
+const ClientResult = () => {
   const [examName, setExamName] = useState("1st-Semester");
   const [session, setSession] = useState(new Date().getFullYear().toString());
   const [className, setClassName] = useState("Play");
@@ -138,7 +138,7 @@ export const Result = () => {
               <input
                 type="number"
                 name="classRoll"
-                min={0}
+                min={1}
                 max={100}
                 placeholder="Student roll"
                 className="input input-bordered max-sm:w-32"
@@ -284,3 +284,4 @@ export const Result = () => {
     </>
   );
 };
+export default ClientResult;

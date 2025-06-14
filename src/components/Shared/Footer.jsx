@@ -29,7 +29,7 @@ export const Footer = () => {
             <Link to="/all-notice" className="link link-hover">
               নোটিশ
             </Link>
-            <Link to="/result" className="link link-hover">
+            <Link to="/client-result" className="link link-hover">
               ফলাফল অনুসন্ধান 
             </Link>
           </div>

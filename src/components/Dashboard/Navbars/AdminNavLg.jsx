@@ -141,7 +141,7 @@ const AdminsNavbarLg = () => {
 
       {/* all results */}
       <NavLink
-        to="/dashboard/results"
+        to="/dashboard/dashboard-results"
         className={({ isActive }) =>
           isActive
             ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"

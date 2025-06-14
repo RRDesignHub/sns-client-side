@@ -30,7 +30,7 @@ export const BooksOverview = () => {
         {
          isLoading ? "Loading..." : <section >
             <h2 className="text-sm md:text-2xl text-gray-950/80 font-semibold mb-6 text-center">
-              শ্রেণী: {allSubjects?.className} এর পাঠ্যপুস্তক ({allSubjects?.subjects.length} টি)
+              শ্রেণী: {allSubjects?.className} এর পাঠ্যপুস্তক ({allSubjects?.subjects?.length} টি)
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
               {allSubjects?.subjects?.slice(0, 6).map((subject, index) => (

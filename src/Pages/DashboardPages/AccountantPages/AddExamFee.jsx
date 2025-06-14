@@ -1,49 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
 import { useAxiosSec } from "../../../Hooks/useAxiosSec";
-import { useRole } from "../../../Hooks/useRole";
-import { useState } from "react";
-import { Loading } from "../../../components/Shared/Loading";
-import { Link } from "react-router-dom";
-import { format } from "date-fns";
 import Swal from "sweetalert2";
 const AddExamFee = () => {
   const axiosSecure = useAxiosSec();
-  const [userRole] = useRole();
-  const [filterByClass, setFilterByClass] = useState("");
-  const [session, setSession] = useState(new Date().getFullYear());
-  const [serverError, setServerError] = useState("");
-  const [enabled, setUnabled] = useState(false);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const className = form.className.value;
     const session = form.session.value;
     const examName = form.examName.value;
     const deadline = form.deadline.value;
-    const examFee = parseInt(form.examFee.value);
+    const amount = parseInt(form.examFee.value);
 
-    const examFeeData = { className, session, examName, deadline, examFee, status: "Due" };
+    const examFeeData = {
+      className,
+      session,
+      examName,
+      deadline,
+      amount,
+      status: "Due",
+    };
     try {
-          const { data } = await axiosSecure.patch("/add-exam-fee", examFeeData);
-          if (data?.message) {
-            Swal.fire({
-              title: "???",
-              text: `${data?.message}`,
-              icon: "info",
-            });
-          }
-          if (data.modifiedCount) {
-            Swal.fire({
-              title: "সফল হয়েছে!",
-              text: `${className}-এর ${examName} পরীক্ষার ফি যুক্ত হয়েছে!!!`,
-              icon: "success",
-            });
-            form.reset();
-          }
-        } catch (err) {
-          console.log("Add exam fees Error--->", err);
-        }
+      const { data } = await axiosSecure.patch("/add-exam-fee", examFeeData);
+      if (data?.message) {
+        Swal.fire({
+          title: "???",
+          text: `${data?.message}`,
+          icon: "info",
+        });
+      }
+      if (data.modifiedCount) {
+        Swal.fire({
+          title: "সফল হয়েছে!",
+          text: `${className}-এর ${examName} পরীক্ষার ফি যুক্ত হয়েছে!!!`,
+          icon: "success",
+        });
+        
+      }
+    } catch (err) {
+      console.log("Add exam fees Error--->", err);
+    }
   };
   return (
     <>
@@ -135,19 +131,19 @@ const AddExamFee = () => {
           </div>
 
           {/* last payment Date */}
-            <div className="form-control md:col-span-2">
-              <label className="label">
-                <span className="label-text max-sm:text-xs">
-                  পরিশোধের শেষ সময়
-                </span>
-              </label>
-              <input
-                type="date"
-                name="deadline"
-                defaultValue={new Date()}
-                className="select select-bordered w-full max-sm:text-xs"
-              />
-            </div>
+          <div className="form-control md:col-span-2">
+            <label className="label">
+              <span className="label-text max-sm:text-xs">
+                পরিশোধের শেষ সময়
+              </span>
+            </label>
+            <input
+              type="date"
+              name="deadline"
+              defaultValue={new Date()}
+              className="select select-bordered w-full max-sm:text-xs"
+            />
+          </div>
 
           {/* exam fee */}
           <div className="form-control md:col-span-2">
@@ -155,7 +151,7 @@ const AddExamFee = () => {
               <span className="label-text max-sm:text-xs">পরীক্ষার ফি:</span>
             </label>
             <input
-            className="select select-bordered w-full max-sm:text-xs"
+              className="select select-bordered w-full max-sm:text-xs"
               type="number"
               name="examFee"
               min={0}
