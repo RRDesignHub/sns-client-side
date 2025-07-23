@@ -20,7 +20,7 @@ export const Hero = () => {
       }}
         spaceBetween={0}
         modules={[Autoplay]}
-        className="mySwiper"
+        className="mySwiper w-full"
       >
         <SwiperSlide>
           <div  className="w-full">

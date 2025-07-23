@@ -76,12 +76,14 @@ const AllStudentsFees = () => {
   const handleUpdateFees = async (e) => {
     e.preventDefault();
     const newFee = parseInt(e.target.newFee.value);
-    const dueAmount = parseInt(e.target.dueAmount.value);
+    const previousDues = parseInt(e.target.previousDues.value);
+    const previousDuesDescription = parseInt(e.target.previousDuesDescription.value);
     try {
       const { data } = await axiosSecure.patch("/update-fee", {
         studentID: selectedStudent.studentID,
         newFee,
-        dueAmount,
+        previousDues,
+        previousDuesDescription
       });
 
       if (data.modifiedCount) {
@@ -414,7 +416,7 @@ const AllStudentsFees = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     বকেয়া মাস
                   </label>
-                  <p className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700">
+                  <p className="mt-1 block w-full px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md text-gray-700">
                     {(selectedStudent?.dueMonths &&
                       selectedStudent?.dueMonths.length) ||
                       "0"} ৳
@@ -548,19 +550,27 @@ const AllStudentsFees = () => {
 
               {/* Editable Fee Field */}
               <div className="grid grid-cols-4 md:grid-cols-12 gap-3">
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    পূর্বের বকেয়া
-                  </label>
+                <div className="col-span-2 md:col-span-4">
+                  <label className="block text-sm font-medium text-gray-700">পূর্বের বকেয়া</label>
                   <input
                     type="number"
-                    defaultValue={selectedStudent?.dueAmount}
-                    name="dueAmount"
+                    name="previousDues"
+                    value={selectedStudent?.previousDues}
                     min="0"
                     step="1"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="পূর্বের বকেয়া..."
-                    required
+                    placeholder="পূর্বের বকেয়া লিখুন"
+                  />
+                </div>
+                <div className="col-span-4 md:col-span-4">
+                  <label className="block text-sm font-medium text-gray-700">বকেয়ার বিবরণ</label>
+                  <input
+                    type="text"
+                    name="previousDuesDescription"
+                    value={selectedStudent?.previousDuesDescription}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="যেমন: ২০২৪ সালের বকেয়া"
+                    required={selectedStudent?.previousDues > 0}
                   />
                 </div>
                 <div className="col-span-2 md:col-span-4">
@@ -569,7 +579,7 @@ const AllStudentsFees = () => {
                   </label>
                   <input
                     type="number"
-                    defaultValue={selectedStudent?.amount}
+                    defaultValue={selectedStudent?.monthlyFee}
                     name="newFee"
                     min="0"
                     step="1"

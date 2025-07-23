@@ -81,7 +81,7 @@ const ClientAllSubjects = () => {
             <div className="form-control">
               <button
                 type="submit"
-                className="btn max-sm:btn-sm bg-green-700  hover:bg-green-600 text-white"
+                className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:btn-sm bg-green-700  hover:bg-green-600 text-white"
               >
                 সার্চ করুন
               </button>
@@ -124,7 +124,7 @@ const ClientAllSubjects = () => {
         ) : serverError ? (
           <h2 className="text-red-400 text-center py-4">{serverError}</h2>
         ) : (
-          ""
+          "সার্ভার ডাউন..."
         )}
       </div>
     </>

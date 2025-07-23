@@ -19,16 +19,16 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="bg-green-50 py-16" id="contact">
+    <section className="bg-green-50 py-8 lg:py-16" id="contact">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-2xl md:text-4xl font-bold mb-4 text-green-800">
+        <h2 className="text-xl md:text-4xl font-bold mb-2 text-green-800">
         আমাদের সাথে যোগাযোগ করুন
         </h2>
-       
+       <div className='divider mt-0 mb-2'></div>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
-          <div className="mb-6">
-            <label htmlFor="name" className="block text-lg text-gray-800 mb-2">
+          <div className="max-sm:flex items-center gap-2 mb-6">
+            <label htmlFor="name" className="block text-sm md:text-lg text-gray-800 mb-2">
               নাম
             </label>
             <input
@@ -38,12 +38,12 @@ const ContactSection = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full p-1 md:p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="email" className="block text-lg text-gray-800 mb-2">
+          <div className="max-sm:flex items-center gap-2 mb-6">
+            <label htmlFor="email" className="block text-sm md:text-lg text-gray-800 mb-2">
             ইমেইল
             </label>
             <input
@@ -53,14 +53,14 @@ const ContactSection = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full p-1 md:p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
-          <div className="mb-6">
+          <div className="max-sm:flex gap-2 mb-6">
             <label
               htmlFor="message"
-              className="block text-lg text-gray-800 mb-2"
+              className="block text-sm md:text-lg text-gray-800 mb-2"
             >
               বার্তা
             </label>
@@ -71,13 +71,13 @@ const ContactSection = () => {
               onChange={handleChange}
               required
               rows="4"
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full p-1 md:p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             ></textarea>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 bg-green-800 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="btn-sm max-sm:rounded-md py-1 md:btn bg-green-800 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
             বার্তা পাঠান
           </button>

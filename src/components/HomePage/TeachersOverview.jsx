@@ -26,11 +26,11 @@ export default function TeachersOverview() {
   return (
     <div className="w-11/12 mx-auto pb-16 ">
       <div className="flex max-sm:flex-col gap-3 items-center justify-between">
-        <h2 className="text-2xl md:text-4xl font-bold text-green-700 text-center ">
+        <h2 className="text-xl md:text-4xl font-bold text-green-700 text-center ">
           আমাদের শিক্ষক/শিক্ষিকা বৃন্দ
         </h2>
         <Link
-          className="btn bg-green-200 text-green-950 hover:bg-green-700 hover:text-green-50"
+          className="btn-sm max-sm:rounded-md py-1 md:btn bg-green-200 text-green-950 hover:bg-green-700 hover:text-green-50"
           to="/teachers"
         >
           আরও দেখুন
@@ -38,8 +38,8 @@ export default function TeachersOverview() {
       </div>
       <div className="divider my-2"></div>
       {isLoading ? (
-        "Loading..."
-      ) : (
+        "লোড করা হচ্ছে..."
+      ) : teachers?.length > 0 ? (
         <Swiper
           loop={true}
           speed={800}
@@ -96,7 +96,7 @@ export default function TeachersOverview() {
             </SwiperSlide>
           ))}
         </Swiper>
-      )}
+      ) : "সার্ভার ডাউন..."}
     </div>
   );
 }

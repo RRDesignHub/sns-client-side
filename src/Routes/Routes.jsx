@@ -111,7 +111,7 @@ const router = createBrowserRouter(
         },
         {
           path: "update-student/:id",
-          element: <AdminRoute><UpdateStudent /></AdminRoute>
+          element: <UpdateStudent />
         },
         {
           path: "add-subjects",

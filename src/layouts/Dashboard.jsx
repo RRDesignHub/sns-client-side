@@ -12,7 +12,7 @@ import AdminsNavbarLg from "../components/Dashboard/Navbars/AdminNavLg";
 import TeacherNavbarLg from "../components/Dashboard/Navbars/TeacherNavbarsLg";
 import { Loading } from "../components/Shared/Loading";
 import AccountantNavbarLg from "../components/Dashboard/Navbars/AccountantNavbarsLg";
-import AccountantNavbars from "../components/Dashboard/Navbars/AccountantNavbarssm";
+import AccountantNavbars from "../components/Dashboard/Navbars/AccountantNavbarsSm";
 export const Dashboard = () => {
   const [userRole, roleLoading] = useRole();
     const { isTeacher, isAccountant, isAdmin } = userRole;

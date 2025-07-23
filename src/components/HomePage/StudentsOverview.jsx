@@ -10,29 +10,32 @@ export default function StudentsOverview() {
       const { data } = await axios.get(
         `${import.meta.env.VITE_SERVER_API}/random-students`
       );
-      return data;
+      return data || [];
     },
   });
   return (
     <section className="bg-green-100">
-      <div className="w-11/12 mx-auto py-16 ">
+      <div className="w-11/12 mx-auto py-8 lg:py-16">
         <div className="flex max-sm:flex-col gap-3 items-center justify-between">
-          <h2 className="text-2xl md:text-4xl font-bold text-green-700 text-center ">
+          <h2 className="text-xl md:text-4xl font-bold text-green-700 text-center ">
             আমাদের শিক্ষার্থীরা
           </h2>
           <Link
-            className="btn border border-green-600 bg-transparent text-green-600 hover:bg-green-700 hover:text-green-50"
+            className="btn-sm max-sm:rounded-md py-1 md:btn border border-green-600 bg-transparent text-green-600 hover:bg-green-700 hover:text-green-50"
             to="/students"
           >
             আরও দেখুন
           </Link>
         </div>
         <div className="divider my-2"></div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
+
+        {isLoading ? "লোড করা হচ্ছে..." : 
+        students?.length > 0 ? <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
           {students.map((student) => (
             <StudentCard key={student._id} student={student}/>
           ))}
-        </div>
+        </div> : "সার্ভার ডাউন..."}
+        
       </div>
     </section>
   );

@@ -5,11 +5,11 @@ export const About = () => {
     <>
       <div className="bg-gradient-to-tr from-green-800 to-green-500 py-8 lg:py-16 mb-10">
         <div className="w-11/12 mx-auto flex max-sm:flex-col gap-y-6 md:gap-5 items-center justify-between">
-          <div className="flex-1">
-            <h2 className="text-2xl md:text-4xl font-bold text-white mb-2">
+          <div className="flex-1 max-sm:items-center">
+            <h2 className="text-xl md:text-4xl font-bold text-white mb-2">
               আমাদের সম্পর্কে
             </h2>
-            <p className="text-white max-sm:text-sm text-justify mb-8">
+            <p className="text-white max-sm:text-xs text-justify mb-4 md:mb-8">
               শাহ নেয়ামত (রহঃ) কেজি অ্যান্ড হাই স্কুল একটি আদর্শ
               শিক্ষাপ্রতিষ্ঠান, যেখানে শিক্ষার্থীদের মানসম্মত শিক্ষা ও নৈতিক
               মূল্যবোধের বিকাশে সর্বোচ্চ গুরুত্ব দেওয়া হয়। আমাদের লক্ষ্য
@@ -22,7 +22,7 @@ export const About = () => {
             </p>
             <Link
               to="/about-us"
-              className="btn bg-green-200 text-green-950 border border-green-950 hover:bg-green-50 rounded-xl"
+              className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:text-sm bg-green-200 text-green-950 md:border border-green-950 hover:bg-green-50 rounded-xl"
             >
               আরও দেখুন
             </Link>

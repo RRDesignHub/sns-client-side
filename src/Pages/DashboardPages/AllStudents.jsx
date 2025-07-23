@@ -209,12 +209,11 @@ export default function AllStudents() {
               <thead className="bg-green-600 text-white">
                 <tr>
                   <th>Student ID</th>
-                  <th>শিক্ষার্থীর ছবি</th>
+                  <th >শিক্ষার্থীর ছবি</th>
                   <th>নাম</th>
                   <th>রোল</th>
-                  <th>জন্ম তাং</th>
-                  <th>বাবার নাম</th>
-                  <th>Actions</th>
+                  <th>জন্ম তারিখ</th>
+                  <th className="text-center">Actions</th>
                 </tr>
               </thead>
               {/* Table Body */}
@@ -225,7 +224,7 @@ export default function AllStudents() {
                     .map((student) => (
                       <tr key={student._id}>
                         <td>{student.studentID}</td>
-                        <td>
+                        <td className="text-center">
                           <img
                             src={student?.image}
                             className="w-10 h-10 border border-green-600 rounded-full"
@@ -241,17 +240,23 @@ export default function AllStudents() {
                               "MMMM dd, yyyy"
                             )}
                         </td>
-                        <td>{student.fatherName}</td>
-                        {isAdmin ? (
-                          <td>
+                        
+                        {isAdmin || isTeacher ? (
+                          <td className="flex flex-row items-center gap-2 md:gap-4">
                             <Link
                               to={`/dashboard/update-student/${student?._id}`}
-                              className="btn btn-sm bg-secondary text-white hover:bg-primary mr-2"
+                              className="btn btn-sm text-xs md:text-lg bg-secondary text-white hover:bg-primary mr-2"
                             >
                               <FaUserEdit />
                             </Link>
+                            <Link
+                              to={`/dashboard/student-details/${student._id}`}
+                              className="btn btn-sm text-xs md:text-lg bg-secondary text-white hover:bg-primary mr-2 "
+                            >
+                              Details
+                            </Link>
                             <button
-                              className="btn btn-sm text-lg btn-error text-white"
+                              className="btn btn-sm text-xs md:text-lg btn-error text-white"
                               onClick={() => handleDelete(student._id)}
                             >
                               <MdDelete />

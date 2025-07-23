@@ -17,7 +17,7 @@ export const Home = () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_SERVER_API}/notices`
       );
-      return data;
+      return data || [];
     },
   });
   return (
@@ -25,16 +25,18 @@ export const Home = () => {
       <Helmet>
         <title>SN-Home</title>
       </Helmet>
-      <div className="relative max-sm:mb-[280px] md:mb-40 lg:mb-10 ">
+      <div className="relative max-sm:mb-[250px] md:mb-40 lg:mb-10 w-[100%]">
         <Hero></Hero>
-        <div className="absolute z-30 -bottom-[260px] md:-bottom-[140px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12 mx-auto bg-gradient-to-br from-green-800 via-green-500 to-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
-          {!isLoading && (
-            <div className="flex max-sm:flex-col items-center gap-2 md:gap-5">
-              <img className="w-20 drop-shadow-xl" src={logo} alt="" />
-              <div className="flex max-sm:flex-col gap-2 items-center">
-                <h3 className="md:w-fit text-2xl font-bold py-2 max-sm:text-center md:text-left underline text-blue-50">
-                  নোটিশ :
-                </h3>
+        <div className="absolute z-30 -bottom-[230px] md:-bottom-[140px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12 mx-auto bg-gradient-to-br from-green-800 via-green-500 to-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
+          <div className="flex max-sm:flex-col items-center gap-2 md:gap-5">
+            <img className="w-20 drop-shadow-xl" src={logo} alt="" />
+            <div className="flex max-sm:flex-col gap-2 items-center">
+              <h3 className="md:w-fit text-lg font-bold py-2 max-sm:text-center md:text-left underline text-blue-50">
+                নোটিশ :
+              </h3>
+              {isLoading ? (
+                "লোড করা হচ্ছে..."
+              ) : notices?.length > 0 ? (
                 <Link className="md:w-10/12" to="/all-notice">
                   <div className="max-sm:w-[300px] w-full bg-green-50 rounded-lg p-3">
                     <Marquee
@@ -49,9 +51,11 @@ export const Home = () => {
                     </Marquee>
                   </div>
                 </Link>
-              </div>
+              ) : (
+                "সার্ভার ডাউন..."
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
       <About></About>

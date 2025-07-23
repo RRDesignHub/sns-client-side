@@ -3,6 +3,7 @@ import axios from "axios";
 import { Loading } from "../components/Shared/Loading";
 import { useState } from "react";
 import StudentCard from "../components/StudentCard";
+import { Helmet } from "react-helmet";
 
 export default function Students() {
   const [selectedClass, setSelectedClass] = useState("Play");
@@ -26,7 +27,7 @@ export default function Students() {
       } else {
         setServerError(null);
       }
-      return data;
+      return data || [];
     },
     enabled,
   });
@@ -38,6 +39,10 @@ export default function Students() {
   };
 
   return (
+    <>
+    <Helmet>
+            <title>আমাদের শিক্ষার্থী</title>
+          </Helmet>
     <div className="w-11/12 mx-auto pt-5 md:pt-10 mb-5 md:mb-10">
       <div className="grid grid-cols-4 max-sm:gap-4">
         {/* Filter Section */}
@@ -127,5 +132,6 @@ export default function Students() {
         )}
       </div>
     </div>
+    </>
   );
 }

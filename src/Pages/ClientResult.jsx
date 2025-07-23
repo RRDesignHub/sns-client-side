@@ -148,7 +148,7 @@ const ClientResult = () => {
             <div className="form-control mt-auto">
               <button
               type="submit"
-                className="btn bg-green-700  hover:bg-green-600 text-white"
+                className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:btn-sm bg-green-700  hover:bg-green-600 text-white"
               >
                 সার্চ করুন
               </button>
