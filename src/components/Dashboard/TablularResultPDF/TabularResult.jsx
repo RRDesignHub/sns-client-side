@@ -43,7 +43,7 @@ export default function TabularResultPDF({ resultData }) {
 
           {/* Table Rows */}
           {resultData
-            ?.sort((a, b) => b.totalMarks - a.totalMarks) // Highest marks first
+            ?.sort((a, b) => a.classRoll - b.classRoll) // Highest marks first
             ?.map((item, index) => (
               <View key={item._id || index} style={styles.tableRow}>
                 <Text style={[styles.cell, { flex: 0.8 }]}>{item.classRoll}</Text>

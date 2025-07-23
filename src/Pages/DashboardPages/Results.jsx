@@ -103,7 +103,6 @@ const Results = () => {
     setIsModalOpen(false);
   };
 
-
   return (
     <>
       <div className="max-sm:ml-1 max-sm:mt-1 md:w-11/12 mx-auto md:my-10">
