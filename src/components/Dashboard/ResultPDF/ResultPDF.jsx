@@ -33,7 +33,7 @@ export default function ResultPDF({result}) {
           <View>
             <Image
               src="/logo.png"
-              style={{ height: 50, width: 50, position: "absolute" }}
+              style={{ height: 50, width: 50, position: "absolute", left: 4 }}
             />
             <Text style={styles.title}>Shah Neyamat (RH:) KG & High School</Text>
             <Text style={{ fontSize: 11, fontWeight: 500, textAlign: "center", opacity: 0.8 }}>

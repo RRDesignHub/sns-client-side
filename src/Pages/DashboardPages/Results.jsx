@@ -103,15 +103,7 @@ const Results = () => {
     setIsModalOpen(false);
   };
 
-  // const handleDownloadPDF = async (selectedResult) => {
-  //   const blob = await pdf(<ResultPDF result={selectedResult} />).toBlob();
-  //   const fileName = `${selectedResult.studentName}_Result_Class_${selectedResult.className}.pdf`;
 
-  //   const link = document.createElement("a");
-  //   link.href = URL.createObjectURL(blob);
-  //   link.download = fileName;
-  //   link.click();
-  // };
   return (
     <>
       <div className="max-sm:ml-1 max-sm:mt-1 md:w-11/12 mx-auto md:my-10">
