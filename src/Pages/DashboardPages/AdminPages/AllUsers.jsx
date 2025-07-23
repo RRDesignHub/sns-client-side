@@ -75,7 +75,6 @@ const AllUsers = () => {
                 <th>ইমেইল</th>
                 <th>ইউজার রোল</th>
                 <th>তারিখ</th>
-                <th>স্টেটাস</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -92,7 +91,6 @@ const AllUsers = () => {
                       {user?.joinedAt &&
                         format(new Date(user?.joinedAt), "MMMM dd, yyyy")}
                     </td>
-                    <td>{user?.status}</td>
                     <td>
                       <Link
                         to={`/dashboard/update-user/${user?._id}`}

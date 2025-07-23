@@ -146,9 +146,9 @@ export default function CreateUserPage() {
             <option value="" disabled>
               Select Role
             </option>
-            <option value="Teacher">শিক্ষক</option>
+            <option value="Teacher">শিক্ষক/শিক্ষিকা</option>
             <option value="Accountant">হিসাবরক্ষক</option>
-            <option value="Admin">অ্যাডমিন</option>
+            <option value="Admin">এডমিন</option>
           </select>
         </div>
 

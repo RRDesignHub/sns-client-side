@@ -25,8 +25,7 @@ const UpdateUser = () => {
       const form = e.target;
       const name = form.name.value;
       const role = form.role.value;
-      const status = form.status.value;
-      const newUser = { name, email: user?.email, role, status };
+      const newUser = { name, email: user?.email, role };
      
       try {
         // Save user data to the database:
@@ -109,6 +108,7 @@ const UpdateUser = () => {
             <option value="Teacher">শিক্ষক</option>
             <option value="Accountant">হিসাবরক্ষক</option>
             <option value="Admin">অ্যাডমিন</option>
+            <option value="Block">ব্লক</option>
           </select>
         </div>}
         
