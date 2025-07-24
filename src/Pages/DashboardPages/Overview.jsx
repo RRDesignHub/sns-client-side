@@ -20,7 +20,6 @@ export default function Overview() {
       return data;
     },
   });
-  console.log(dashboardData);
   return (
     <>
       {isLoading || roleLoading ? (
@@ -180,12 +179,12 @@ export default function Overview() {
             <div className="flex items-start gap-3">
               <div>
                 <p className="text-gray-800">
-                  {dashboardData?.latestActivity?.details}
+                  {dashboardData?.recentActivities?.details}
                 </p>
                 <p className="text-sm text-gray-500">
-                  {dashboardData?.latestActivity &&
+                  {dashboardData?.recentActivities &&
                     format(
-                      new Date(dashboardData?.latestActivity?.createdAt),
+                      new Date(dashboardData?.recentActivities?.createdAt),
                       "MMMM dd, yyyy"
                     )}
                 </p>
