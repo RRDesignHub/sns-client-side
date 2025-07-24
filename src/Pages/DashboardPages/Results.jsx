@@ -44,11 +44,19 @@ const Results = () => {
     enabled,
   });
 
-  const handleFilter = () => {
+  const handleFilter = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const className = form.className.value;
+    const session = form.session.value;
+    const examName = form.examName.value;
     if (className === "" && examName === "") {
       setError("শ্রেণী, শিক্ষাবর্ষ ও পরীক্ষা নির্বাচন করুন!");
       return;
     }
+    setClassName(className);
+    setSession(session);
+    setExamName(examName);
     setUnabled(true);
     refetch();
   };
@@ -112,18 +120,20 @@ const Results = () => {
           </h2>
           <div className="divider my-0"></div>
           {/* Filter Inputs */}
-          <div className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5">
+          <form className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5"
+          onSubmit={handleFilter}
+          >
             {/* choose class */}
             <div className="form-control col-span-12 md:col-span-3">
               <label className="label">
                 <span className="label-text max-sm:text-lg">শ্রেণী:</span>
               </label>
               <select
-                onChange={(e) => setClassName(e.target.value)}
-                value={className}
+                defaultValue={""}
+              name="className"
                 className="select select-bordered bg-white  text-gray-700"
               >
-                <option value="">Choose class...</option>
+                <option value="">শ্রেণী নির্বাচন করুন...</option>
                 {[
                   "Play",
                   "Nursery",
@@ -151,14 +161,13 @@ const Results = () => {
                 <span className="label-text max-sm:text-lg">শিক্ষাবর্ষ:</span>
               </label>
               <select
-                onChange={(e) => setSession(parseInt(e.target.value))}
                 name="session"
-                value={session}
+              defaultValue={""}
                 className="select select-bordered"
                 required
               >
                 <option value="" disabled>
-                  Select a year
+                  শিক্ষাবর্ষ নির্বাচন করুন
                 </option>
                 {Array.from({ length: 10 }, (_, i) => {
                   const year = new Date().getFullYear() - i;
@@ -177,14 +186,13 @@ const Results = () => {
                 <span className="label-text max-sm:text-lg">পরীক্ষার নাম:</span>
               </label>
               <select
-                onChange={(e) => setExamName(e.target.value)}
-                name="subjectName"
-                value={examName}
+                name="examName"
+              defaultValue={""}
                 className={`select select-bordered`}
                 required
               >
                 <option value={""} disabled>
-                  Select
+                  পরীক্ষা নির্বাচন করুন
                 </option>
                 <option value="1st-Semester">1st Semester</option>
                 <option value="2nd-Semester">2nd Semester</option>
@@ -196,13 +204,12 @@ const Results = () => {
 
             <div className="col-span-6 md:col-span-2 flex items-end">
               <button
-                onClick={handleFilter}
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
               >
                 সার্চ করুন
               </button>
             </div>
-          </div>
+          </form>
           <div className="divider my-0"></div>
           {resultData.length > 0 && (
             <div className="pb-2 flex justify-between items-center text-sm md:text-lg text-green-950 font-semibold">

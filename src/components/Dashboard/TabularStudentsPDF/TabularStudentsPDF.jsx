@@ -22,7 +22,7 @@ export default function TabularStudentInfoPDF({ students }) {
             <View>
               <Image
                 src="/logo.png"
-                style={{ height: 50, width: 50, position: "absolute" }}
+                style={{ height: 50, width: 50, position: "absolute", left: 4 }}
               />
               <Text style={styles.title}>
                 Shah Neyamat (RH:) KG & High School
@@ -58,12 +58,13 @@ export default function TabularStudentInfoPDF({ students }) {
               <Text style={[styles.headerCell, { flex: 1.5 }]}>
                 Mother's Name
               </Text>
+              <Text style={[styles.headerCell, { flex: 1.5 }]}>DOB</Text>
               <Text style={[styles.headerCell, { flex: 1 }]}>Mobile No</Text>
             </View>
 
             {/* Table Rows */}
             {students
-              ?.slice(0, 25)
+              ?.slice(0, 30)
               ?.sort((a, b) => a.classRoll - b.classRoll)
               ?.map((item, index) => (
                 <View key={item._id || index} style={styles.tableRow}>
@@ -75,11 +76,14 @@ export default function TabularStudentInfoPDF({ students }) {
                   <Text style={[styles.nameCell, { flex: 1.5 }]}>
                     {item.studentName}
                   </Text>
-                  <Text style={[styles.cell, { flex: 1.5 }]}>
+                  <Text style={[styles.cell, { flex: 1.2 }]}>
                     {item.fatherName}
                   </Text>
-                  <Text style={[styles.cell, { flex: 1.5 }]}>
+                  <Text style={[styles.cell, { flex: 1 }]}>
                     {item.motherName}
+                  </Text>
+                  <Text style={[styles.cell, { flex: 1 }]}>
+                    {format(new Date(item?.dateOfBirth), "dd MMM yyyy")}
                   </Text>
                   <Text
                     style={[styles.cell, { flex: 0.8, textAlign: "center" }]}

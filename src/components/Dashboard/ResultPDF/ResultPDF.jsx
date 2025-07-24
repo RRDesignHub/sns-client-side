@@ -33,7 +33,7 @@ export default function ResultPDF({result}) {
           <View>
             <Image
               src="/logo.png"
-              style={{ height: 50, width: 50, position: "absolute", left: 4 }}
+              style={{ height: 50, width: 50, position: "absolute"}}
             />
             <Text style={styles.title}>Shah Neyamat (RH:) KG & High School</Text>
             <Text style={{ fontSize: 11, fontWeight: 500, textAlign: "center", opacity: 0.8 }}>
@@ -53,20 +53,20 @@ export default function ResultPDF({result}) {
                 <Text style={{ fontSize: 12, fontWeight: "bold" }}>{result?.studentName}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
-                <Text style={{ fontSize: 11, fontWeight: 500 }}>Father's Name:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 600 }}>{result?.fatherName}</Text>
+                <Text style={{ fontSize: 11 }}>Father's Name:</Text>
+                <Text style={{ fontSize: 11 }}>{result?.fatherName}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
-                <Text style={{ fontSize: 11, fontWeight: 500 }}>Mother's Name:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 600 }}>{result?.motherName}</Text>
+                <Text style={{ fontSize: 11 }}>Mother's Name:</Text>
+                <Text style={{ fontSize: 11 }}>{result?.motherName}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
-                <Text style={{ fontSize: 11, fontWeight: 600 }}>Class:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>{result?.className}</Text>
+                <Text style={{ fontSize: 11 }}>Class:</Text>
+                <Text style={{ fontSize: 11}}>{result?.className}</Text>
               </View>
               <View style={{ flexDirection: "row", justifyContent: "flex-start", gap: 5 }}>
-                <Text style={{ fontSize: 11, fontWeight: 500 }}>Roll:</Text>
-                <Text style={{ fontSize: 11, fontWeight: 400 }}>{result?.classRoll}</Text>
+                <Text style={{ fontSize: 11 }}>Roll:</Text>
+                <Text style={{ fontSize: 11}}>{result?.classRoll}</Text>
               </View>
             </View>
             <View style={styles.infoRight}>
@@ -98,6 +98,10 @@ export default function ResultPDF({result}) {
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Status:</Text>
                 <Text style={styles.infoValue}>{result?.status}</Text>
+              </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Position:</Text>
+                <Text style={styles.infoValue}>{result?.position}</Text>
               </View>
             </View>
           </View>

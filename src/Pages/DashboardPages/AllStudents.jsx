@@ -162,7 +162,7 @@ export default function AllStudents() {
           </div>
 
           {/* choose exam */}
-          <div className="form-control col-span-12 md:col-span-3">
+          {/* <div className="form-control col-span-12 md:col-span-3">
             <label className="label">
               <span className="label-text max-sm:text-lg">
                 শিক্ষার্থী আইডি:
@@ -176,7 +176,7 @@ export default function AllStudents() {
               onChange={(e) => setFilterStudentsID(e.target.value)}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
 
           <div className="col-span-6 md:col-span-2 flex items-end">
             <button
