@@ -32,8 +32,14 @@ export default function Students() {
     enabled,
   });
 
-  const handleFilter = async () => {
+  const handleFilter = async (e) => {
     setServerError(null);
+     e.preventDefault();
+    const form = e.target;
+    const className = form.className.value;
+    const session = form.session.value;
+    setSelectedClass(className);
+    setSession(session);
     setUnabled(true);
     refetch();
   };
@@ -46,13 +52,15 @@ export default function Students() {
     <div className="w-11/12 mx-auto pt-5 md:pt-10 mb-5 md:mb-10">
       <div className="grid grid-cols-4 max-sm:gap-4">
         {/* Filter Section */}
-        <div className="col-span-4 md:col-span-3 flex max-sm:items-end gap-3 md:gap-8 ">
+        <form className="col-span-4 md:col-span-3 flex max-sm:items-end gap-3 md:gap-8 "
+        onSubmit={handleFilter}
+        >
           <div className="flex max-sm:flex-col md:items-center  gap-2 md:gap-2">
             <p className="text-green-800 max-sm:text-xs">শ্রেণী:</p>
             <select
               className="border border-gray-300 p-2 rounded-md"
-              defaultValue={selectedClass}
-              onChange={(e) => setSelectedClass(e.target.value)}
+               defaultValue={""}
+              name="className"
             >
               {[
                 "Play",
@@ -79,11 +87,11 @@ export default function Students() {
             <p className="text-green-800 max-sm:text-xs">শিক্ষাবর্ষ:</p>
             <select
               className="border border-gray-300 p-2 rounded-md"
-              value={session}
-              onChange={(e) => setSession(e.target.value.toString())}
+               defaultValue={""}
+              name="session"
             >
               <option value="" disabled>
-                Select a year
+                শিক্ষাবর্ষ নির্বাচন করুন...
               </option>
               {Array.from({ length: 10 }, (_, i) => {
                 const year = new Date().getFullYear() - i;
@@ -98,11 +106,10 @@ export default function Students() {
 
           <button
             className="bg-green-200 max-sm:h-fit max-sm:text-sm text-green-950 px-4 py-2 rounded-md"
-            onClick={handleFilter}
           >
             সার্চ করুন
           </button>
-        </div>
+        </form>
         <div className="max-sm:col-span-4 col-span-1">
           <h3 className="text-sm max-sm:text-center md:text-2xl text-green-950">
             মোট শিক্ষার্থী:{" "}
