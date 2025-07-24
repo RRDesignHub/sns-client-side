@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { pdf } from "@react-pdf/renderer";
 import { MdDelete } from "react-icons/md";
 import { FaFilePdf } from "react-icons/fa";
 import { useAxiosSec } from "../../Hooks/useAxiosSec";
