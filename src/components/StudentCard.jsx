@@ -1,7 +1,7 @@
 import React from "react";
 import { FaUserGraduate } from "react-icons/fa6";
 export default function StudentCard({ student }) {
-  const { studentName, image, className, classRoll, bloodGroup } = student;
+  const { studentName, image, className, classRoll, bloodGroup, gender } = student;
 
   return (
     <div className="group relative bg-white border border-green-200 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
@@ -9,12 +9,12 @@ export default function StudentCard({ student }) {
       <div className="relative flex flex-col items-center p-2 md:p-6">
         {/* Profile Image */}
         <div className="avatar mb-2 md:mb-4">
-          <div className="w-20 h-20 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-green-500">
+          <div className="w-20 h-24 md:w-40 md:h-48 overflow-hidden border-2 border-green-500/70 drop-shadow-md">
             {image ? (
               <img
                 src={image}
                 alt={studentName}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
                 onError={(e) => (e.target.src = "https://via.placeholder.com/160")}
               />
             ) : (
@@ -30,7 +30,7 @@ export default function StudentCard({ student }) {
           {studentName || "N/A"}
         </h3>
         <p className="text-xs md:text-sm font-medium text-gray-600 text-center">
-          শিক্ষার্থী
+          {gender === "Male" ? "ছাত্র" : "ছাত্রী"}
         </p>
 
         {/* Details Section */}

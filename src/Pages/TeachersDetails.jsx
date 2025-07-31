@@ -36,7 +36,7 @@ const TeachersDetails = () => {
       if (isLoading) return <Loading />;
       if (error) return (
         <div className="min-h-screen bg-green-50 flex items-center justify-center">
-          <p className="text-red-500 text-lg">ত্রুটি: শিক্ষকের তথ্য লোড করতে ব্যর্থ।</p>
+          <p className="text-red-500 text-lg">শিক্ষকের তথ্য লোড করতে ব্যর্থ।</p>
         </div>
       );
   return (

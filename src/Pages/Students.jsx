@@ -124,14 +124,14 @@ export default function Students() {
           <div className="col-span-4 ">
             <Loading />
           </div>
-        ) : serverError ? (
-          <p className="col-span-4 text-red-500 text-center max-sm:text-xs">{serverError}</p>
         ) : students.length > 0 ? (
           students
             .sort((a, b) => a.classRoll - b.classRoll)
             .map((student) => (
             <StudentCard key={student._id} student={student} />
           ))
+        ) : serverError ? (
+          <p className="col-span-4 text-red-500 text-center max-sm:text-xs">{serverError}</p>
         ) : (
           <h2 className="col-span-4 text-center pt-5 max-sm:text-xs">
             দয়া করে শ্রেণী নির্বাচন করুন এবং "Search" এ ক্লিক করুন...

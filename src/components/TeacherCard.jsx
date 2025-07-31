@@ -1,18 +1,25 @@
 import { FaCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 export const TeacherCard = ({ teacher }) => {
-  const { _id, name, profileImage, role, category, specialization, qualification } =
-    teacher;
+  const {
+    _id,
+    name,
+    profileImage,
+    role,
+    category,
+    specialization,
+    qualification,
+  } = teacher;
 
   return (
     <>
       <Link to={`/teacher-details/${_id}`}>
-        <div className="group relative bg-white border border-green-200 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+        <div className="group relative bg-white border border-green-200 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl h-full ">
           <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative flex flex-col items-center p-2 md:p-6">
+          <div className="relative h-full flex flex-col items-center p-2 md:p-6">
             {/* Profile Image */}
             <div className="avatar mb-2 md:mb-4">
-              <div className="w-20 h-20 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-green-500">
+              <div className="w-20 h-24 md:w-40 md:h-48 rounded-sm overflow-hidden border-4 border-green-500">
                 {profileImage ? (
                   <img
                     src={profileImage}
@@ -37,14 +44,22 @@ export const TeacherCard = ({ teacher }) => {
             <p className="text-xs md:text-sm font-medium text-gray-600 text-center">
               {role || "N/A"}
             </p>
-
+            <div className="flex-grow"></div>
             {/* Details Section */}
             <div className="mt-2 md:mt-4 w-full space-y-1 md:space-y-3">
               <p className="text-gray-700 max-sm:text-xs flex  md:items-center gap-2">
                 <span className="font-semibold max-sm:text-[10px] text-green-600">
                   ক্যাটেগরি:
                 </span>
-                <span>{category == "Primary" ? "প্রাথমিক" : category == "Higher" ? "মাধ্যমিক" : category == "Primary & Higher" ? "প্রাথমিক ও মাধ্যমিক" : "N/A"}</span>
+                <span>
+                  {category == "Primary"
+                    ? "প্রাথমিক"
+                    : category == "Higher"
+                    ? "মাধ্যমিক"
+                    : category == "Primary & Higher"
+                    ? "প্রাথমিক ও মাধ্যমিক"
+                    : "N/A"}
+                </span>
               </p>
               <p className="text-gray-700 max-sm:text-xs flex  md:items-center gap-2">
                 <span className="font-semibold max-sm:text-[10px] text-green-600">
