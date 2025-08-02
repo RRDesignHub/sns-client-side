@@ -19,7 +19,7 @@ export const TeacherCard = ({ teacher }) => {
           <div className="relative h-full flex flex-col items-center p-2 md:p-6">
             {/* Profile Image */}
             <div className="avatar mb-2 md:mb-4">
-              <div className="w-20 h-24 md:w-40 md:h-48 rounded-sm overflow-hidden border-4 border-green-500">
+              <div className="w-20 h-24 md:w-40 md:h-48 rounded-sm overflow-hidden border-2 border-green-500 drop-shadow-lg">
                 {profileImage ? (
                   <img
                     src={profileImage}

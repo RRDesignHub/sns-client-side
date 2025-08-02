@@ -78,7 +78,7 @@ const StudentDetails = () => {
                     <p className="text-green-200 font-semibold">
                       জন্ম নিবন্ধন নম্বর :
                     </p>
-                    <p id="birthRegNo" classNameName="text-green-100">
+                    <p id="birthRegNo" className="text-green-100">
                       {studentDetails?.birthRegNo}
                     </p>
                   </div>

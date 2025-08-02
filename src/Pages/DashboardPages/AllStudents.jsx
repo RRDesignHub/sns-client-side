@@ -148,6 +148,7 @@ export default function AllStudents() {
               name="session"
               defaultValue={""}
               className="select select-bordered"
+              required
             >
               <option value="">শিক্ষাবর্ষ নির্বাচন করুন</option>
               {Array.from({ length: 10 }, (_, i) => {
