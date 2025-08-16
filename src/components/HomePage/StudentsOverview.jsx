@@ -21,7 +21,7 @@ export default function StudentsOverview() {
             আমাদের শিক্ষার্থীরা
           </h2>
           <Link
-            className="btn-sm max-sm:rounded-md py-1 md:btn border border-green-600 bg-transparent text-green-600 hover:bg-green-700 hover:text-green-50"
+            className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:text-sm sm:bg-green-600 sm:text-green-50 hover:bg-green-300 hover:text-green-950"
             to="/students"
           >
             আরও দেখুন

@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
-// Import Swiper React components
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay} from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import heroImg_1 from "./../assets/Hero-1.jpg";
+import heroImg_1 from "./../../assets/Hero-1.jpg";
 export const Hero = () => {
   return (
     <>

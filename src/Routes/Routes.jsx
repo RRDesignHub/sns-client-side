@@ -12,7 +12,6 @@ import Overview from "../Pages/DashboardPages/Overview";
 import { Notices } from "../Pages/Notices";
 import Students from "../Pages/Students";
 import ResultPDF from "../components/Dashboard/ResultPDF/ResultPDF";
-import { SignUp } from "../Pages/SignUp";
 
 import AddNotice from "../Pages/DashboardPages/AdminPages/AddNotice";
 import { AddSubject } from "../Pages/DashboardPages/AdminPages/AddSubject";
@@ -38,6 +37,7 @@ import StuPaymentHistory from "../Pages/DashboardPages/AccountantPages/StuPaymen
 import AddExamFee from "../Pages/DashboardPages/AccountantPages/AddExamFee";
 import ClientResult from "../Pages/ClientResult";
 import AddAllStudents from "../Pages/DashboardPages/AccountantPages/AddAllStudents";
+import Management from "../Pages/Management";
 
 const router = createBrowserRouter(
   [
@@ -57,6 +57,10 @@ const router = createBrowserRouter(
         {
           path: '/teachers',
           element: <Teachers />,
+        },
+        {
+          path: '/management',
+          element: <Management />,
         },
         {
           path: '/students',
@@ -79,10 +83,6 @@ const router = createBrowserRouter(
     {
       path: 'login',
       element:<SignIn></SignIn>
-    },
-    {
-      path: 'sign-up',
-      element:<SignUp />
     },
     {
       path: "dashboard",

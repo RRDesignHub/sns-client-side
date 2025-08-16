@@ -105,12 +105,6 @@ export const SignIn = () => {
             >
               হোম পেইজে ফিরুন
             </Link>
-            <Link
-              to="/sign-up"
-              className="btn btn-sm bg-green-100 text-green-900 text-sm text-dark font-heebo hover:underline"
-            >
-              রেজিস্ট্রেশন করুন
-            </Link>
           </div>
         </div>
       </div>

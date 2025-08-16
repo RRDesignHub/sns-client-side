@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-export const About = () => {
+const About = () => {
   return (
     <>
       <div className="bg-gradient-to-tr from-green-800 to-green-500 py-8 lg:py-16 mb-10">
@@ -21,7 +21,7 @@ export const About = () => {
               প্রতিভার বিকাশ আমাদের প্রধান দায়িত্ব।
             </p>
             <Link
-              to="/about-us"
+              to="/management"
               className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:text-sm bg-green-200 text-green-950 md:border border-green-950 hover:bg-green-50 rounded-xl"
             >
               আরও দেখুন
@@ -73,3 +73,4 @@ export const About = () => {
     </>
   );
 };
+export default About;
