@@ -9,11 +9,11 @@ const PrincipalSaying = () => {
          <div className="divider my-2"></div>
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+          <div className="flex flex-col items-center lg:items-start text-center">
             <img
               src="https://i.ibb.co.com/3ySTt4gN/Hasan-Sir.jpg" // replace with actual image
               alt="Principal"
-              className="w-52 h-64 object-cover rounded-lg md:rounded-2xl shadow-lg border-2 border-green-600"
+              className="w-52 h-64 mx-auto object-cover rounded-lg md:rounded-2xl shadow-lg border-2 border-green-600"
             />
             <div className="mt-1">
               <h2 className="text-lg md:text-xl font-bold text-green-800 mb-1">

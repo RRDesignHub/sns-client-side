@@ -58,6 +58,19 @@ export const Navbar = () => {
               ? "text-green-950 lg:text-white py-1 border-b-4 border-b-green-950 lg:border-b-green-50 bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent"
               : "text-green-950 lg:text-white"
           }
+          to="/management"
+          onClick={()=>setOpenCloseMenu(true)}
+        >
+          পরিচালকমন্ডলী
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? "text-green-950 lg:text-white py-1 border-b-4 border-b-green-950 lg:border-b-green-50 bg-transparent focus:text-white max-sm:focus:text-green-600 focus:bg-transparent"
+              : "text-green-950 lg:text-white"
+          }
           to="/subjects"
           onClick={()=>setOpenCloseMenu(true)}
         >
@@ -88,7 +101,7 @@ export const Navbar = () => {
           to="/client-result"
           onClick={()=>setOpenCloseMenu(true)}
         >
-          ফলাফল অনুসন্ধান
+          ফলাফল
         </NavLink>
       </li>
     </>
