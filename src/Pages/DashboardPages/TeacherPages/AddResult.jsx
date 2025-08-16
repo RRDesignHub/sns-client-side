@@ -101,14 +101,14 @@ export const AddResult = () => {
       letterGrade = "F";
     }
 
-    const resultData = {
+    const singleSubjectResult = {
       subjectName,
       marks,
       totalMarks: totalMarksForSubject, // Include totalMarks in result
       GPA,
       letterGrade,
     };
-    const updatedResult = [...result, resultData];
+    const updatedResult = [...result, singleSubjectResult];
     setResult(updatedResult);
 
     // Calculate total marks achieved
@@ -117,28 +117,29 @@ export const AddResult = () => {
       0
     );
 
+    // ✅ Check if any subject is failed
+const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
+
+
     // Calculate GPA Average
     const totalGPA = updatedResult.reduce(
       (total, subject) => total + subject.GPA,
       0
     );
-    const gpaAverage = totalGPA / updatedResult.length;
+    const gpaAverage = hasFail ? 0 : totalGPA / updatedResult.length;
 
     // Determine Average Letter Grade
     let averageLetterGrade = "";
-    if (gpaAverage >= 5) averageLetterGrade = "A+";
+    if (hasFail) averageLetterGrade = "F";
+    else if (gpaAverage >= 5) averageLetterGrade = "A+";
     else if (gpaAverage >= 4) averageLetterGrade = "A";
     else if (gpaAverage >= 3.5) averageLetterGrade = "A-";
     else if (gpaAverage >= 3) averageLetterGrade = "B";
     else if (gpaAverage >= 2) averageLetterGrade = "C";
     else if (gpaAverage >= 1) averageLetterGrade = "D";
-    else averageLetterGrade = "F";
 
-    // Update status (Pass/Fail) - Check all subjects;  if less 33% = fail
-    const hasFailed = updatedResult.some(
-      (result) => (result.marks / result.totalMarks) * 100 < 33
-    );
-    setStatus(hasFailed ? "Fail" : "Pass");
+    
+    setStatus(hasFail ? "Fail" : "Pass");
 
     //update states
     setTotalMarks(totalMarksAchieved);
