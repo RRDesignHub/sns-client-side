@@ -10,6 +10,7 @@ import { BooksOverview } from "../components/HomePage/BooksOverview";
 import TeachersOverview from "../components/HomePage/TeachersOverview";
 import StudentsOverview from "../components/HomePage/StudentsOverview";
 import ContactSection from "../components/Contact";
+import PrincipalSaying from "../components/HomePage/PrincipalSaying";
 export const Home = () => {
   const { data: notices = [], isLoading } = useQuery({
     queryKey: ["notices"],
@@ -58,6 +59,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+      <PrincipalSaying />
       <About></About>
       <BooksOverview />
       <TeachersOverview />
