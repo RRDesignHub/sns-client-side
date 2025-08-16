@@ -118,8 +118,9 @@ export const AddResult = () => {
     );
 
     // ✅ Check if any subject is failed
-const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
-
+    const hasFail = updatedResult.some(
+      (subject) => subject.letterGrade === "F"
+    );
 
     // Calculate GPA Average
     const totalGPA = updatedResult.reduce(
@@ -138,7 +139,6 @@ const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
     else if (gpaAverage >= 2) averageLetterGrade = "C";
     else if (gpaAverage >= 1) averageLetterGrade = "D";
 
-    
     setStatus(hasFail ? "Fail" : "Pass");
 
     //update states
@@ -286,7 +286,7 @@ const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
                 ফলাফল তৈরি করুন
               </h1>
               <div className="divider my-0"></div>
-             
+
               <div className="flex max-sm:flex-wrap justify-around md:justify-center items-center gap-2 md:gap-8 pt-2">
                 <h3 className="text-sm md:text-lg">
                   শিক্ষার্থীর নাম:
@@ -295,7 +295,7 @@ const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
                   </span>
                 </h3>
                 <h3 className="text-sm md:text-lg">
-                  শ্রেণী : 
+                  শ্রেণী :
                   <span className="ms-1 font-semibold">
                     {studentData?.className || ""}
                   </span>
@@ -334,15 +334,15 @@ const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
                   </select>
                 </div>
               </div>
-                     
+
               <form
                 onSubmit={handleSingleSubjectResult}
                 className="card-body max-sm:px-0"
               >
                 <p className="text-xs md:text-sm text-center text-green-950/60">
-                বিষয়ের নাম, পরীক্ষার তারিখ, সময় নির্বাচন করুন এবং “Add” বাটনে
-                ক্লিক করুন
-              </p>
+                  বিষয়ের নাম, পরীক্ষার তারিখ, সময় নির্বাচন করুন এবং “Add” বাটনে
+                  ক্লিক করুন
+                </p>
                 <div className="grid gap-3 grid-cols-12 items-end">
                   <div className="form-control col-span-6">
                     <label className="block label max-sm:text-sm text-gray-700">
@@ -364,7 +364,9 @@ const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
                     </select>
                   </div>
                   <div className="form-control col-span-6 md:col-span-3">
-                    <label className="block label max-sm:text-sm text-gray-700">প্রাপ্ত নম্বর</label>
+                    <label className="block label max-sm:text-sm text-gray-700">
+                      প্রাপ্ত নম্বর
+                    </label>
                     <input
                       type="number"
                       name="marks"
@@ -421,25 +423,24 @@ const hasFail = updatedResult.some(subject => subject.letterGrade === "F");
               ) : (
                 ""
               )}
-              {
-                result.length > 0 && <div className="w-fit mx-auto mt-6 space-x-2 md:space-x-4">
-                <button
-                  type="button"
-                  onClick={handleResetResult}
-                  className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
-                >
-                  রিসেট
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSubmitResult}
-                  className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
-                >
-                  ফলাফল আপলোড
-                </button>
-              </div>
-              }
-              
+              {result.length > 0 && (
+                <div className="w-fit mx-auto mt-6 space-x-2 md:space-x-4">
+                  <button
+                    type="button"
+                    onClick={handleResetResult}
+                    className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
+                  >
+                    রিসেট
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSubmitResult}
+                    className="btn bg-green-600 px-5 hover:bg-green-700 text-sm md:text-lg text-white"
+                  >
+                    ফলাফল আপলোড
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -119,8 +119,9 @@ const Results = () => {
           </h2>
           <div className="divider my-0"></div>
           {/* Filter Inputs */}
-          <form className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5"
-          onSubmit={handleFilter}
+          <form
+            className="grid grid-cols-12 md:grid-cols-10 gap-4 mb-5"
+            onSubmit={handleFilter}
           >
             {/* choose class */}
             <div className="form-control col-span-12 md:col-span-3">
@@ -129,7 +130,7 @@ const Results = () => {
               </label>
               <select
                 defaultValue={""}
-              name="className"
+                name="className"
                 className="select select-bordered bg-white  text-gray-700"
               >
                 <option value="">শ্রেণী নির্বাচন করুন...</option>
@@ -161,7 +162,7 @@ const Results = () => {
               </label>
               <select
                 name="session"
-              defaultValue={""}
+                defaultValue={""}
                 className="select select-bordered"
                 required
               >
@@ -186,7 +187,7 @@ const Results = () => {
               </label>
               <select
                 name="examName"
-              defaultValue={""}
+                defaultValue={""}
                 className={`select select-bordered`}
                 required
               >
@@ -202,9 +203,7 @@ const Results = () => {
             </div>
 
             <div className="col-span-6 md:col-span-2 flex items-end">
-              <button
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-              >
+              <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
                 সার্চ করুন
               </button>
             </div>
@@ -225,11 +224,7 @@ const Results = () => {
           {/* Display Results */}
           {isLoading || roleLoading ? (
             <Loading />
-          ) : resultData.length === 0 ? (
-            <p className="text-center text-gray-500">{error}</p>
-          ) : error ? (
-            <p className="py-2 text-center text-red-500">{error}</p>
-          ) : (
+          ) : resultData.length > 0 ? (
             <table className="w-full table">
               <thead>
                 <tr className="bg-green-600 text-green-50 ">
@@ -273,6 +268,10 @@ const Results = () => {
                     ))}
               </tbody>
             </table>
+          ) : error ? (
+            <p className="py-2 text-center text-red-500">{error}</p>
+          ) : (
+            <p className="text-center text-gray-500">{error}</p>
           )}
         </div>
       </div>
@@ -297,7 +296,6 @@ const Results = () => {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
           <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
-            
             <button
               onClick={closePdfModal}
               className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"

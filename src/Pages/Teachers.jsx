@@ -31,9 +31,21 @@ export const Teachers = () => {
             <Loading />
           ) : teachers.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-5">
-              {teachers.map((teacher, index) => (
-                <TeacherCard key={teacher._id || index} teacher={teacher} />
-              ))}
+              {teachers
+                .filter((teacher) => teacher.role === "Principal")
+                .map((teacher, index) => (
+                  <div
+                    key={teacher._id || index}
+                    className="col-span-2 md:col-span-3 md:w-1/3 mx-auto"
+                  >
+                    <TeacherCard teacher={teacher} />
+                  </div>
+                ))}
+              {teachers
+                .filter((teacher) => teacher.role !== "Principal")
+                .map((teacher, index) => (
+                  <TeacherCard key={teacher._id || index} teacher={teacher} />
+                ))}
             </div>
           ) : (
             <p className="text-center text-gray-600 text-sm md:text-lg">
