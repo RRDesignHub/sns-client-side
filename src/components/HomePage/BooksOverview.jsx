@@ -35,12 +35,13 @@ export const BooksOverview = () => {
               শ্রেণী: {allSubjects?.className} এর পাঠ্যপুস্তক (
               {allSubjects?.subjects?.length} টি)
             </h2>
-            <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4"
+            >
               {allSubjects?.subjects?.slice(0, 6).map((subject, index) => (
                 <a
                   key={index}
