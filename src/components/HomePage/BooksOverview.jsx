@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { motion } from "motion/react";
 export const BooksOverview = () => {
   const { data: allSubjects = {}, isLoading } = useQuery({
     queryKey: ["subjects"],
@@ -35,7 +35,12 @@ export const BooksOverview = () => {
               শ্রেণী: {allSubjects?.className} এর পাঠ্যপুস্তক (
               {allSubjects?.subjects?.length} টি)
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
+            <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
               {allSubjects?.subjects?.slice(0, 6).map((subject, index) => (
                 <a
                   key={index}
@@ -55,7 +60,7 @@ export const BooksOverview = () => {
                   </div>
                 </a>
               ))}
-            </div>
+            </motion.div>
           </section>
         ) : (
           "সার্ভার ডাউন..."
