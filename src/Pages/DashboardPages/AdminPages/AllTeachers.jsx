@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Loading } from '../../../components/Shared/Loading';
 import { MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { format } from "date-fns";
 
 export const AllTeachers = () => {
   const axiosSecure = useAxiosSec();
@@ -87,9 +88,7 @@ export const AllTeachers = () => {
                     <th className="px-4 py-3 text-left">ছবি</th>
                     <th className="px-4 py-3 text-left">নাম</th>
                     <th className="px-4 py-3 text-left">পদবি</th>
-                    <th className="px-4 py-3 text-left">বিভাগ</th>
                     <th className="px-4 py-3 text-left">বিশেষীকরণ</th>
-                    <th className="px-4 py-3 text-left">যোগ্যতা</th>
                     <th className="px-4 py-3 text-left">যোগদানের তারিখ</th>
                     <th className="px-4 py-3 text-left">অ্যাকশন</th>
                   </tr>
@@ -116,18 +115,7 @@ export const AllTeachers = () => {
                         <td className="px-4 py-3">{teacher.name || 'N/A'}</td>
                         <td className="px-4 py-3">{teacher.role || 'N/A'}</td>
                         <td className="px-4 py-3">{teacher.category || 'N/A'}</td>
-                        <td className="px-4 py-3">{teacher.specialization || 'N/A'}</td>
-                        <td className="px-4 py-3">
-                          {teacher.qualification?.length > 0 ? (
-                            <ul className="list-disc list-inside">
-                              {teacher.qualification.map((qual, i) => (
-                                <li key={i}>{qual}</li>
-                              ))}
-                            </ul>
-                          ) : (
-                            'N/A'
-                          )}
-                        </td>
+                        
                         <td className="px-4 py-3">
                           {teacher.joinedAt
                             ? format(new Date(teacher.joinedAt), 'MMMM dd, yyyy')

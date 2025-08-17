@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
@@ -43,6 +43,7 @@ export const Teachers = () => {
                 ))}
               {teachers
                 .filter((teacher) => teacher.role !== "Principal")
+                .sort((a, b) => a?.position - b?.position)
                 .map((teacher, index) => (
                   <TeacherCard key={teacher._id || index} teacher={teacher} />
                 ))}
