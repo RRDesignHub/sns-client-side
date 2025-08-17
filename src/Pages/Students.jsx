@@ -4,7 +4,7 @@ import { Loading } from "../components/Shared/Loading";
 import { useState } from "react";
 import StudentCard from "../components/StudentCard";
 import { Helmet } from "react-helmet";
-
+import { motion } from "motion/react";
 export default function Students() {
   const [selectedClass, setSelectedClass] = useState("Play");
   const [session, setSession] = useState(new Date().getFullYear().toString());

@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 const PrincipalSaying = () => {
   return (
     <section className="bg-gradient-to-r from-green-50 via-green-100 to-green-50 py-8 lg:py-16">
@@ -6,10 +7,16 @@ const PrincipalSaying = () => {
           <h1 className="text-2xl md:text-4xl font-extrabold text-green-800 tracking-tight leading-tight">
             অধ্যক্ষের বাণী
           </h1>
-         <div className="divider my-2"></div>
+          <div className="divider my-2"></div>
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="flex flex-col items-center lg:items-start text-center">
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col items-center lg:items-start text-center"
+          >
             <img
               src="https://i.ibb.co.com/3ySTt4gN/Hasan-Sir.jpg" // replace with actual image
               alt="Principal"
@@ -30,10 +37,27 @@ const PrincipalSaying = () => {
                 চারিত্রিক গঠনের প্রতি আমরা বিশেষ গুরুত্ব দিচ্ছি।
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-l-4 border-green-600 hover:scale-105 transition-transform duration-300 ease-in-out">
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-6"
+          >
+            <motion.div
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                type: "spring",
+                damping: 10,
+                stiffness: 100,
+              }}
+              className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-l-4 border-green-600 hover:scale-105 transition-transform duration-300 ease-in-out"
+            >
               <h3 className="flex items-center text-md md:text-2xl font-bold text-green-700 mb-2">
                 <span className="mr-2 text-xl">🎯</span> মিশন
               </h3>
@@ -41,9 +65,20 @@ const PrincipalSaying = () => {
                 মানসম্মত শিক্ষা, শৃঙ্খলাপূর্ণ পরিবেশ ও নৈতিক উন্নতির মাধ্যমে
                 আগামী প্রজন্মকে গড়ে তোলা।
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-l-4 border-green-600 hover:scale-105 transition-transform duration-300 ease-in-out">
+            <motion.div
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4, // Staggered delay
+                type: "spring",
+                damping: 10,
+                stiffness: 100,
+              }}
+              className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-l-4 border-green-600 hover:scale-105 transition-transform duration-300 ease-in-out"
+            >
               <h3 className="flex items-center text-md md:text-2xl font-bold text-green-700 mb-2">
                 <span className="mr-2 text-3xl">🔭</span> ভিশন
               </h3>
@@ -51,9 +86,20 @@ const PrincipalSaying = () => {
                 প্রত্যেক শিক্ষার্থীকে জ্ঞান, প্রযুক্তিগত, আদর্শ ও ইসলামী চেতনায়
                 সমৃদ্ধ করা।
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border-l-4 border-green-600 hover:scale-105 transition-transform duration-300 ease-in-out">
+            <motion.div
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.6, // Staggered delay
+                type: "spring",
+                damping: 10,
+                stiffness: 100,
+              }}
+              className="bg-white rounded-xl shadow-lg p-6 md:p-8 border-l-4 border-green-600 hover:scale-105 transition-transform duration-300 ease-in-out"
+            >
               <h3 className="flex items-center text-md md:text-2xl font-bold text-green-700 mb-2">
                 <span className="mr-2 text-3xl">💡</span> পরিকল্পনা
               </h3>
@@ -61,12 +107,11 @@ const PrincipalSaying = () => {
                 শিক্ষার্থীদেরকে শুধু পরীক্ষার জন্য নয়, জীবনের জন্য প্রস্তুত
                 করা।
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
-   
   );
 };
 export default PrincipalSaying;

@@ -24,7 +24,7 @@ export const Teachers = () => {
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
-      transition={{ duration: 0.5 }} 
+      transition={{ duration: 0.3 }} 
       className="bg-green-50 min-h-screen py-5 md:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl md:text-4xl font-bold text-green-900 text-center mb-1">
@@ -39,7 +39,7 @@ export const Teachers = () => {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 1 }}
               className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-5"
             >
               {teachers

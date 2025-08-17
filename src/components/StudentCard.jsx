@@ -4,7 +4,8 @@ export default function StudentCard({ student }) {
   const { studentName, image, className, classRoll, bloodGroup, gender } = student;
 
   return (
-    <div className="group relative bg-white border border-green-200 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+    <div 
+    className="group relative bg-white border border-green-200 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
       <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       <div className="relative flex flex-col items-center p-2 md:p-6">
         {/* Profile Image */}

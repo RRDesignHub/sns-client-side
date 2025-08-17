@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import logo from "./../assets/logo.png";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -28,7 +29,17 @@ export const Home = () => {
       </Helmet>
       <div className="relative max-sm:mb-[250px] md:mb-40 lg:mb-10 w-[100%]">
         <Hero />
-        <div className="absolute z-30 -bottom-[230px] md:-bottom-[140px] lg:-bottom-5 left-1/2 transform -translate-x-1/2 w-11/12 mx-auto bg-gradient-to-br from-green-800 via-green-500 to-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between">
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: 0.6,
+            type: "spring",
+            damping: 20,
+            stiffness: 100,
+          }}
+          className="absolute z-30 -bottom-[230px] md:-bottom-[140px] lg:-bottom-5 left-[4%] transform -translate-x-1/2 w-11/12 mx-auto bg-gradient-to-br from-green-800 via-green-500 to-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between"
+        >
           <div className="flex max-sm:flex-col items-center gap-2 md:gap-5">
             <img className="w-20 drop-shadow-xl" src={logo} alt="" />
             <div className="flex max-sm:flex-col gap-2 items-center">
@@ -57,7 +68,7 @@ export const Home = () => {
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       <PrincipalSaying />
       <About />
