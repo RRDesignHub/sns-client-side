@@ -20,7 +20,7 @@ export const BooksOverview = () => {
             প্রাথমিক ও মাধ্যমিক স্তরের পাঠ্যপুস্তক
           </h2>
           <Link
-            className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:text-sm sm:bg-green-600 sm:text-green-50 hover:bg-green-300 hover:text-green-950"
+            className="px-4 py-2 md:px-6 md:py-4 rounded-md md:rounded-xl max-sm:text-sm bg-green-600 text-green-50  hover:bg-green-800"
             to="/subjects"
           >
             আরও দেখুন

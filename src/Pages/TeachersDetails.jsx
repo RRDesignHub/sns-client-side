@@ -45,7 +45,7 @@ const TeachersDetails = () => {
      <Helmet>
             <title>{name ? `${name} - শিক্ষকের বিস্তারিত` : 'শিক্ষকের বিস্তারিত'}</title>
           </Helmet>
-          <div className="min-h-screen bg-green-50 py-12 px-4 sm:px-6 lg:px-8">
+          <div className="min-h-screen bg-green-100 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-green-200">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 opacity-50"></div>
@@ -53,7 +53,7 @@ const TeachersDetails = () => {
                   {/* Profile Image and Social Links */}
                   <div className="md:w-1/3 flex flex-col items-center p-6">
                     <div className="avatar mb-6">
-                      <div className="w-28 h-28 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-green-500 shadow-md">
+                      <div className="w-24 h-32 md:w-44 md:h-56 rounded-md md:rounded-lg overflow-hidden border-4 border-green-500 shadow-md">
                         {profileImage ? (
                           <img
                             src={profileImage}

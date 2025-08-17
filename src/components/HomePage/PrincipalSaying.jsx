@@ -3,7 +3,7 @@ const PrincipalSaying = () => {
     <section className="bg-gradient-to-r from-green-50 via-green-100 to-green-50 py-8 lg:py-16">
       <div className="w-11/12 mx-auto">
         <div className="text-center mb-2 md:mb-5">
-          <h1 className="text-xl md:text-4xl font-extrabold text-green-800 tracking-tight leading-tight">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-green-800 tracking-tight leading-tight">
             অধ্যক্ষের বাণী
           </h1>
          <div className="divider my-2"></div>
@@ -16,10 +16,10 @@ const PrincipalSaying = () => {
               className="w-52 h-64 mx-auto object-cover rounded-lg md:rounded-2xl shadow-lg border-2 border-green-600"
             />
             <div className="mt-1">
-              <h2 className="text-lg md:text-xl font-bold text-green-800 mb-1">
+              <h2 className="text-md md:text-xl font-bold text-green-800 mb-1">
                 — মোঃ আবুল হাসান
               </h2>
-              <p className="text-sm md:text-lg text-gray-600 font-semibold mb-6">
+              <p className="text-xs md:text-lg text-green-950/70 font-semibold mb-6">
                 অধ্যক্ষ, শাহ নেয়ামত রহ: কেজি এন্ড হাই স্কুল
               </p>
               <p className="text-gray-700 text-justify max-sm:text-sm leading-relaxed">

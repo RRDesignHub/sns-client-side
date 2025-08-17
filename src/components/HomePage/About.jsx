@@ -22,7 +22,7 @@ const About = () => {
             </p>
             <Link
               to="/management"
-              className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:text-sm bg-green-200 text-green-950 md:border border-green-950 hover:bg-green-50 rounded-xl"
+              className="px-4 py-2 md:px-6 md:py-4 rounded-md md:rounded-xl max-sm:text-sm bg-green-50 text-green-950 border-green-950 hover:bg-green-200 "
             >
               আরও দেখুন
             </Link>

@@ -18,8 +18,8 @@ export const TeacherCard = ({ teacher }) => {
           <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div className="relative h-full flex flex-col items-center p-2 md:p-6">
             {/* Profile Image */}
-            <div className="avatar mb-2 md:mb-4">
-              <div className="w-20 h-24 md:w-40 md:h-48 rounded-sm overflow-hidden border-2 border-green-500 drop-shadow-lg">
+            <div className="avatar mb-2 ">
+              <div className="w-20 h-24 md:w-40 md:h-48 rounded-md overflow-hidden border-2 border-green-500 drop-shadow-lg">
                 {profileImage ? (
                   <img
                     src={profileImage}
@@ -38,10 +38,10 @@ export const TeacherCard = ({ teacher }) => {
             </div>
 
             {/* Name and Role */}
-            <h3 className="text-sm md:text-xl font-bold text-green-800 text-center md:mb-2">
+            <h3 className="text-sm md:text-xl font-bold text-green-800 text-center">
               {name || "N/A"}
             </h3>
-            <p className="text-xs md:text-sm font-medium text-gray-600 text-center">
+            <p className="text-xs md:text-sm font-medium text-green-950/50 text-center">
               {role || "N/A"}
             </p>
             <div className="flex-grow"></div>

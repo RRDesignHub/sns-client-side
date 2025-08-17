@@ -30,7 +30,7 @@ export default function TeachersOverview() {
           আমাদের শিক্ষক/শিক্ষিকা বৃন্দ
         </h2>
         <Link
-          className="btn-sm max-sm:rounded-md py-1 md:btn max-sm:text-sm sm:bg-green-600 sm:text-green-50 hover:bg-green-300 hover:text-green-950"
+          className="px-4 py-2 md:px-6 md:py-4 rounded-md md:rounded-xl max-sm:text-sm bg-green-600 text-green-50  hover:bg-green-800"
           to="/teachers"
         >
           আরও দেখুন
@@ -87,7 +87,7 @@ export default function TeachersOverview() {
                       <FaCircleUser className="text-green-700 text-[180px]" />
                     )}
                   </div>
-                  <h3 className="text-lg text-green-950 font-semibold">
+                  <h3 className="text-lg text-green-950 font-semibold mt-2">
                     {teacher.name}
                   </h3>
                   <p className="text-green-950/80">{teacher.role}</p>
