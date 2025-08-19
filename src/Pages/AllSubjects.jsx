@@ -3,7 +3,7 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import { Loading } from "../components/Shared/Loading";
 import { useState } from "react";
-
+import { motion } from "motion/react";
 const ClientAllSubjects = () => {
   const [className, setClassName] = useState("Play");
   const [serverError, setServerError] = useState("");
@@ -101,8 +101,12 @@ const ClientAllSubjects = () => {
           <section>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
               {allSubjects?.subjects?.map((subject, index) => (
-                <a
+                <motion.a
                   key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   href={subject?.pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -117,14 +121,14 @@ const ClientAllSubjects = () => {
                     </span>
                     <span>মোট নম্বর: {subject?.totalMarks}</span>
                   </div>
-                </a>
+                </motion.a>
               ))}
             </div>
           </section>
         ) : serverError ? (
           <h2 className="text-red-400 text-center py-4">{serverError}</h2>
         ) : (
-          "সার্ভার ডাউন..."
+          "দয়া করে শ্রেণী নির্বাচন করুন..."
         )}
       </div>
     </>

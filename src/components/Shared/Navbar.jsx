@@ -143,7 +143,7 @@ export const Navbar = () => {
       {/* mobile/tab links */}
       <div
         className={`absolute z-40 w-full lg:hidden transition-all duration-700 ease-in-out shadow-[0_2px_15px_#16a34a] overflow-hidden top-[70px] ${
-          openCloseMenu ? "-left-[500px]" : "left-0"
+          openCloseMenu ? "-left-[500px] md:-left-[1000px]" : "left-0"
         }`}
       >
         <ul className="w-full flex flex-col bg-gradient-to-b from-green-50/95 via-green-200/95 to-green-100/95 text-left py-4 px-8 space-y-4">

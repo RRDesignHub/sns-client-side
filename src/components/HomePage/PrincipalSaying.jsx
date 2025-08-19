@@ -39,18 +39,13 @@ const PrincipalSaying = () => {
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-6"
+          <div className="space-y-6"
           >
             <motion.div
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
               transition={{
-                duration: 0.8,
+                duration: 1,
                 delay: 0.2,
                 type: "spring",
                 damping: 10,
@@ -68,11 +63,11 @@ const PrincipalSaying = () => {
             </motion.div>
 
             <motion.div
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
               transition={{
-                duration: 0.8,
-                delay: 0.4, // Staggered delay
+                duration: 1,
+                delay: 0.6, // Staggered delay
                 type: "spring",
                 damping: 10,
                 stiffness: 100,
@@ -89,11 +84,11 @@ const PrincipalSaying = () => {
             </motion.div>
 
             <motion.div
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
               transition={{
-                duration: 0.8,
-                delay: 0.6, // Staggered delay
+                duration: 1,
+                delay: 1, // Staggered delay
                 type: "spring",
                 damping: 10,
                 stiffness: 100,
@@ -108,7 +103,7 @@ const PrincipalSaying = () => {
                 করা।
               </p>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

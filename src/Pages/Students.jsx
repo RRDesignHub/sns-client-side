@@ -4,7 +4,6 @@ import { Loading } from "../components/Shared/Loading";
 import { useState } from "react";
 import StudentCard from "../components/StudentCard";
 import { Helmet } from "react-helmet";
-import { motion } from "motion/react";
 export default function Students() {
   const [selectedClass, setSelectedClass] = useState("Play");
   const [session, setSession] = useState(new Date().getFullYear().toString());
@@ -49,12 +48,7 @@ export default function Students() {
       <Helmet>
         <title>আমাদের শিক্ষার্থী</title>
       </Helmet>
-      <motion.div
-      initial={{ x: 300, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: -300, opacity: 0 }}
-      transition={{ duration: 1 }} 
-      className="w-11/12 mx-auto pt-5 md:pt-10 mb-5 md:mb-10">
+      <div className="w-11/12 mx-auto pt-5 md:pt-10 mb-5 md:mb-10">
         <div className="grid grid-cols-4 max-sm:gap-4">
           {/* Filter Section */}
           <form
@@ -131,8 +125,8 @@ export default function Students() {
           ) : students.length > 0 ? (
             students
               .sort((a, b) => a.classRoll - b.classRoll)
-              .map((student) => (
-                <StudentCard key={student._id} student={student} />
+              .map((student, index) => (
+                <StudentCard key={student._id} student={student} index={index} />
               ))
           ) : serverError ? (
             <p className="col-span-4 text-red-500 text-center max-sm:text-xs">
@@ -144,7 +138,7 @@ export default function Students() {
             </h2>
           )}
         </div>
-      </motion.div>
+      </div>
     </>
   );
 }

@@ -31,8 +31,8 @@ export default function StudentsOverview() {
 
         {isLoading ? "লোড করা হচ্ছে..." : 
         students?.length > 0 ? <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
-          {students.map((student) => (
-            <StudentCard key={student._id} student={student}/>
+          {students.map((student, index) => (
+            <StudentCard key={student._id} student={student} index={index} />
           ))}
         </div> : "সার্ভার ডাউন..."}
         

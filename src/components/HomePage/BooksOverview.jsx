@@ -35,16 +35,14 @@ export const BooksOverview = () => {
               শ্রেণী: {allSubjects?.className} এর পাঠ্যপুস্তক (
               {allSubjects?.subjects?.length} টি)
             </h2>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4"
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4">
               {allSubjects?.subjects?.slice(0, 6).map((subject, index) => (
-                <a
+                <motion.a
                   key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   href={subject?.pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -59,9 +57,9 @@ export const BooksOverview = () => {
                     </span>
                     <span>মোট নম্বর: {subject?.totalMarks}</span>
                   </div>
-                </a>
+                </motion.a>
               ))}
-            </motion.div>
+            </div>
           </section>
         ) : (
           "সার্ভার ডাউন..."
