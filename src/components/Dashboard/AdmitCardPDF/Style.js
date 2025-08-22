@@ -125,16 +125,16 @@ export const styles = StyleSheet.create({
   },
   footer: {
     position: "absolute", // Fixed at bottom
-    bottom: 30,
+    bottom: 20,
     left: 10,
     right: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     borderBottom: "1px solid #757575",
-    paddingBottom: 10,
+    paddingBottom: 5,
   },
   signature: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "bold",
     borderTop: "1px solid #000",
     paddingTop: 5,

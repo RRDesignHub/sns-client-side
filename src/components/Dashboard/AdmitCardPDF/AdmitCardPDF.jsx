@@ -8,7 +8,6 @@ import {
 } from "@react-pdf/renderer";
 import { styles } from "./Style";
 import { format } from "date-fns";
-import { bn } from "date-fns/locale";
 export default function AdmitCardPDF({ admitCardData }) {
   return (
     <PDFViewer width="100%" height="600px">
@@ -33,7 +32,7 @@ export default function AdmitCardPDF({ admitCardData }) {
                 style={{
                   width: 50,
                   position: "absolute",
-                  left: 10,
+                  left: 20,
                 }}
               />
               <Text style={styles.title}>
@@ -67,7 +66,8 @@ export default function AdmitCardPDF({ admitCardData }) {
                   <Text style={styles.infoLabel}>Date of Birth:</Text>
                   <Text style={styles.infoValue}>
                     {/* {new Date(admitCardData.dateOfBirth).toLocaleDateString()} */}
-                    {admitCardData.dateOfBirth && format(new Date(admitCardData.dateOfBirth), "dd-MM-yyyy")}
+                    {admitCardData.dateOfBirth &&
+                      format(new Date(admitCardData.dateOfBirth), "dd-MM-yyyy")}
                   </Text>
                 </View>
                 <View style={styles.infoRow}>
@@ -121,12 +121,22 @@ export default function AdmitCardPDF({ admitCardData }) {
                 toDate.setHours(parseInt(toHours), parseInt(toMinutes));
                 return (
                   <View key={index} style={styles.tableRow}>
-                  <Text style={styles.tableCellSubject}>{subject.subjectName}</Text>
-                  <Text style={styles.tableCellOther}>
-                  {format(new Date(subject.examDate), "dd-MM-yyyy, EEEE")}
-                  </Text>
-                  <Text style={styles.tableCellOther}>{format(fromDate, "hh:mm a")} - {format(toDate, "hh:mm a")}</Text>
-                </View>
+                    <Text style={styles.tableCellSubject}>
+                      {subject.subjectName}
+                    </Text>
+                    <Text style={styles.tableCellOther}>
+                      {subject.examDate &&
+                        format(new Date(subject.examDate), "dd-MM-yyyy, EEEE")}
+                    </Text>
+                    <Text style={styles.tableCellOther}>
+                      {fromDate && toDate
+                        ? `${format(fromDate, "hh:mm a")} - ${format(
+                            toDate,
+                            "hh:mm a"
+                          )}`
+                        : "N/A"}
+                    </Text>
+                  </View>
                 );
               })}
             </View>
