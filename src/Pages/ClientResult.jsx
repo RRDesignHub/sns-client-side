@@ -168,7 +168,7 @@ const ClientResult = () => {
                     style={{ color: "#052e16" }}
                     className="text-2xl md:text-4xl font-bold text-center"
                   >
-                    Shah Neyamat (RH:) KG & High School
+                    শাহ্ নেয়ামত (রহঃ) কেজি এন্ড হাই স্কুল
                   </h2>
                   <h3 className="text-lg md:text-xl text-center font-semibold">
                     {resultData?.examName} Exam: {resultData.session}
@@ -180,7 +180,7 @@ const ClientResult = () => {
                     {/* student name */}
                     <h3 className="text-md md:text-lg grid grid-cols-12  gap-1">
                       <strong className="col-span-6 md:col-span-3">
-                        Student Name
+                        শিক্ষার্থীর নাম
                       </strong>{" "}
                       <span className="col-span-1">:</span>{" "}
                       <span className="col-span-5 md:col-span-8">
@@ -190,7 +190,7 @@ const ClientResult = () => {
                     {/* class name */}
                     <h3 className="text-md md:text-lg grid grid-cols-12 gap-1">
                       <strong className="col-span-6 md:col-span-3">
-                        Class
+                        শ্রেণী
                       </strong>{" "}
                       <span className="col-span-1">:</span>{" "}
                       <span className="col-span-5 md:col-span-8">
@@ -199,7 +199,7 @@ const ClientResult = () => {
                     </h3>
                     {/* Roll no */}
                     <h3 className="text-md md:text-lg grid grid-cols-12 gap-1">
-                      <strong className="col-span-6 md:col-span-3">Roll</strong>{" "}
+                      <strong className="col-span-6 md:col-span-3">রোল</strong>{" "}
                       <span className="col-span-1">:</span>{" "}
                       <span className="col-span-5 md:col-span-8">
                         {resultData?.classRoll}
@@ -209,7 +209,7 @@ const ClientResult = () => {
                   <div className=" md:ms-auto col-span-12 md:col-span-5">
                     <h3 className="text-md md:text-lg grid grid-cols-12  gap-1">
                       <strong className="col-span-6 md:col-span-7">
-                        Total Marks
+                        মোট প্রাপ্ত নম্বর
                       </strong>{" "}
                       <span className="col-span-1">:</span>{" "}
                       <span className="col-span-5 md:col-span-4">
@@ -241,34 +241,12 @@ const ClientResult = () => {
                       </strong>{" "}
                       <span className="col-span-1">:</span>{" "}
                       <span className="col-span-5 md:col-span-4">
-                        {resultData.status}
+                        {resultData.status === "Pass" ? "পাস" : resultData.status === "Fail" ? "ফেইল" : "N/A"}
                       </span>
                     </h3>
                   </div>
                 </div>
-                <div className="overflow-x-auto">
-                  <table className="table">
-                    {/* head */}
-                    <thead>
-                      <tr>
-                        <th>Subject Name</th>
-                        <th>Marks</th>
-                        <th>Grade Point</th>
-                        <th>Latter Grade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {resultData?.resultData?.map((singleSubject, index) => (
-                        <tr key={index}>
-                          <td>{singleSubject?.subjectName}</td>
-                          <td>{singleSubject?.marks}</td>
-                          <td>{singleSubject?.GPA}</td>
-                          <td>{singleSubject?.letterGrade}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                
               </div>
             ) : serverError ? (
               <p className="text-red-500 max-sm:text-xs text-center">{serverError}</p>
