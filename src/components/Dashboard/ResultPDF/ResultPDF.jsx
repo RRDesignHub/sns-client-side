@@ -117,7 +117,7 @@ export default function ResultPDF({result}) {
             {result?.resultData?.map((subject, index) => (
               <View key={index} style={styles.tableRow}>
                 <Text style={styles.tableCellSubject}>{subject?.subjectName}</Text>
-                <Text style={styles.tableCellOther}>{subject?.marks}</Text>
+                <Text style={styles.tableCellOther}>{subject?.marks}/{subject?.totalMarks}</Text>
                 <Text style={styles.tableCellOther}>{subject?.GPA}</Text>
                 <Text style={styles.tableCellOther}>{subject?.letterGrade}</Text>
               </View>

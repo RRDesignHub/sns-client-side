@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 import imageUpload from "../../../Api/Utils";
+import useAuth from "../../../Hooks/useAuth";
 export const AddStudent = () => {
   const axiosSecure = useAxiosSec();
+  const {user} = useAuth();
   const [session, setSession] = useState(new Date().getFullYear().toString());
   const [className, setClassName] = useState("Play");
   const [bloodGroup, setBloodGroup] = useState("A+");
@@ -58,6 +60,7 @@ export const AddStudent = () => {
       religion,
       image: photoURL,
       mobileNo,
+      user: user.email,
     };
 
     try {

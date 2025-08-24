@@ -86,7 +86,7 @@ export default function TabularStudentInfoPDF({ students }) {
                     {format(new Date(item?.dateOfBirth), "dd MMM yyyy")}
                   </Text>
                   <Text
-                    style={[styles.cell, { flex: 0.8, textAlign: "center" }]}
+                    style={[styles.cell, { flex: 0.8}]}
                   >
                     0{item.mobileNo || "-"}
                   </Text>

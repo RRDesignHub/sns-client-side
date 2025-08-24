@@ -56,7 +56,7 @@ export default function Overview() {
                     মোট ব্যবহারকারী
                   </h2>
                   <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
-                    {dashboardData.totalUsers || 0} জন
+                    {dashboardData?.totalUsers || 0} জন
                   </p>
                 </div>
 
@@ -66,7 +66,7 @@ export default function Overview() {
                     মোট শিক্ষার্থী
                   </h2>
                   <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
-                    {dashboardData.totalStudents || 0} জন
+                    {dashboardData?.totalStudents || 0} জন
                   </p>
                 </div>
 
@@ -76,7 +76,7 @@ export default function Overview() {
                     শিক্ষক/শিক্ষিকা
                   </h2>
                   <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
-                    {dashboardData.allTeachers || 0} জন
+                    {dashboardData?.allTeachers || 0} জন
                   </p>
                 </div>
 
