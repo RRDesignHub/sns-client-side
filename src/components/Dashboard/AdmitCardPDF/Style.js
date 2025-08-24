@@ -12,6 +12,19 @@ Font.register({
   ],
 });
 
+// Register Bangla font
+Font.register({
+  family: "Bangla",
+  fonts: [
+    { src: "/Fonts/NotoSansBengali-Light.ttf" }, // You can use Hind Siliguri or SolaimanLipi too
+    { src: "/Fonts/NotoSansBengali-Regular.ttf" }, // You can use Hind Siliguri or SolaimanLipi too
+    { src: "/Fonts/NotoSansBengali-Medium.ttf" }, // You can use Hind Siliguri or SolaimanLipi too
+    { src: "/Fonts/NotoSansBengali-SemiBold.ttf", fontWeight: 600 }, // You can use Hind Siliguri or SolaimanLipi too
+    { src: "/Fonts/NotoSansBengali-Bold.ttf", fontWeight: "bold" }, // You can use Hind Siliguri or SolaimanLipi too
+    { src: "/Fonts/NotoSansBengali-ExtraBold.ttf", fontWeight: 900 }, // You can use Hind Siliguri or SolaimanLipi too
+  ],
+});
+
 // Styles for the PDF
 export const styles = StyleSheet.create({
   page: {
@@ -28,11 +41,12 @@ export const styles = StyleSheet.create({
     height: "100%", // Ensure it fills the page
   },
   title: {
-    fontSize: 20,
+    fontFamily: "Bangla",
+    fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 2,
-    color: "#052e16", // Matching your UI color
+    color: "#01160a", // Matching your UI color
   },
   subtitle: {
     fontSize: 14,
@@ -72,21 +86,22 @@ export const styles = StyleSheet.create({
     marginBottom: 5,
   },
   infoLabel: {
-    flex: 6,
+    flex: 3,
     fontSize: 11,
     fontWeight: 600,
     width: 80, // Fixed width for labels to align values
   },
   infoValue: {
-    flex: 6,
+    flex: 8,
     fontSize: 11,
     fontWeight: 400,
   },
   cardTitle: {
     textAlign: "center",
-    fontSize: "18px",
-    fontWeight: 700,
-    marginTop: "14px"
+    fontSize: "14px",
+    fontWeight: 600,
+    marginTop: "4px",
+    opacity:0.9
   },
   table: {
     width: "100%",
@@ -96,6 +111,7 @@ export const styles = StyleSheet.create({
     borderRadius: "5px",
   },
   tableHeader: {
+    fontFamily: "Bangla",
     flexDirection: "row",
     backgroundColor: "#bfbfbf",
     fontSize: 11,
@@ -123,6 +139,7 @@ export const styles = StyleSheet.create({
     padding: 5,
     textAlign: "center",
   },
+  
   footer: {
     position: "absolute", // Fixed at bottom
     bottom: 20,
@@ -134,6 +151,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   signature: {
+    fontFamily: "Bangla",
     fontSize: 11,
     fontWeight: "bold",
     borderTop: "1px solid #000",

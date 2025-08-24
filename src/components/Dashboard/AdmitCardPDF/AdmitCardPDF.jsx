@@ -36,13 +36,14 @@ export default function AdmitCardPDF({ admitCardData }) {
                 }}
               />
               <Text style={styles.title}>
-                Shah Neyamat (RH:) KG & High School
+                শাহ্ নেয়ামত (রহঃ) কেজি এন্ড হাই স্কুল
               </Text>
               <Text style={{ fontSize: 11, textAlign: "center", opacity: 0.8 }}>
                 Karnaphuli, Chattogram || ESTD: 2004
               </Text>
-              <Text style={styles.subtitle}>
-                {admitCardData.examName} Exam: {admitCardData.session}
+              <Text style={styles.cardTitle}>
+                {admitCardData.examName} Exam: {admitCardData.session} |{" "}
+                <Text>Admit Card</Text>
               </Text>
             </View>
             <View style={styles.divider} />
@@ -52,7 +53,9 @@ export default function AdmitCardPDF({ admitCardData }) {
               <View style={styles.infoLeft}>
                 <View style={styles.infoRow}>
                   <Text style={styles.infoLabel}>Student Name:</Text>
-                  <Text style={styles.infoValue}>
+                  <Text
+                    style={{ flex: 8, fontSize: "13px", fontWeight: "bold" }}
+                  >
                     {admitCardData.studentName}
                   </Text>
                 </View>
@@ -100,16 +103,12 @@ export default function AdmitCardPDF({ admitCardData }) {
               </View>
             </View>
 
-            <View>
-              <Text style={styles.cardTitle}>Exam Routine</Text>
-            </View>
-
             {/* Exam Schedule Table */}
             <View style={styles.table}>
               <View style={styles.tableHeader}>
-                <Text style={styles.tableCellSubject}>Subject Name</Text>
-                <Text style={styles.tableCellOther}>Exam Date</Text>
-                <Text style={styles.tableCellOther}>Time</Text>
+                <Text style={styles.tableCellSubject}> িবষয়ের নামম</Text>
+                <Text style={styles.tableCellOther}>পরীক্ষার তারিখ</Text>
+                <Text style={styles.tableCellOther}>সময়</Text>
               </View>
               {admitCardData.examData.map((subject, index) => {
                 const baseDate = new Date(subject.examDate);
@@ -140,11 +139,11 @@ export default function AdmitCardPDF({ admitCardData }) {
                 );
               })}
             </View>
-
+           
             {/* Footer with Signatures */}
             <View style={styles.footer}>
-              <Text style={styles.signature}>Class Teacher Signature</Text>
-              <Text style={styles.signature}>Principal Signature</Text>
+              <Text style={styles.signature}>শ্রেণী শিক্ষক</Text>
+              <Text style={styles.signature}>প্রধান শিক্ষক</Text>
             </View>
           </View>
         </Page>

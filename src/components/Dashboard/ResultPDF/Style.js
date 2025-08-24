@@ -14,7 +14,7 @@ Font.register({
 export const styles = StyleSheet.create({
   page: {
     backgroundColor: "#fff",
-    padding: "5%", // Relative padding (5% of A4 width/height)
+    padding: "5%",
     fontFamily: "Roboto",
     flexDirection: "column",
   },
@@ -24,19 +24,41 @@ export const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     position: "relative",
-    flex: 1, // Allow container to grow and fill available space
+    flex: 1,
+  },
+  overlayLogo: {
+    position: "absolute",
+    top: "35%",
+    left: "28%",
+    transform: "translate(-50%, -50%)",
+    width: 380,
+    height: 380,
+    opacity: 0.17,
+  },
+  headerLogo: {
+    height: 50,
+    width: 50,
+    position: "absolute",
+    left: 20,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 2,
-    color: "#052e16", // Consistent with your branding
+    color: "#052e16",
+  },
+  subtitleSmall: {
+    fontSize: 11,
+    fontWeight: 500,
+    textAlign: "center",
+    opacity: 0.8,
   },
   subtitle: {
     fontSize: 14,
     fontWeight: 600,
     textAlign: "center",
+    marginTop: 3,
     marginBottom: 2,
     opacity: 0.9,
   },
@@ -48,11 +70,11 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 4,
-    flexWrap: "wrap", // Allow wrapping on smaller pages if needed
+    flexWrap: "wrap",
   },
   infoLeft: {
-    width: "60%", // Flexible width
-    minWidth: 200, // Minimum width for smaller layouts
+    width: "60%",
+    minWidth: 200,
     display: "flex",
     flexDirection: "column",
     gap: "6px",
@@ -60,28 +82,52 @@ export const styles = StyleSheet.create({
     borderRadius: "5px",
     padding: "10px",
   },
+  infoRowText: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    gap: 5,
+  },
+  infoLabelInline: {
+    fontSize: 11,
+    fontWeight: 600,
+  },
+  infoValueInline: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  infoValueText: {
+    fontSize: 11,
+  },
   infoRight: {
-    width: "38%", // Flexible width
-    minWidth: 150, // Minimum width for smaller layouts
+    width: "38%",
+    minWidth: 150,
     border: "1px solid #c4c4c4",
     borderRadius: "5px",
     padding: "5px",
-    alignItems: "center", // Center content for flexibility
+    alignItems: "center",
+  },
+  studentImage: {
+    width: 50,
+    height: 60,
+    margin: "5px auto",
+    border: "1px solid #5c5e5d",
+    borderRadius: 5,
+    marginBottom: 10,
   },
   infoRow: {
     flexDirection: "row",
-    justifyContent: "flex-start", // Align left for readability
+    justifyContent: "flex-start",
     marginBottom: 5,
-    width: "100%", // Ensure full width usage
+    width: "100%",
   },
   infoLabel: {
-    flex: 2, // Adjusted for more flexibility (was 6)
+    flex: 2,
     fontSize: 11,
     fontWeight: 600,
-    minWidth: 70, // Minimum width for labels
+    minWidth: 70,
   },
   infoValue: {
-    flex: 3, // Adjusted for more flexibility (was 6)
+    flex: 3,
     fontSize: 11,
     fontWeight: 400,
   },
@@ -105,17 +151,13 @@ export const styles = StyleSheet.create({
     borderBottom: "1px solid #a19f9f",
     fontSize: 11,
   },
-  tableCell: {
-    padding: 5,
-    textAlign: "center", // Center text for consistency
-  },
   tableCellSubject: {
-    flex: 2, // Wider column for Subject Name
+    flex: 2,
     padding: 5,
-    textAlign: "left", // Left-align for readability
+    textAlign: "left",
   },
   tableCellOther: {
-    flex: 1, // Narrower columns for Marks, GPA, Letter Grade
+    flex: 1,
     padding: 5,
     textAlign: "center",
   },
