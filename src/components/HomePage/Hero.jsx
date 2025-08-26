@@ -5,6 +5,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import heroImg_1 from "./../../assets/Hero-1.jpg";
+import Asembly from "./../../assets/Asembly (1).jpg";
+import Teachers from "./../../assets/Teachers_1.jpg";
 export const Hero = () => {
   return (
     <>
@@ -32,13 +34,13 @@ export const Hero = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div  className="w-full">
-            <img src='https://i.ibb.co.com/Y0zBFKS/Banner-2.png' className="h-full lg:w-full lg:h-[500px] object-cover" />
+            <img src={Teachers} className="h-full lg:w-full lg:h-[500px] object-cover" />
             
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div  className="w-full">
-            <img src='https://i.ibb.co.com/XVscVds/Banner-1.png' className="h-full lg:w-full lg:h-[500px] object-cover" />
+            <img src={Asembly} className="h-full lg:w-full lg:h-[500px] object-cover" />
             
           </div>
         </SwiperSlide>
