@@ -1,11 +1,13 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { RiBookShelfFill } from "react-icons/ri";
 import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
-import {FaRegIdCard } from "react-icons/fa";
+import {FaIdCard, FaRegIdCard, FaTasks } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
-import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
+import { MdDashboard} from "react-icons/md";
 import { HiSpeakerphone } from "react-icons/hi";
-import { GiPapers } from "react-icons/gi";
+import { GiPapers, GiTeacher } from "react-icons/gi";
+import { FaUsersGear } from "react-icons/fa6";
+import { TiUserAdd } from "react-icons/ti";
 
 const AdminsNavbars = ({openCloseMenu}) => {
   const location = useLocation();
@@ -46,7 +48,7 @@ const AdminsNavbars = ({openCloseMenu}) => {
             : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
         }
       >
-        <IoMdPersonAdd className="w-4 h-4" />
+        <FaUsersGear className="w-4 h-4" />
         <span className="text-xs ">{openCloseMenu ? "All User" : ""}</span>
       </NavLink>
 
@@ -85,7 +87,7 @@ const AdminsNavbars = ({openCloseMenu}) => {
             : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
         }
       >
-        <MdOutlineAddchart className="w-4 h-4" />
+        <FaIdCard className="w-4 h-4" />
         <span className="text-xs ">
           {openCloseMenu ? "এডমিট কার্ড তৈরি" : ""}
         </span>
@@ -100,7 +102,7 @@ const AdminsNavbars = ({openCloseMenu}) => {
             : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
         }
       >
-        <MdOutlineAddchart className="w-4 h-4" />
+        <TiUserAdd className="w-4 h-4" />
         <span className="text-xs ">
           {openCloseMenu ? "শিক্ষক/শিক্ষিকা যোগ" : ""}
         </span>
@@ -159,7 +161,7 @@ const AdminsNavbars = ({openCloseMenu}) => {
         <span className="text-xs ">{openCloseMenu ? "ফলাফল" : ""}</span>
       </NavLink>
 
-        {/* all students */}
+        {/* all teachers */}
       <NavLink
         to="/dashboard/all-teacher"
         className={({ isActive }) =>
@@ -168,9 +170,23 @@ const AdminsNavbars = ({openCloseMenu}) => {
             : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
         }
       >
-        <PiUsersFourFill className="w-4 h-4" />
+        <GiTeacher className="w-4 h-4" />
         <span className="text-xs ">
           {openCloseMenu ? "সকল শিক্ষক/শিক্ষিকা" : ""}
+        </span>
+      </NavLink>
+        {/* special task */}
+      <NavLink
+        to="/dashboard/special-task"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+            : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+        }
+      >
+        <FaTasks className="w-4 h-4" />
+        <span className="text-xs ">
+          {openCloseMenu ? "বিশেষ কাজ" : ""}
         </span>
       </NavLink>
     </>

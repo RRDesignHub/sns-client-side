@@ -5,6 +5,7 @@ import { useAxiosSec } from "../../Hooks/useAxiosSec";
 import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../../components/Shared/Loading";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 export default function Overview() {
   const [userRole, roleLoading] = useRole();
   const { isTeacher, isAccountant, isAdmin } = userRole;
@@ -51,34 +52,40 @@ export default function Overview() {
             {isAdmin && (
               <>
                 {/* Total Users */}
-                <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-700">
-                  <h2 className="text-xs md:text-xl font-semibold text-primary">
-                    মোট ব্যবহারকারী
-                  </h2>
-                  <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
-                    {dashboardData?.totalUsers || 0} জন
-                  </p>
-                </div>
+                <Link to="/dashboard/all-user">
+                  <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-700">
+                    <h2 className="text-xs md:text-xl font-semibold text-primary">
+                      মোট ব্যবহারকারী
+                    </h2>
+                    <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
+                      {dashboardData?.totalUsers || 0} জন
+                    </p>
+                  </div>
+                </Link>
 
                 {/* Total Students */}
-                <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-600">
-                  <h2 className="text-xs md:text-xl font-semibold text-primary">
-                    মোট শিক্ষার্থী
-                  </h2>
-                  <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
-                    {dashboardData?.totalStudents || 0} জন
-                  </p>
-                </div>
+                <Link to="/dashboard/students">
+                  <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-600">
+                    <h2 className="text-xs md:text-xl font-semibold text-primary">
+                      মোট শিক্ষার্থী
+                    </h2>
+                    <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
+                      {dashboardData?.totalStudents || 0} জন
+                    </p>
+                  </div>
+                </Link>
 
                 {/* Total Teachers */}
-                <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-500">
-                  <h2 className="text-xs md:text-xl font-semibold text-primary">
-                    শিক্ষক/শিক্ষিকা
-                  </h2>
-                  <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
-                    {dashboardData?.allTeachers || 0} জন
-                  </p>
-                </div>
+                <Link to="/dashboard/all-teacher">
+                  <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-500">
+                    <h2 className="text-xs md:text-xl font-semibold text-primary">
+                      শিক্ষক/শিক্ষিকা
+                    </h2>
+                    <p className="text-lg md:text-4xl font-bold mt-2 text-green-700">
+                      {dashboardData?.allTeachers || 0} জন
+                    </p>
+                  </div>
+                </Link>
 
                 {/* Ongoing Exams */}
                 <div className="bg-card p-2 md:p-6 rounded-xl shadow-md border-l-8 border-green-400">

@@ -1,11 +1,13 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { RiBookShelfFill } from "react-icons/ri";
 import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
-import {  FaIdCard, FaRegIdCard } from "react-icons/fa";
+import {  FaIdCard, FaRegIdCard, FaTasks } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
 import { HiSpeakerphone } from "react-icons/hi";
-import { GiPapers } from "react-icons/gi";
+import { GiPapers, GiTeacher } from "react-icons/gi";
+import { TiUserAdd } from "react-icons/ti";
+import { FaUsersGear } from "react-icons/fa6";
 const AdminsNavbarLg = () => {
   const location = useLocation();
   return (
@@ -45,7 +47,7 @@ const AdminsNavbarLg = () => {
             : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
         }
       >
-        <IoMdPersonAdd className="w-5 h-5" />
+        <FaUsersGear className="w-5 h-5" />
         All User
       </NavLink>
 
@@ -96,7 +98,7 @@ const AdminsNavbarLg = () => {
             : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
         }
       >
-        <FaIdCard className="w-5 h-5" />
+        <TiUserAdd className="w-5 h-5" />
         শিক্ষক/শিক্ষিকা যোগ
       </NavLink>
 
@@ -161,8 +163,20 @@ const AdminsNavbarLg = () => {
             : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
         }
       >
-        <PiUsersFourFill className="w-5 h-5" />
+        <GiTeacher className="w-5 h-5" />
         সকল শিক্ষক/শিক্ষিকা
+      </NavLink>
+      {/* special task */}
+      <NavLink
+        to="/dashboard/special-task"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+            : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+        }
+      >
+        <FaTasks className="w-5 h-5" />
+        বিশেষ কাজ
       </NavLink>
     </>
   );

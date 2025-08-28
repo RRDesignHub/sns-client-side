@@ -38,6 +38,7 @@ import AddExamFee from "../Pages/DashboardPages/AccountantPages/AddExamFee";
 import ClientResult from "../Pages/ClientResult";
 import AddAllStudents from "../Pages/DashboardPages/AccountantPages/AddAllStudents";
 import Management from "../Pages/Management";
+import SpecialTask from "../Pages/DashboardPages/AdminPages/SpecialTask";
 
 const router = createBrowserRouter(
   [
@@ -100,6 +101,10 @@ const router = createBrowserRouter(
          {
           path: "all-user",
           element: <AdminRoute><AllUsers /></AdminRoute>
+        },
+         {
+          path: "special-task",
+          element: <AdminRoute><SpecialTask /></AdminRoute>
         },
          {
           path: "update-user/:id",

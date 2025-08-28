@@ -1,5 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,7 +12,7 @@ export default function UpdateStudent() {
   const axiosSecure = useAxiosSec();
   const navigate = useNavigate();
   const [imageFile, setImageFile] = useState(null);
-
+  const [imgErr, setImgErr] = useState("");
   const { register, handleSubmit, reset, control } = useForm({
     defaultValues: async () => {
       const res = await axiosSecure.get(`/student/${id}`);
@@ -24,7 +24,19 @@ export default function UpdateStudent() {
     },
   });
 
+  useEffect(() => {
+      if (imageFile && imageFile?.size >= 40000) {
+        return setImgErr("ছবি অবশ্যই 40kb এর সমান বা ছোট হতে হবে!");
+      } else {
+        setImgErr(null);
+      }
+    }, [imageFile]);
+
   const onSubmit = async (data) => {
+    if (imageFile && imageFile?.size >= 40000) {
+      return;
+    }
+
     try {
       // upload image if any
       if (imageFile) {
@@ -298,8 +310,10 @@ export default function UpdateStudent() {
                 name="imageFile"
                 onChange={(e) => setImageFile(e.target.files[0])}
                 accept="image/*"
-                className="select mb-2 px-4 py-2 select-bordered"
+                className={`select mb-2 px-4 py-2 select-bordered ${imgErr ? "border-red-500"  : ""}`}
               />
+
+              <small className="text-red-500">{imgErr && imgErr}</small>
             </div>
 
             {/* Mobile Number */}
