@@ -111,8 +111,8 @@ export const Navbar = () => {
       <div className="navbar-start w-fit">
         <Link to="/" className=" text-xl">
           <div className="flex items-center gap-3">
-            <img className="w-10 md:w-16 drop-shadow-xl" src={logo} alt="" />
-            <h3 className="text-base md:text-xl lg:text-2xl font-bold">
+            <img className="w-10 md:w-16 drop-shadow-[0_5px_15px_#02160b]" src={logo} alt="" />
+            <h3 className="text-base md:text-xl lg:text-2xl font-bold ">
               শাহ্ নেয়ামত (রহঃ) <br className="lg:hidden" /> কেজি এন্ড হাই স্কুল
             </h3>
           </div>

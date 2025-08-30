@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-evenly items-center">
           {/* School Logo and Name */}
           <div className="text-center flex flex-col md:flex-row items-center gap-3 md:text-left mb-4 md:mb-0">
-            <img className="w-20" src={logo} alt="" />
+            <img className="w-20 drop-shadow-[0_5px_15px_#02160b]" src={logo} alt="" />
             <div >
               <h2 className="text-lg md:text-xl font-bold">
               শাহ্ নেয়ামত (রহঃ) কেজি এন্ড হাই স্কুল
