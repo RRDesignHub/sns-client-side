@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    borderColor: "#333",
+    borderColor: "##000000",
     backgroundColor: "#e6f4ea",
     paddingVertical: 4,
     marginTop: 10,
@@ -59,15 +59,16 @@ export const styles = StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     borderWidth: 0.5,
-    borderColor: "#999",
+    borderColor: "##000000",
     paddingVertical: 3,
   },
   cell: {
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
-    borderColor: "#999",
+    borderColor: "#000000",
     textAlign: "left",
     paddingHorizontal: 2,
+    paddingVertical: 2,
   },
   nameCell: {
     textAlign: "left",

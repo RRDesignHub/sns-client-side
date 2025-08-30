@@ -10,6 +10,7 @@ import { styles } from "./Style";
 import { format } from "date-fns";
 
 export default function TabularStudentInfoPDF({ students }) {
+ 
   return (
     <PDFViewer width="100%" height="600px">
       <Document>
@@ -52,14 +53,10 @@ export default function TabularStudentInfoPDF({ students }) {
                 Roll
               </Text>
               <Text style={[styles.headerCell, { flex: 1.5 }]}>Name</Text>
-              <Text style={[styles.headerCell, { flex: 1.5 }]}>
-                Father's Name
-              </Text>
-              <Text style={[styles.headerCell, { flex: 1.5 }]}>
-                Mother's Name
-              </Text>
-              <Text style={[styles.headerCell, { flex: 1.5 }]}>DOB</Text>
+              <Text style={[styles.headerCell, { flex: 1.5 }]}>Date Of Birth</Text>
+              <Text style={[styles.headerCell, { flex: 1.5 }]}>Brth Reg. No</Text>
               <Text style={[styles.headerCell, { flex: 1 }]}>Mobile No</Text>
+              
             </View>
 
             {/* Table Rows */}
@@ -76,19 +73,19 @@ export default function TabularStudentInfoPDF({ students }) {
                   <Text style={[styles.nameCell, { flex: 1.5 }]}>
                     {item.studentName}
                   </Text>
-                  <Text style={[styles.cell, { flex: 1.2 }]}>
-                    {item.fatherName}
-                  </Text>
-                  <Text style={[styles.cell, { flex: 1 }]}>
-                    {item.motherName}
-                  </Text>
-                  <Text style={[styles.cell, { flex: 1 }]}>
+                 
+                  <Text style={[styles.cell, { flex: 0.8 }]}>
                     {format(new Date(item?.dateOfBirth), "dd MMM yyyy")}
+                  </Text>
+                  <Text
+                    style={[styles.cell, { flex: 1}]}
+                  >
+                    {item.birthRegNo || ""}
                   </Text>
                   <Text
                     style={[styles.cell, { flex: 0.8}]}
                   >
-                    0{item.mobileNo || "-"}
+                    0{item.mobileNo || ""}
                   </Text>
                 </View>
               ))}
