@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 import { Loading } from "../../../components/Shared/Loading";
-
+import { bn } from "date-fns/locale";
 export default function CreateAdmitCard() {
   const axiosSecure = useAxiosSec();
   const [classFilter, setClassFilter] = useState("Play");
@@ -17,7 +17,6 @@ export default function CreateAdmitCard() {
   const [examData, setExamData] = useState([]);
   const [error, setError] = useState("");
   const [multipleAdd, setMultipleAdd] = useState("");
-
   const {
     data: subjectData = {},
     isLoading,
@@ -149,11 +148,14 @@ export default function CreateAdmitCard() {
                 <option value={""} disabled>
                   Select
                 </option>
-                <option value="1st-Semester">1st Semester</option>
-                <option value="2nd-Semester">2nd Semester</option>
-                <option value="3rd-Semester">3rd Semester</option>
-                <option value="Half-Yearly">Half Yearly</option>
-                <option value="Annual">Annual</option>
+                <option value="1st-Semester">১ম সেমিস্টার</option>
+                <option value="2nd-Semester">২য় সেমিস্টার</option>
+                <option value="3rd-Semester">৩য় সেমিস্টার</option>
+                <option value="Half-Yearly">অর্ধ-বার্ষিক</option>
+                <option value="Annual">বার্ষিক</option>
+                <option value="1st-Modeltest">১ম-মডেল টেস্ট</option>
+                <option value="2nd-Modeltest">২য়-মডেল টেস্ট</option>
+                <option value="Pre-Test">প্রি-টেস্ট</option>
               </select>
             </div>
 

@@ -38,10 +38,10 @@ export const Notices = () => {
                     <th className="px-1 md:px-4 py-2 text-left text-green-700 font-semibold">
                       শিরোনাম
                     </th>
-                    <th className="px-1 md:px-4 py-2 text-left text-green-700 font-semibold">
+                    <th className="px-1 md:px-4 py-2 text-center text-green-700 font-semibold">
                       তারিখ
                     </th>
-                    <th className="px-1 md:px-4 py-2 text-left text-green-700 font-semibold">
+                    <th className="px-1 md:px-4 py-2 text-center text-green-700 font-semibold">
                       PDF
                     </th>
                   </tr>
@@ -61,12 +61,12 @@ export const Notices = () => {
                           {notice?.date &&
                             format(new Date(notice.date), "dd/MM/yyyy, EEEE")}
                         </td>
-                        <td className="px-1 md:px-4 py-2 max-sm:text-xs text-gray-700">
+                        <td className="px-1 md:px-4 py-2">
                           <Link
-                            className="text-green-800 text-xl"
+                            className="text-green-800 flex items-center gap-1 md:gap-2"
                             to={notice?.pdfUrl}
                           >
-                            <FaFile></FaFile>
+                          <FaFile className="text-md md:text-xl" /> <span className="text-[8px] md:text-sm">নোটিশ দেখুন</span>
                           </Link>
                         </td>
                       </tr>

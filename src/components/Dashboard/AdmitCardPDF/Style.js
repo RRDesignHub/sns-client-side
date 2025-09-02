@@ -49,11 +49,11 @@ export const styles = StyleSheet.create({
     color: "#01160a", // Matching your UI color
   },
   subtitle: {
-    fontSize: 14,
-    fontWeight: 600,
-    textAlign: "center",
-    marginBottom: 2,
+    fontFamily: "Bangla",
+    fontSize: 11, 
+    textAlign: "center", 
     opacity: 0.9,
+    marginBottom: 2,
   },
   divider: {
     borderBottom: "1px solid #c4c4c4",
@@ -97,6 +97,7 @@ export const styles = StyleSheet.create({
     fontWeight: 400,
   },
   cardTitle: {
+    fontFamily: "Bangla",
     textAlign: "center",
     fontSize: "14px",
     fontWeight: 600,
@@ -139,7 +140,13 @@ export const styles = StyleSheet.create({
     padding: 5,
     textAlign: "center",
   },
-  
+  noteText:{
+    fontSize: 11,
+    fontWeight: 400,
+    opacity: 0.9,
+    textAlign: "justify",
+    fontFamily: "Bangla",
+  },
   footer: {
     position: "absolute", // Fixed at bottom
     bottom: 20,

@@ -38,12 +38,20 @@ export default function AdmitCardPDF({ admitCardData }) {
               <Text style={styles.title}>
                 শাহ্ নেয়ামত (রহঃ) কেজি এন্ড হাই স্কুল
               </Text>
-              <Text style={{ fontSize: 11, textAlign: "center", opacity: 0.8 }}>
-                Karnaphuli, Chattogram || ESTD: 2004
+              <Text style={styles.subtitle}>
+                কর্ণফুলী, চট্টগ্রাম || স্থাপিত: ২০০৪
               </Text>
+              
               <Text style={styles.cardTitle}>
-                {admitCardData.examName} Exam: {admitCardData.session} |{" "}
-                <Text>Admit Card</Text>
+                {admitCardData.examName === "2nd-Modeltest"
+                  ? "২য়-মডেল টেস্ট"
+                  : admitCardData.examName === "1st-Modeltest" ? "১ম-মডেল টেস্ট" 
+                  : admitCardData.examName === "Pre-Test" ? "প্রি-টেস্ট"
+                  : admitCardData.examName === "Half-Yearly" ? "অর্ধ-বার্ষিক"
+                  : admitCardData.examName === "Annual" ? "বার্ষিক"
+                  : ""
+                  } {" "}
+                 পরীক্ষা: {admitCardData.session} | <Text>প্রবেশ পত্র</Text>
               </Text>
             </View>
             <View style={styles.divider} />
@@ -106,7 +114,7 @@ export default function AdmitCardPDF({ admitCardData }) {
             {/* Exam Schedule Table */}
             <View style={styles.table}>
               <View style={styles.tableHeader}>
-                <Text style={styles.tableCellSubject}> িবষয়ের নামম</Text>
+                <Text style={styles.tableCellSubject}> বিষয়ের নাম</Text>
                 <Text style={styles.tableCellOther}>পরীক্ষার তারিখ</Text>
                 <Text style={styles.tableCellOther}>সময়</Text>
               </View>
@@ -139,11 +147,36 @@ export default function AdmitCardPDF({ admitCardData }) {
                 );
               })}
             </View>
-           
+
+            {/* note text */}
+            <View style={styles.infoContainer}>
+              {admitCardData && (
+                <View>
+                  {/* <Text style={styles.noteText}>
+                    ১. পরীক্ষা কেন্দ্রে আসার সময় অবশ্যই বিদ্যালয়ের নির্ধারিত
+                    ইউনিফর্ম পরিধান করে আসতে হবে। ইউনিফর্ম ছাড়া প্রবেশ করতে
+                    দেওয়া হবে না।
+                  </Text>
+                  <Text style={styles.noteText}>
+                    ২. পরীক্ষার ফি এবং অন্য কোনো বকেয়া থাকলে তা পরীক্ষার আগে
+                    অবশ্যই পরিশোধ করতে হবে।
+                  </Text>
+                  <Text style={styles.noteText}>
+                    ৩. পরীক্ষা শুরুর আগে তোমার প্রবেশপত্র দেখে শ্রেণী ও রোল
+                    নম্বর অনুযায়ী নিজের আসন খুঁজে নিতে হবে।
+                  </Text>
+                  <Text style={styles.noteText}>
+                    ৪. পরীক্ষার সময় কোনো প্রকার অবৈধ পন্থা যেমন— নকল করা বা
+                    অন্যের সাথে কথা বলা— কঠোরভাবে নিষিদ্ধ।
+                  </Text> */}
+                </View>
+              )}
+            </View>
+
             {/* Footer with Signatures */}
             <View style={styles.footer}>
-              <Text style={styles.signature}>শ্রেণী শিক্ষক</Text>
-              <Text style={styles.signature}>প্রধান শিক্ষক</Text>
+              <Text style={styles.signature}>শ্রেণী শিক্ষকের স্বাক্ষর</Text>
+              <Text style={styles.signature}>প্রধান শিক্ষকের স্বাক্ষর</Text>
             </View>
           </View>
         </Page>

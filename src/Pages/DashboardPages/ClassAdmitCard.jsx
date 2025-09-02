@@ -92,11 +92,14 @@ export default function ClassAdmitCard() {
                 <option value={""} disabled>
                   Select
                 </option>
-                <option value="1st-Semester">1st Semester</option>
-                <option value="2nd-Semester">2nd Semester</option>
-                <option value="3rd-Semester">3rd Semester</option>
-                <option value="Half-Yearly">Half Yearly</option>
-                <option value="Annual">Annual</option>
+                <option value="1st-Semester">১ম সেমিস্টার</option>
+                <option value="2nd-Semester">২য় সেমিস্টার</option>
+                <option value="3rd-Semester">৩য় সেমিস্টার</option>
+                <option value="Half-Yearly">অর্ধ-বার্ষিক</option>
+                <option value="Annual">বার্ষিক</option>
+                <option value="1st-Modeltest">১ম-মডেল টেস্ট</option>
+                <option value="2nd-Modeltest">২য়-মডেল টেস্ট</option>
+                <option value="Pre-Text">প্রি-টেস্ট</option>
               </select>
             </div>
 
