@@ -1,6 +1,5 @@
-
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay} from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -10,47 +9,49 @@ import Teachers from "./../../assets/Teachers_1.jpg";
 export const Hero = () => {
   return (
     <>
-      
       <Swiper
-      loop={true}
-      speed={1000}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      }}
-        spaceBetween={0}
-        modules={[Autoplay]}
-        className="mySwiper w-full"
+        // Swiper options here
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        loop={true}
+        autoplay={{ delay: 5000 }}
       >
         <SwiperSlide>
-          <div  className="w-full">
+          <div className="w-full h-full lg:h-[500px]">
             <img
               src={heroImg_1}
-              className="h-full lg:w-full lg:h-[500px] object-cover"
+              className="w-full h-full object-cover"
+              alt="Hero Image 1"
             />
-            
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div  className="w-full">
-            <img src={Teachers} className="h-full lg:w-full lg:h-[500px] object-cover" />
-            
+          <div className="w-full h-full lg:h-[500px]">
+            <img
+              src={Teachers}
+              className="w-full h-full object-cover"
+              alt="Teachers"
+            />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div  className="w-full">
-            <img src={Asembly} className="h-full lg:w-full lg:h-[500px] object-cover" />
-            
+          <div className="w-full h-full lg:h-[500px]">
+            <img
+              src={Asembly}
+              className="w-full h-full object-cover"
+              alt="Assembly"
+            />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div  className="w-full">
-            <img src='https://i.ibb.co.com/YBJpkQG/Banner-3.png' className="h-full lg:w-full lg:h-[500px] object-cover" />
-            
+          <div className="w-full h-full lg:h-[500px]">
+            <img
+              src="https://i.ibb.co.com/YBJpkQG/Banner-3.png"
+              className="w-full h-full object-cover"
+              alt="Banner 3"
+            />
           </div>
         </SwiperSlide>
-        
       </Swiper>
     </>
   );

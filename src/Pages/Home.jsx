@@ -38,10 +38,10 @@ export const Home = () => {
             damping: 20,
             stiffness: 100,
           }}
-          className="absolute z-30 -bottom-[230px] md:-bottom-[140px] lg:-bottom-5 left-[4%] transform -translate-x-1/2 w-11/12 mx-auto bg-gradient-to-br from-green-800 via-green-500 to-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between"
+          className="absolute z-30 -bottom-[230px] md:-bottom-[140px] lg:-bottom-5 left-[4%] transform -translate-x-1/2 w-11/12 mx-auto bg-gradient-to-br from-green-800 via-green-500 to-green-800 rounded-lg p-5 flex max-sm:flex-col items-center justify-between border-[2px] border-green-200 drop-shadow-[0_5px_15px_#bbf7d0]"
         >
           <div className="flex max-sm:flex-col items-center gap-2 md:gap-5">
-            <img className="w-20 drop-shadow-xl" src={logo} alt="" />
+            <img className="w-20 drop-shadow-[0_5px_15px_#02160b]" src={logo} alt="" />
             <div className="flex max-sm:flex-col gap-2 items-center">
               <h3 className="md:w-fit text-lg font-bold py-2 max-sm:text-center md:text-left underline text-blue-50">
                 নোটিশ :

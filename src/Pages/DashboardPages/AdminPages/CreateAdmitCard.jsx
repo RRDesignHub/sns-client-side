@@ -76,7 +76,6 @@ export default function CreateAdmitCard() {
 
   const handleResetAdmitCard = () =>{
     setExamData([]);
-    // Optional: Reset form fields after successful addition
     setMultipleAdd("");
     setExamDate(new Date());
     setExamFrom("");
