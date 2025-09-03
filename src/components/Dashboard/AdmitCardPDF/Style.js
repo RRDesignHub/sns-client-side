@@ -12,18 +12,7 @@ Font.register({
   ],
 });
 
-// Register Bangla font
-Font.register({
-  family: "Bangla",
-  fonts: [
-    { src: "/Fonts/NotoSansBengali-Light.ttf" }, // You can use Hind Siliguri or SolaimanLipi too
-    { src: "/Fonts/NotoSansBengali-Regular.ttf" }, // You can use Hind Siliguri or SolaimanLipi too
-    { src: "/Fonts/NotoSansBengali-Medium.ttf" }, // You can use Hind Siliguri or SolaimanLipi too
-    { src: "/Fonts/NotoSansBengali-SemiBold.ttf", fontWeight: 600 }, // You can use Hind Siliguri or SolaimanLipi too
-    { src: "/Fonts/NotoSansBengali-Bold.ttf", fontWeight: "bold" }, // You can use Hind Siliguri or SolaimanLipi too
-    { src: "/Fonts/NotoSansBengali-ExtraBold.ttf", fontWeight: 900 }, // You can use Hind Siliguri or SolaimanLipi too
-  ],
-});
+
 
 // Styles for the PDF
 export const styles = StyleSheet.create({
@@ -41,20 +30,37 @@ export const styles = StyleSheet.create({
     height: "100%", // Ensure it fills the page
   },
   title: {
-    fontFamily: "Bangla",
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 2,
-    color: "#01160a", // Matching your UI color
+    color: "#000", // Matching your UI color
   },
   subtitle: {
-    fontFamily: "Bangla",
     fontSize: 11, 
     textAlign: "center", 
-    opacity: 0.9,
+    opacity: 0.8,
     marginBottom: 2,
   },
+    cardTitle: {
+    textAlign: "center",
+    fontSize: "14px",
+    fontWeight: 600,
+    marginTop: "2px",
+    opacity:0.9
+  },
+cardName: {
+  width: 150, 
+  margin: "auto",
+  backgroundColor: "#052e16",
+  color: "#fff",
+  padding: "6px 10px",
+  borderRadius: 50,
+  textAlign: "center",
+  fontSize: "15px",
+  fontWeight: 600,
+  marginTop: "2px",
+},
   divider: {
     borderBottom: "1px solid #c4c4c4",
     marginVertical: 10,
@@ -96,41 +102,33 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: 400,
   },
-  cardTitle: {
-    fontFamily: "Bangla",
-    textAlign: "center",
-    fontSize: "14px",
-    fontWeight: 600,
-    marginTop: "4px",
-    opacity:0.9
-  },
+
   table: {
     width: "100%",
     marginTop: 8,
-    border: "1px solid #a6a4a4",
+    border: "1px solid #000",
     borderBottom: "none",
     borderRadius: "5px",
   },
   tableHeader: {
-    fontFamily: "Bangla",
     flexDirection: "row",
     backgroundColor: "#bfbfbf",
     fontSize: 11,
     fontWeight: "bold",
-    borderBottom: "1px solid #a19f9f",
     padding: 5,
   },
   tableRow: {
     flexDirection: "row",
-    borderBottom: "1px solid #a19f9f",
     fontSize: 11,
   },
   tableCell: {
+    border: "1px solid #000",
     padding: 3,
     flex: 1,
-    textAlign: "left", 
+    textAlign: "center", 
   },
   tableCellSubject: {
+    border: "1px solid #000",
     flex: 1, // Wider column for Subject Name
     padding: 5,
     textAlign: "left", // Left-align for readability
@@ -140,13 +138,6 @@ export const styles = StyleSheet.create({
     padding: 5,
     textAlign: "center",
   },
-  noteText:{
-    fontSize: 11,
-    fontWeight: 400,
-    opacity: 0.9,
-    textAlign: "justify",
-    fontFamily: "Bangla",
-  },
   footer: {
     position: "absolute", // Fixed at bottom
     bottom: 20,
@@ -154,11 +145,10 @@ export const styles = StyleSheet.create({
     right: 10,
     flexDirection: "row",
     justifyContent: "space-between",
-    borderBottom: "1px solid #757575",
+    borderBottom: "1px solid #c0c0c0",
     paddingBottom: 5,
   },
   signature: {
-    fontFamily: "Bangla",
     fontSize: 11,
     fontWeight: "bold",
     borderTop: "1px solid #000",

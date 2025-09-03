@@ -18,8 +18,8 @@ export default function AdmitCardPDF({ admitCardData }) {
               src="/logo.png"
               style={{
                 position: "absolute",
-                top: "35%",
-                left: "28%",
+                top: "40%",
+                left: "25%",
                 transform: "translate(-50%, -50%)",
                 width: 380,
                 opacity: 0.17,
@@ -36,23 +36,17 @@ export default function AdmitCardPDF({ admitCardData }) {
                 }}
               />
               <Text style={styles.title}>
-                শাহ্ নেয়ামত (রহঃ) কেজি এন্ড হাই স্কুল
+                Shah Neyamat (RH:) KG & High School
               </Text>
               <Text style={styles.subtitle}>
-                কর্ণফুলী, চট্টগ্রাম || স্থাপিত: ২০০৪
+                Karnaphuli, Chattogram || ESTD: 2004
               </Text>
               
               <Text style={styles.cardTitle}>
-                {admitCardData.examName === "2nd-Modeltest"
-                  ? "২য়-মডেল টেস্ট"
-                  : admitCardData.examName === "1st-Modeltest" ? "১ম-মডেল টেস্ট" 
-                  : admitCardData.examName === "Pre-Test" ? "প্রি-টেস্ট"
-                  : admitCardData.examName === "Half-Yearly" ? "অর্ধ-বার্ষিক"
-                  : admitCardData.examName === "Annual" ? "বার্ষিক"
-                  : ""
-                  } {" "}
-                 পরীক্ষা: {admitCardData.session} | <Text>প্রবেশ পত্র</Text>
+                {admitCardData.examName && admitCardData.examName} {" "}
+                 Exam: {admitCardData.session}
               </Text>
+              <Text style={styles.cardName}>Admit Card</Text>
             </View>
             <View style={styles.divider} />
 
@@ -108,15 +102,24 @@ export default function AdmitCardPDF({ admitCardData }) {
                     }}
                   ></Image>
                 )}
+
+                <View style={{display: "flex", flexDirection: "row", gap: "2px" }}>
+                  <Text style={{fontSize: "11px"}}>Student ID:</Text>
+                  <Text
+                    style={{  fontSize: "11px", fontWeight: "bold" }}
+                  >
+                    {admitCardData?.studentID}
+                  </Text>
+                </View>
               </View>
             </View>
 
             {/* Exam Schedule Table */}
             <View style={styles.table}>
               <View style={styles.tableHeader}>
-                <Text style={styles.tableCellSubject}> বিষয়ের নাম</Text>
-                <Text style={styles.tableCellOther}>পরীক্ষার তারিখ</Text>
-                <Text style={styles.tableCellOther}>সময়</Text>
+                <Text style={styles.tableCellOther}>Subject Name</Text>
+                <Text style={styles.tableCellOther}>Exam Date</Text>
+                <Text style={styles.tableCellOther}>Time</Text>
               </View>
               {admitCardData.examData.map((subject, index) => {
                 const baseDate = new Date(subject.examDate);
@@ -131,11 +134,11 @@ export default function AdmitCardPDF({ admitCardData }) {
                     <Text style={styles.tableCellSubject}>
                       {subject.subjectName}
                     </Text>
-                    <Text style={styles.tableCellOther}>
+                    <Text style={styles.tableCell}>
                       {subject.examDate &&
                         format(new Date(subject.examDate), "dd-MM-yyyy, EEEE")}
                     </Text>
-                    <Text style={styles.tableCellOther}>
+                    <Text style={styles.tableCell}>
                       {fromDate && toDate
                         ? `${format(fromDate, "hh:mm a")} - ${format(
                             toDate,
@@ -147,36 +150,10 @@ export default function AdmitCardPDF({ admitCardData }) {
                 );
               })}
             </View>
-
-            {/* note text */}
-            <View style={styles.infoContainer}>
-              {admitCardData && (
-                <View>
-                  {/* <Text style={styles.noteText}>
-                    ১. পরীক্ষা কেন্দ্রে আসার সময় অবশ্যই বিদ্যালয়ের নির্ধারিত
-                    ইউনিফর্ম পরিধান করে আসতে হবে। ইউনিফর্ম ছাড়া প্রবেশ করতে
-                    দেওয়া হবে না।
-                  </Text>
-                  <Text style={styles.noteText}>
-                    ২. পরীক্ষার ফি এবং অন্য কোনো বকেয়া থাকলে তা পরীক্ষার আগে
-                    অবশ্যই পরিশোধ করতে হবে।
-                  </Text>
-                  <Text style={styles.noteText}>
-                    ৩. পরীক্ষা শুরুর আগে তোমার প্রবেশপত্র দেখে শ্রেণী ও রোল
-                    নম্বর অনুযায়ী নিজের আসন খুঁজে নিতে হবে।
-                  </Text>
-                  <Text style={styles.noteText}>
-                    ৪. পরীক্ষার সময় কোনো প্রকার অবৈধ পন্থা যেমন— নকল করা বা
-                    অন্যের সাথে কথা বলা— কঠোরভাবে নিষিদ্ধ।
-                  </Text> */}
-                </View>
-              )}
-            </View>
-
             {/* Footer with Signatures */}
             <View style={styles.footer}>
-              <Text style={styles.signature}>শ্রেণী শিক্ষকের স্বাক্ষর</Text>
-              <Text style={styles.signature}>প্রধান শিক্ষকের স্বাক্ষর</Text>
+              <Text style={styles.signature}>Headmaster Signature</Text>
+              <Text style={styles.signature}>Class Teacher Signature</Text>
             </View>
           </View>
         </Page>
