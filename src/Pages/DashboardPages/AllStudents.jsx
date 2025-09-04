@@ -12,10 +12,11 @@ import TabularStudentInfoPDF from "../../components/Dashboard/TabularStudentsPDF
 export default function AllStudents() {
   const axiosSecure = useAxiosSec();
   const [userRole] = useRole();
-  const [filterStudentsID, setFilterStudentsID] = useState("");
+  const [serverError, setServerError] = useState("");
   const [filterByClass, setFilterByClass] = useState("");
   const [session, setSession] = useState(new Date().getFullYear());
-  const [serverError, setServerError] = useState("");
+  const [filterStudentsID, setFilterStudentsID] = useState("");
+  const [filterBySection, setFilterBySection] = useState("");
   const [enabled, setUnabled] = useState(false);
   const { isTeacher, isAccountant, isAdmin } = userRole;
   const [isTableModalOpen, setIsTableModalOpen] = useState(false);
@@ -26,10 +27,10 @@ export default function AllStudents() {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["students", filterByClass, session],
+    queryKey: ["students", filterByClass, session, filterBySection, filterStudentsID],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
-        `/students?session=${session}&&className=${filterByClass}`
+        `/students?session=${session}&className=${filterByClass}&sectionName=${filterBySection}&studentID=${filterStudentsID}`
       );
       if (data?.message) {
         setServerError(data.message);
@@ -47,8 +48,12 @@ export default function AllStudents() {
     const form = e.target;
     const className = form.className.value;
     const session = form.session.value;
+    const sectionName = form.sectionName.value;
+    const studentID = form.studentID.value;
     setFilterByClass(className);
     setSession(session);
+    setFilterBySection(sectionName);
+    setFilterStudentsID(studentID);
     setUnabled(true);
     refetch();
   };
@@ -57,21 +62,21 @@ export default function AllStudents() {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You have to again add this!",
+        title: "আপনি কি নিশ্চিত?",
+        text: "পুনরায় তার তথ্য যোগ করতে হবে!",
         icon: "warning",
         color: "#064E3B",
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#16A34A",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "হ্যা, ডিলিট করুন!",
       }).then(async (result) => {
         if (result.isConfirmed) {
           const { data } = await axiosSecure.delete(`/delete-student/${id}`);
           if (data?.deletedCount) {
             Swal.fire({
-              title: "Deleted!",
-              text: "Student has been deleted.",
+              title: "ডিলিট হয়েছে!",
+              text: "শিক্ষার্থীর তথ্য ডিলিট করা হয়েছে।",
               icon: "success",
             });
             refetch();
@@ -107,7 +112,7 @@ export default function AllStudents() {
           onSubmit={handleFilter}
         >
           {/* choose class */}
-          <div className="form-control col-span-12 md:col-span-3">
+          <div className="form-control col-span-12 md:col-span-2">
             <label className="label">
               <span className="label-text max-sm:text-lg">শ্রেণী:</span>
             </label>
@@ -133,12 +138,11 @@ export default function AllStudents() {
                 "10",
               ].map((className) => (
                 <option key={className} value={className}>
-                  {className}
+                  Class-{className}
                 </option>
               ))}
             </select>
           </div>
-
           {/* select year */}
           <div className="form-control col-span-12 md:col-span-2">
             <label className="label">
@@ -162,8 +166,33 @@ export default function AllStudents() {
             </select>
           </div>
 
-          {/* choose exam */}
-          {/* <div className="form-control col-span-12 md:col-span-3">
+          {/* section name */}
+
+          <div className="form-control col-span-12 md:col-span-2">
+            <label className="label">
+              <span className="label-text max-sm:text-lg">শাখা:</span>
+            </label>
+            <select
+              defaultValue={""}
+              name="sectionName"
+              className="select select-bordered w-full"
+              
+            >
+              <option value="" disabled>
+                শাখা নির্বাচন করুন...
+              </option>
+              {["A", "B", "C", "D", "E"].map((section) => (
+                <option key={section} value={section}>
+                  {section}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          
+
+          {/* students ID */}
+          <div className="form-control col-span-12 md:col-span-2">
             <label className="label">
               <span className="label-text max-sm:text-lg">
                 শিক্ষার্থী আইডি:
@@ -172,12 +201,12 @@ export default function AllStudents() {
             <input
               type="text"
               placeholder="যেমন: 'SN-20251234'"
-              name="classRoll"
+              name="studentID"
               value={filterStudentsID}
               onChange={(e) => setFilterStudentsID(e.target.value)}
               className="input input-bordered w-full"
             />
-          </div> */}
+          </div>
 
           <div className="col-span-6 md:col-span-2 flex items-end">
             <button
@@ -210,7 +239,7 @@ export default function AllStudents() {
               <thead className="bg-green-600 text-white">
                 <tr>
                   <th>Student ID</th>
-                  <th >শিক্ষার্থীর ছবি</th>
+                  <th>শিক্ষার্থীর ছবি</th>
                   <th>নাম</th>
                   <th>রোল</th>
                   <th>জন্ম তারিখ</th>
@@ -241,7 +270,7 @@ export default function AllStudents() {
                               "MMMM dd, yyyy"
                             )}
                         </td>
-                        
+
                         {isAdmin || isTeacher ? (
                           <td className="flex flex-row items-center gap-2 md:gap-4">
                             <Link
