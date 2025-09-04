@@ -41,9 +41,25 @@ export default function AdmitCardPDF({ admitCardData }) {
               <Text style={styles.subtitle}>
                 Karnaphuli, Chattogram || ESTD: 2004
               </Text>
-              
+               <option value="1st-Semester">১ম সেমিস্টার</option>
+                <option value="2nd-Semester">২য় সেমিস্টার</option>
+                <option value="3rd-Semester">৩য় সেমিস্টার</option>
+                <option value="Half-Yearly">অর্ধ-বার্ষিক</option>
+                <option value="Annual">বার্ষিক</option>
+                <option value="1st-Modeltest">১ম-মডেল টেস্ট</option>
+                <option value="2nd-Modeltest">২য়-মডেল টেস্ট</option>
+                <option value="Pre-Text">প্রি-টেস্ট</option>
               <Text style={styles.cardTitle}>
-                {admitCardData.examName && admitCardData.examName} {" "}
+                {admitCardData.examName && 
+                admitCardData.examName === "1st-Semester" ? "1st Semester"
+              :admitCardData.examName === "2nd-Semester" ? "2nd Semester"
+            :admitCardData.examName === "3rd-Semester" ? "3rd Semester"
+          :admitCardData.examName === "Half-Yearly" ? "Half Yearly"
+        :admitCardData.examName === "Annual" ? "Annual"
+        :admitCardData.examName === "2nd-Modeltest" ? "2nd Model Test"
+        :admitCardData.examName === "Pre-Text" ? "Pre-Test"
+      :admitCardData.examName === "1st-Modeltest" ? "1st Model Test" : ""} 
+      {" "}
                  Exam: {admitCardData.session}
               </Text>
               <Text style={styles.cardName}>Admit Card</Text>
@@ -152,8 +168,8 @@ export default function AdmitCardPDF({ admitCardData }) {
             </View>
             {/* Footer with Signatures */}
             <View style={styles.footer}>
-              <Text style={styles.signature}>Headmaster Signature</Text>
-              <Text style={styles.signature}>Class Teacher Signature</Text>
+              <Text style={styles.signature}>Head Teacher</Text>
+              <Text style={styles.signature}>Exam Controller</Text>
             </View>
           </View>
         </Page>

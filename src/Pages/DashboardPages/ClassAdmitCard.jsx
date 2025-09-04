@@ -99,7 +99,7 @@ export default function ClassAdmitCard() {
                 <option value="Annual">বার্ষিক</option>
                 <option value="1st-Modeltest">১ম-মডেল টেস্ট</option>
                 <option value="2nd-Modeltest">২য়-মডেল টেস্ট</option>
-                <option value="Pre-Text">প্রি-টেস্ট</option>
+                <option value="Pre-Test">প্রি-টেস্ট</option>
               </select>
             </div>
 
