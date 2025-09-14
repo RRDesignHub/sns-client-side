@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     marginVertical: 1,
   },
   examName: {
-    fontSize: 10,
+    fontSize: 8,
     marginBottom: 3,
   },
   studentImage: {

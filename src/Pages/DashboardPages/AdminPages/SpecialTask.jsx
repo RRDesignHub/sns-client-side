@@ -3,6 +3,8 @@ import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 import { useState } from "react";
 import { Loading } from "../../../components/Shared/Loading";
 import SeatCardPDF from "../../../components/Dashboard/ExamSeatCardPDF/SeatCardPDF";
+import { FaFilePdf } from "react-icons/fa";
+import ExamAttendancePDF from "../../../components/Dashboard/ExamAttendanceSheetPDF/ExamAttandenceSheetPDF";
 
 const SpecialTask = () => {
   const axiosSecure = useAxiosSec();
@@ -10,16 +12,15 @@ const SpecialTask = () => {
   const [filterByClass, setFilterByClass] = useState("");
   const [session, setSession] = useState(new Date().getFullYear());
   const [serverError, setServerError] = useState("");
-  const [enabled, setUnabled] = useState(false);
+  const [sheetEnabled, setSheetUnabled] = useState(false);
   const [seatCards, setSeatCards] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [taskResult, setTaskResult] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState({});
   // all students data fro admin and teachers dashboard
-  const {
-    data: students = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["students", filterByClass, session],
+  const { data: students = [], isLoading } = useQuery({
+    queryKey: ["students", filterByClass, session, examName],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
         `/students?session=${session}&&className=${filterByClass}`
@@ -31,91 +32,122 @@ const SpecialTask = () => {
       }
       return data || [];
     },
-    enabled,
   });
 
-  
-
-  // filter all students from db
-  const handleFilter = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const className = form.className.value;
-    const session = form.session.value;
-    setFilterByClass(className);
-    setSession(session);
-    setUnabled(true);
-    refetch();
-  };
-
-  // whole class pdf open modal:
-  const openSeatCards = () => {
-    if(examName == ""){
-      return setServerError("পরীক্ষার নাম নির্বাচন করুন।")
-    }
-    setSeatCards(true);
-  };
   // whole class pdf open modal:
   const closeSeatCards = () => {
     setSeatCards(false);
+    setIsModalOpen(false);
   };
 
   const tasks = [
-    { id: 1, name: "পরীক্ষার সিট কার্ড তৈরি", action: "Generate", clickFunc: openSeatCards },
-    { id: 2, name: "শিক্ষার্থীর আইডি কার্ড তৈরি", action: "Generate" },
-    { id: 3, name: "অ্যাডমিট কার্ড প্রিন্ট", action: "Print" },
-    { id: 4, name: "রিপোর্ট কার্ড তৈরি", action: "Generate" },
+    {
+      id: 1,
+      type: "seatCard",
+      name: "পরীক্ষার সিট কার্ড তৈরি",
+      action: "Generate",
+    },
+    {
+      id: 2,
+      type: "examSheet",
+      name: "পরীক্ষার উপস্থিতি শীট",
+      action: "Generate",
+    },
   ];
+
+  // general handler
+  const handleTask = async (taskType) => {
+    if (!filterByClass || !examName) {
+      return setServerError("শ্রেণী ও পরীক্ষার নাম নির্বাচন করুন");
+    }
+    setSheetUnabled(false);
+    setLoading(true);
+    setServerError("");
+
+    const result = await handleTaskSubmit(taskType, {
+      filterByClass,
+      session,
+      examName,
+    });
+
+    setLoading(false);
+
+    if (result) {
+      setTaskResult(result);
+    } else {
+      console.log("Unknown error occured!!!");
+    }
+  };
+
+  const handleTaskSubmit = async (
+    taskType,
+    { filterByClass, session, examName }
+  ) => {
+    try {
+      const { data: students } = await axiosSecure.get(
+        `/students?session=${session}&&className=${filterByClass}`
+      );
+
+      if (!students || students.length === 0) {
+        setServerError("কোনো শিক্ষার্থী পাওয়া যায়নি!!!");
+      }
+
+      if (taskType === "seatCard") {
+        setSeatCards(true);
+      }
+
+      if (taskType === "examSheet") {
+        const { data: subjects } = await axiosSecure.get(
+          `/subjects?className=${filterByClass}`
+        );
+        setSheetUnabled(true);
+        return subjects;
+      }
+
+      setServerError("Unknown task type");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const openPdfModal = (student) => {
+    setSelectedStudent(student);
+    setIsModalOpen(true);
+  };
 
   return (
     <>
       <div className="p-6 min-h-screen">
         {/* Filter Inputs */}
-        <form
-          className="grid grid-cols-12 gap-4 mb-5 bg-green-100 p-4 rounded-lg justify-items-center"
-          onSubmit={handleFilter}
-        >
-          {/* choose class */}
-          <div className="form-control col-span-12 md:col-span-3">
-            <label className="label">
-              <span className="label-text max-sm:text-lg">শ্রেণী:</span>
-            </label>
+
+        <form className="grid grid-cols-12 gap-4 mb-5 bg-green-100 p-4 rounded-lg">
+          {/* class select */}
+          <div className="form-control col-span-12 md:col-span-4">
+            <label className="label">শ্রেণী:</label>
             <select
-              defaultValue={""}
+              defaultValue={filterByClass}
+              onChange={(e) => setFilterByClass(e.target.value)}
               name="className"
-              className="select select-bordered w-full"
-              required
+              className="select select-bordered"
             >
               <option value="">শ্রেণী নির্বাচন করুন</option>
-              {[
-                "Play",
-                "Nursery",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-              ].map((className) => (
-                <option key={className} value={className}>
-                  শ্রেণী-{className}
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((c) => (
+                <option key={c} value={c}>
+                  শ্রেণী-{c}
                 </option>
               ))}
             </select>
           </div>
 
           {/* select year */}
-          <div className="form-control col-span-12 md:col-span-2">
+          <div className="form-control col-span-12 md:col-span-4">
             <label className="label">
               <span className="label-text max-sm:text-lg">শিক্ষাবর্ষ:</span>
             </label>
             <select
               name="session"
               defaultValue={""}
+              onChange={(e) => setSession(e.target.value)}
               className="select select-bordered"
               required
             >
@@ -131,27 +163,40 @@ const SpecialTask = () => {
             </select>
           </div>
 
-          <div className="col-span-6 md:col-span-2 flex items-end">
-            <button
-              type="submit"
-              className={`px-4 py-2 rounded ${
-                students.length === 0 ? "bg-red-500" : "bg-green-600"
-              }  text-white  hover:bg-green-700 transition`}
+          {/* exam select */}
+          <div className="form-control col-span-12 md:col-span-4">
+            <label className="label">পরীক্ষার নাম:</label>
+            <select
+              defaultValue={examName}
+              onChange={(e) => setExamName(e.target.value)}
+              name="examName"
+              className="select select-bordered"
+              required
             >
-              সার্চ করুন
-            </button>
+              <option value="">পরীক্ষা নির্বাচন করুন</option>
+              <option value="1st-Semester">১ম সেমিস্টার</option>
+              <option value="2nd-Semester">২য় সেমিস্টার</option>
+              <option value="3rd-Semester">৩য় সেমিস্টার</option>
+              <option value="Half-Yearly">অর্ধ-বার্ষিক</option>
+              <option value="Annual">বার্ষিক</option>
+              <option value="1st-Modeltest">১ম-মডেল টেস্ট</option>
+              <option value="2nd-Modeltest">২য়-মডেল টেস্ট</option>
+              <option value="Pre-Test">প্রি-টেস্ট</option>
+            </select>
           </div>
 
-          <div className="col-span-6 md:col-span-5 my-auto">
+          <div className="col-span-12 ">
             {students.length > 0 && (
-              <div className="text-sm md:text-lg text-green-950 font-semibold">
+              <div className="flex justify-between text-sm md:text-lg text-green-950 font-semibold">
                 <h2>শ্রেণী : {filterByClass}</h2>
                 <h2>মোট শিক্ষার্থী: {students.length} জন</h2>
               </div>
             )}
           </div>
         </form>
-
+        <p className="text-red-500 text-sm text-center">
+          {serverError && serverError}
+        </p>
         {isLoading && <Loading />}
 
         {/* table for the diffrent task */}
@@ -162,40 +207,18 @@ const SpecialTask = () => {
               <thead className="bg-green-600 text-white">
                 <tr>
                   <th className="py-3 px-4 text-left">টাস্কের নাম</th>
-                  <th className="py-3 px-4 text-left">টাস্ক তথ্য</th>
                   <th className="py-3 px-4 text-center">অ্যাকশন</th>
                 </tr>
               </thead>
               <tbody>
                 {tasks.map((task) => (
                   <tr key={task.id} className="border-b hover:bg-green-50">
-                    <td className="py-3 px-4 font-medium text-gray-700">
-                      {task.name}
-                    </td>
-                    <td className="py-3 px-4 font-medium text-gray-700">
-                      <select
-                    onChange={(e) => setExamName(e.target.value)}
-                    name="examName"
-                    value={examName}
-                    className={`w-full h-10 md:h-12 p-2 border rounded-md ${examName == "" ? "border-red-500" : ""}`}
-                    required
-                  >
-                    <option value={""} disabled>
-                      Select
-                    </option>
-                    <option value="1st Semester">1st Semester</option>
-                    <option value="2nd Semester">2nd Semester</option>
-                    <option value="3rd Semester">3rd Semester</option>
-                    <option value="1st Model Test">1st Model Test</option>
-                    <option value="2nd Model Test">2nd Model Test</option>
-                    <option value="Half Yearly">Half Yearly</option>
-                    <option value="Annual">Annual</option>
-                  </select>
-                    </td>
+                    <td className="py-3 px-4">{task.name}</td>
                     <td className="py-3 px-4 text-center">
-                      <button 
-                      onClick={task.clickFunc}
-                      className="bg-green-600 hover:bg-green-700 text-white rounded-lg px-4 py-2">
+                      <button
+                        onClick={() => handleTask(task.type)}
+                        className="bg-green-600 hover:bg-green-700 text-white rounded-lg px-4 py-2"
+                      >
                         {task.action}
                       </button>
                     </td>
@@ -203,6 +226,52 @@ const SpecialTask = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {students && sheetEnabled && (
+          <div className="overflow-x-auto my-4 bg-green-200 shadow-md rounded-lg">
+            <h3 className="text-center text-green-950/70 text-lg py-2">পরীক্ষায় উপস্থিতি রেকর্ড শীট প্রিন্ট টেবল</h3>
+          <table className="table w-full">
+            {/* Table Header */}
+            <thead className="bg-green-600 text-white">
+              <tr>
+                <th>Student ID</th>
+                <th>শিক্ষার্থীর ছবি</th>
+                <th>নাম</th>
+                <th>রোল</th>
+                <th className="text-center">Actions</th>
+              </tr>
+            </thead>
+            {/* Table Body */}
+            <tbody>
+              {students
+                  .sort((a, b) => a.classRoll - b.classRoll)
+                  .map((student) => (
+                    <tr key={student._id}>
+                      <td>{student.studentID}</td>
+                      <td className="text-center">
+                        <img
+                          src={student?.image}
+                          className="w-10 h-10 border border-green-600 rounded-full"
+                          alt=""
+                        />
+                      </td>
+                      <td>{student.studentName}</td>
+                      <td>{student.classRoll}</td>
+
+                      <td className="flex flex-row items-center gap-2 md:gap-4">
+                        <button
+                          onClick={() => openPdfModal(student)}
+                          className="btn btn-sm bg-green-50 text-primary"
+                        >
+                          Print <FaFilePdf />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
           </div>
         )}
 
@@ -216,10 +285,25 @@ const SpecialTask = () => {
               >
                 Close
               </button>
-              <SeatCardPDF students={students} examName={examName} />
+              <SeatCardPDF students={students} subjects={taskResult?.subjects} examName={examName} />
             </div>
           </div>
         )}
+
+        {/* pdf popup for exam attendance sheet */}
+                      {isModalOpen && (
+                        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+                          <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
+                            <button
+                             onClick={closeSeatCards}
+                              className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
+                            >
+                              Close
+                            </button>
+                            <ExamAttendancePDF studentData={selectedStudent} subjects={taskResult?.subjects} examName={examName} />
+                          </div>
+                        </div>
+                      )}
       </div>
     </>
   );
