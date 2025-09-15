@@ -10,7 +10,7 @@ import { styles } from "./Style";
 import { format } from "date-fns";
 
 export default function ExamAttendancePDF({ studentData, subjects, examName }) {
-  console.log(examName);
+  
   return (
     <PDFViewer width="100%" height="600px">
       <Document>

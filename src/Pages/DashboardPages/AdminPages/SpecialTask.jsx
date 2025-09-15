@@ -5,53 +5,58 @@ import { Loading } from "../../../components/Shared/Loading";
 import SeatCardPDF from "../../../components/Dashboard/ExamSeatCardPDF/SeatCardPDF";
 import { FaFilePdf } from "react-icons/fa";
 import ExamAttendancePDF from "../../../components/Dashboard/ExamAttendanceSheetPDF/ExamAttandenceSheetPDF";
+import SmallAdmitCardsPDF from "../../../components/Dashboard/SmallAdmitCardsPDF/SmallAdmitCardsPDF";
 
 const SpecialTask = () => {
   const axiosSecure = useAxiosSec();
+  // Form filters
   const [examName, setExamName] = useState("");
   const [filterByClass, setFilterByClass] = useState("");
   const [session, setSession] = useState(new Date().getFullYear());
+
+  // General states
   const [serverError, setServerError] = useState("");
-  const [sheetEnabled, setSheetUnabled] = useState(false);
-  const [seatCards, setSeatCards] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [taskResult, setTaskResult] = useState(null);
+
+  // Task state (instead of multiple booleans)
+  const [seatCards, setSeatCards] = useState(false); // "seatCard" | "examSheet" | "admitCard"
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState({});
-  // all students data fro admin and teachers dashboard
+  const [isAdmitCardOpen, setIsAdmitCardOpen] = useState(false);
+  const [sheetEnabled, setSheetUnabled] = useState(false);
+  const [taskResult, setTaskResult] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
+  // Fetch students
   const { data: students = [], isLoading } = useQuery({
     queryKey: ["students", filterByClass, session, examName],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
         `/students?session=${session}&&className=${filterByClass}`
       );
-      if (data?.message) {
-        setServerError(data.message);
-      } else {
-        setServerError("");
-      }
+      if (data?.message) setServerError(data.message);
+      else setServerError("");
       return data || [];
     },
   });
-
-  // whole class pdf open modal:
-  const closeSeatCards = () => {
-    setSeatCards(false);
-    setIsModalOpen(false);
-  };
 
   const tasks = [
     {
       id: 1,
       type: "seatCard",
       name: "পরীক্ষার সিট কার্ড তৈরি",
-      action: "Generate",
+      action: "প্রিন্ট করুন",
     },
     {
       id: 2,
       type: "examSheet",
       name: "পরীক্ষার উপস্থিতি শীট",
       action: "Generate",
+    },
+    {
+      id: 3,
+      type: "admitcardPrint",
+      name: "এডমিট কার্ড প্রিন্ট",
+      action: "প্রিন্ট করুন",
     },
   ];
 
@@ -61,58 +66,43 @@ const SpecialTask = () => {
       return setServerError("শ্রেণী ও পরীক্ষার নাম নির্বাচন করুন");
     }
     setSheetUnabled(false);
-    setLoading(true);
     setServerError("");
-
-    const result = await handleTaskSubmit(taskType, {
-      filterByClass,
-      session,
-      examName,
-    });
-
-    setLoading(false);
-
-    if (result) {
-      setTaskResult(result);
-    } else {
-      console.log("Unknown error occured!!!");
-    }
-  };
-
-  const handleTaskSubmit = async (
-    taskType,
-    { filterByClass, session, examName }
-  ) => {
+    setTaskResult(null);
     try {
-      const { data: students } = await axiosSecure.get(
-        `/students?session=${session}&&className=${filterByClass}`
-      );
-
-      if (!students || students.length === 0) {
-        setServerError("কোনো শিক্ষার্থী পাওয়া যায়নি!!!");
-      }
-
       if (taskType === "seatCard") {
         setSeatCards(true);
       }
 
       if (taskType === "examSheet") {
+        setLoading(true);
         const { data: subjects } = await axiosSecure.get(
           `/subjects?className=${filterByClass}`
         );
         setSheetUnabled(true);
-        return subjects;
+        setTaskResult(subjects);
+        setLoading(false);
       }
 
-      setServerError("Unknown task type");
+      if (taskType === "admitcardPrint") {
+        setIsAdmitCardOpen(true);
+      }
+      
     } catch (err) {
       console.log(err);
     }
   };
 
+  // for exam attendance sheet popup open func:
   const openPdfModal = (student) => {
     setSelectedStudent(student);
     setIsModalOpen(true);
+  };
+
+  // close pdf modal:
+  const closeSeatCards = () => {
+    setSeatCards(false);
+    setIsModalOpen(false);
+    setIsAdmitCardOpen(false);
   };
 
   return (
@@ -174,14 +164,14 @@ const SpecialTask = () => {
               required
             >
               <option value="">পরীক্ষা নির্বাচন করুন</option>
-              <option value="1st-Semester">১ম সেমিস্টার</option>
-              <option value="2nd-Semester">২য় সেমিস্টার</option>
-              <option value="3rd-Semester">৩য় সেমিস্টার</option>
+              <option value="1st Semester">১ম সেমিস্টার</option>
+              <option value="2nd Semester">২য় সেমিস্টার</option>
+              <option value="3rd Semester">৩য় সেমিস্টার</option>
               <option value="Half-Yearly">অর্ধ-বার্ষিক</option>
               <option value="Annual">বার্ষিক</option>
-              <option value="1st-Modeltest">১ম-মডেল টেস্ট</option>
-              <option value="2nd-Modeltest">২য়-মডেল টেস্ট</option>
-              <option value="Pre-Test">প্রি-টেস্ট</option>
+              <option value="1st Model Test">১ম-মডেল টেস্ট</option>
+              <option value="2nd Model Test">২য়-মডেল টেস্ট</option>
+              <option value="Pre Test">প্রি-টেস্ট</option>
             </select>
           </div>
 
@@ -197,7 +187,6 @@ const SpecialTask = () => {
         <p className="text-red-500 text-sm text-center">
           {serverError && serverError}
         </p>
-        {isLoading && <Loading />}
 
         {/* table for the diffrent task */}
 
@@ -229,23 +218,26 @@ const SpecialTask = () => {
           </div>
         )}
 
+        {isLoading || loading && <Loading />}
         {students && sheetEnabled && (
           <div className="overflow-x-auto my-4 bg-green-200 shadow-md rounded-lg">
-            <h3 className="text-center text-green-950/70 text-lg py-2">পরীক্ষায় উপস্থিতি রেকর্ড শীট প্রিন্ট টেবল</h3>
-          <table className="table w-full">
-            {/* Table Header */}
-            <thead className="bg-green-600 text-white">
-              <tr>
-                <th>Student ID</th>
-                <th>শিক্ষার্থীর ছবি</th>
-                <th>নাম</th>
-                <th>রোল</th>
-                <th className="text-center">Actions</th>
-              </tr>
-            </thead>
-            {/* Table Body */}
-            <tbody>
-              {students
+            <h3 className="text-center text-green-950/70 text-lg py-2">
+              পরীক্ষায় উপস্থিতি রেকর্ড শীট প্রিন্ট টেবল
+            </h3>
+            <table className="table w-full">
+              {/* Table Header */}
+              <thead className="bg-green-600 text-white">
+                <tr>
+                  <th>Student ID</th>
+                  <th>শিক্ষার্থীর ছবি</th>
+                  <th>নাম</th>
+                  <th>রোল</th>
+                  <th className="text-center">Actions</th>
+                </tr>
+              </thead>
+              {/* Table Body */}
+              <tbody>
+                {students
                   .sort((a, b) => a.classRoll - b.classRoll)
                   .map((student) => (
                     <tr key={student._id}>
@@ -270,8 +262,8 @@ const SpecialTask = () => {
                       </td>
                     </tr>
                   ))}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
           </div>
         )}
 
@@ -285,25 +277,52 @@ const SpecialTask = () => {
               >
                 Close
               </button>
-              <SeatCardPDF students={students} subjects={taskResult?.subjects} examName={examName} />
+              <SeatCardPDF
+                students={students}
+                subjects={taskResult?.subjects}
+                examName={examName}
+              />
             </div>
           </div>
         )}
 
         {/* pdf popup for exam attendance sheet */}
-                      {isModalOpen && (
-                        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
-                          <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
-                            <button
-                             onClick={closeSeatCards}
-                              className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
-                            >
-                              Close
-                            </button>
-                            <ExamAttendancePDF studentData={selectedStudent} subjects={taskResult?.subjects} examName={examName} />
-                          </div>
-                        </div>
-                      )}
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+            <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
+              <button
+                onClick={closeSeatCards}
+                className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
+              >
+                Close
+              </button>
+              <ExamAttendancePDF
+                studentData={selectedStudent}
+                subjects={taskResult?.subjects}
+                examName={examName}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* admit card generate pdf popup */}
+         {students && isAdmitCardOpen && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+            <div className="bg-white w-[90%] h-[90%] rounded shadow-lg relative">
+              <button
+                onClick={closeSeatCards}
+                className="absolute bottom-2 right-8 text-lg bg-red-500 text-white px-4 py-2 rounded"
+              >
+                Close
+              </button>
+              <SmallAdmitCardsPDF
+                students={students}
+                examName={examName}
+                session={session}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

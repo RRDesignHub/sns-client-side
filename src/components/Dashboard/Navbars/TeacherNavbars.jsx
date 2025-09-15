@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
-import { FaRegIdCard } from "react-icons/fa";
+import { FaRegIdCard, FaTasks } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
 import { GiPapers } from "react-icons/gi";
@@ -88,6 +88,20 @@ const TeacherNavbars = ({ openCloseMenu }) => {
       >
         <GiPapers className="w-4 h-4" />
         <span className="text-xs ">{openCloseMenu ? "ফলাফল" : ""}</span>
+      </NavLink>
+
+       <NavLink
+        to="/dashboard/special-task"
+        className={({ isActive }) =>
+          isActive
+            ? "flex items-center ps-2 gap-2 py-2 bg-[#166534] text-white "
+            : "flex items-center ps-2 gap-2 py-2 hover:bg-[#166534] hover:text-white transition "
+        }
+      >
+        <FaTasks className="w-4 h-4" />
+        <span className="text-xs ">
+          {openCloseMenu ? "বিশেষ কাজ" : ""}
+        </span>
       </NavLink>
     </>
   );

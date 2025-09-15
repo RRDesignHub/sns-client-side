@@ -3,7 +3,7 @@ import { PiUsersFourFill, PiBookOpenTextFill } from "react-icons/pi";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdDashboard, MdOutlineAddchart } from "react-icons/md";
 import { GiPapers } from "react-icons/gi";
-import { FaRegIdCard } from "react-icons/fa";
+import { FaRegIdCard, FaTasks } from "react-icons/fa";
 const TeacherNavbarLg = () => {
   const location = useLocation();
   return (
@@ -86,6 +86,19 @@ const TeacherNavbarLg = () => {
         <GiPapers className="w-5 h-5" />
         ফলাফল
       </NavLink>
+
+       {/* special task */}
+            <NavLink
+              to="/dashboard/special-task"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center gap-3 px-4 py-2 bg-[#166534] text-white rounded-lg"
+                  : "flex items-center gap-3 px-4 py-2 hover:bg-[#166534] hover:text-green-950 transition rounded-lg"
+              }
+            >
+              <FaTasks className="w-5 h-5" />
+              বিশেষ কাজ
+            </NavLink>
     </>
   );
 };

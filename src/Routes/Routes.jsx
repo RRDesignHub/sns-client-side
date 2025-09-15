@@ -105,7 +105,7 @@ const router = createBrowserRouter(
         },
          {
           path: "special-task",
-          element: <AdminRoute><SpecialTask /></AdminRoute>
+          element: <SpecialTask />
         },
          {
           path: "update-user/:id",
