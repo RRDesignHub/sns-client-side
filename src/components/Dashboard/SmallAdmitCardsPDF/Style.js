@@ -19,7 +19,9 @@ export const styles = StyleSheet.create({
   pageContainer: {
     display: "flex",
     flexDirection: "column",
+    border: "1px dashed #fafafa",
     gap: 20,
+    paddingBottom: 40,
   },
   
   title: {
@@ -74,7 +76,7 @@ export const styles = StyleSheet.create({
     width: "38%",
     border: "1px solid #c4c4c4",
     borderRadius: 5,
-    padding: 5,
+    padding: 3,
     alignItems: "center",
   },
   infoRow: {
@@ -95,7 +97,7 @@ export const styles = StyleSheet.create({
   
   // Footer (Signatures)
   footer: {
-    marginTop: 40,
+    marginTop: 70,
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 5,
