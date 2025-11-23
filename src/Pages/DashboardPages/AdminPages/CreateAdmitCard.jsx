@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
+import { format, parse  } from "date-fns";
+import DatePicker from "react-datepicker";
 import Swal from "sweetalert2";
 import { useAxiosSec } from "../../../Hooks/useAxiosSec";
 import { Loading } from "../../../components/Shared/Loading";
@@ -155,6 +156,7 @@ export default function CreateAdmitCard() {
                 <option value="1st-Modeltest">১ম-মডেল টেস্ট</option>
                 <option value="2nd-Modeltest">২য়-মডেল টেস্ট</option>
                 <option value="Pre-Test">প্রি-টেস্ট</option>
+                <option value="SSC-Test">এস.এস.সি. টেস্ট</option>
               </select>
             </div>
 

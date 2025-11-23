@@ -41,7 +41,7 @@ export default function AdmitCardPDF({ admitCardData }) {
               <Text style={styles.subtitle}>
                 Karnaphuli, Chattogram || ESTD: 2004
               </Text>
-              
+
               <Text style={styles.cardTitle}>
                 {admitCardData.examName &&
                 admitCardData.examName === "1st-Semester"
@@ -56,11 +56,12 @@ export default function AdmitCardPDF({ admitCardData }) {
                   ? "Annual"
                   : admitCardData.examName === "2nd-Modeltest"
                   ? "2nd Model Test"
-                  : admitCardData.examName === "Pre-Text"
+                  : admitCardData.examName === "Pre-Test"
                   ? "Pre-Test"
                   : admitCardData.examName === "1st-Modeltest"
                   ? "1st Model Test"
-                  : ""}{" "}
+                  : admitCardData.examName === "SSC-Test"
+                  ? "SSC-Test" : admitCardData.examName === ""}{" "}
                 Exam: {admitCardData.session}
               </Text>
               <Text style={styles.cardName}>Admit Card</Text>
@@ -93,16 +94,21 @@ export default function AdmitCardPDF({ admitCardData }) {
                   </Text>
                 </View>
                 <View style={styles.infoRow}>
-                  <Text style={styles.infoLabel}>Class:</Text>
-                  <Text style={styles.infoValue}>
-                    {admitCardData.className}
-                  </Text>
-                </View>
-                <View style={styles.infoRow}>
-                  <Text style={styles.infoLabel}>Roll:</Text>
+                  <Text style={styles.infoLabel}>Class Roll:</Text>
                   <Text style={styles.infoValue}>
                     {admitCardData.classRoll}
                   </Text>
+                </View>
+                <View style={styles.infoRow}>
+                  <Text style={styles.infoLabel}>Exam Center:</Text>
+                  <Text style={styles.infoValue}>
+                    Charlakshya Union High School
+                  </Text>
+                </View>
+
+                <View style={styles.infoRow}>
+                  <Text style={styles.infoLabel}>Reg. No:</Text>
+                  <Text style={styles.infoValue}></Text>
                 </View>
               </View>
               <View style={styles.infoRight}>
@@ -126,6 +132,14 @@ export default function AdmitCardPDF({ admitCardData }) {
                   <Text style={{ fontSize: "11px" }}>Student ID:</Text>
                   <Text style={{ fontSize: "11px", fontWeight: "bold" }}>
                     {admitCardData?.studentID}
+                  </Text>
+                </View>
+                <View
+                  style={{ display: "flex", flexDirection: "row", gap: "2px" }}
+                >
+                  <Text style={{ fontSize: "11px" }}>Session:</Text>
+                  <Text style={{ fontSize: "11px", fontWeight: "bold" }}>
+                    2024-25 (Exam: 2026)
                   </Text>
                 </View>
               </View>
