@@ -172,6 +172,7 @@ const SpecialTask = () => {
               <option value="1st Model Test">১ম-মডেল টেস্ট</option>
               <option value="2nd Model Test">২য়-মডেল টেস্ট</option>
               <option value="Pre Test">প্রি-টেস্ট</option>
+              <option value="SSC-Test">এস.এস.সি. টেস্ট</option>
             </select>
           </div>
 

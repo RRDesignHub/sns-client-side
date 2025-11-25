@@ -9,6 +9,7 @@ import {
 import { styles } from "./Style";
 import { format } from "date-fns";
 export default function AdmitCardPDF({ admitCardData }) {
+  console.log(admitCardData)
   return (
     <PDFViewer width="100%" height="600px">
       <Document>
